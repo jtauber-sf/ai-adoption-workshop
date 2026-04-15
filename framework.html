@@ -53,66 +53,42 @@ body {
 ::-webkit-scrollbar-thumb { background: #C5D8EE; border-radius: 3px; }
 
 /* ══════════════ NAV ══════════════ */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(3,45,96,0.97);
-  backdrop-filter: blur(12px);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 40px; height: 56px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+/* Workshop site navigation (shared across workshop HTML pages) */
+.workshop-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  min-height: 48px;
+  padding: 8px 16px;
+  background: rgba(3, 45, 96, 0.98);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-
-.nav-brand {
-  display: flex; align-items: center; gap: 12px;
+.workshop-nav a {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
 }
-
-.nav-cloud {
-  width: 28px; height: 28px;
+.workshop-nav a:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+.workshop-nav a[aria-current="page"] {
   background: var(--sky);
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  position: relative;
-  flex-shrink: 0;
+  color: var(--navy);
+  font-weight: 600;
 }
-.nav-cloud::before {
-  content: '';
-  position: absolute;
-  width: 16px; height: 16px;
-  background: var(--sky);
-  border-radius: 50%;
-  top: -6px; left: 4px;
-}
-.nav-cloud::after {
-  content: '';
-  position: absolute;
-  width: 12px; height: 12px;
-  background: var(--sky);
-  border-radius: 50%;
-  top: -4px; left: 14px;
-}
-
-.nav-title {
-  font-size: 13px; font-weight: 600;
-  color: white; letter-spacing: 0.02em;
-}
-
-.nav-pills {
-  display: flex; gap: 6px;
-}
-
-.nav-pill {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; font-weight: 500;
-  padding: 4px 12px; border-radius: 20px;
-  cursor: pointer; transition: all 0.2s;
-  border: 1px solid rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.6);
-  background: transparent;
-  letter-spacing: 0.04em;
-}
-.nav-pill:hover { color: white; border-color: rgba(255,255,255,0.4); }
-.nav-pill.active { background: var(--sky); color: var(--navy); border-color: var(--sky); font-weight: 700; }
-.nav-pill.all-pill { color: white; background: rgba(255,255,255,0.1); }
-.nav-pill.all-pill.active { background: white; color: var(--navy); }
 
 /* ══════════════ HERO ══════════════ */
 .hero {
@@ -745,7 +721,6 @@ footer strong { color: var(--sky); }
   .detail-header { padding: 24px 24px 20px; }
   .detail-body { padding: 20px 24px 24px; }
   .detail-nav { padding: 16px 24px; }
-  .nav-pills { display: none; }
   footer { padding: 20px 24px; }
 }
 
@@ -763,18 +738,11 @@ footer strong { color: var(--sky); }
 </head>
 <body>
 
-<!-- ══════════════ NAV ══════════════ -->
-<nav>
-  <div class="nav-brand">
-    <div class="nav-cloud"></div>
-    <div class="nav-title">Pathways to Agentic Success</div>
-  </div>
-  <div class="nav-pills">
-    <button class="nav-pill all-pill active" data-filter="all">All</button>
-    <button class="nav-pill" data-filter="tech">Technology</button>
-    <button class="nav-pill" data-filter="people">People</button>
-    <button class="nav-pill" data-filter="exec">Executive</button>
-  </div>
+<nav class="workshop-nav" aria-label="Workshop pages">
+  <a href="index.html">Agenda</a>
+  <a href="framework.html" aria-current="page">9 Pathways Framework</a>
+  <a href="sample-sprint-plan.html">Sample 90 Day Sprint Plan</a>
+  <a href="sample-playbook.html">Sample Playbook Output</a>
 </nav>
 
 <!-- ══════════════ HERO ══════════════ -->
@@ -1375,21 +1343,6 @@ document.getElementById('filterRow').addEventListener('click', e => {
   document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
   chip.classList.add('active');
   applyFilter(chip.dataset.filter);
-});
-
-// ── Nav pills ──
-document.querySelectorAll('.nav-pill').forEach(pill => {
-  pill.addEventListener('click', () => {
-    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
-    pill.classList.add('active');
-    const f = pill.dataset.filter;
-    applyFilter(f);
-    // sync filter chips
-    document.querySelectorAll('.filter-chip').forEach(c => {
-      c.classList.toggle('active', c.dataset.filter === f);
-    });
-    document.getElementById('matrix-section').scrollIntoView({ behavior: 'smooth' });
-  });
 });
 
 // ── Box clicks ──

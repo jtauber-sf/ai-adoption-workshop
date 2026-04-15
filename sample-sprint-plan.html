@@ -49,8 +49,27 @@ body{
   font-family:'Sora',sans-serif;
   background:#C8D8EC;
   min-height:100vh;
-  padding:32px 20px 60px;
+  padding:88px 20px 60px;
 }
+
+/* Workshop site navigation */
+.workshop-nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:6px 10px;
+  min-height:48px;padding:8px 16px;
+  background:rgba(3,45,96,0.98);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.workshop-nav a{
+  font-size:12px;font-weight:500;
+  color:rgba(255,255,255,0.78);text-decoration:none;
+  padding:6px 12px;border-radius:20px;
+  transition:color .2s,background .2s;
+  white-space:nowrap;
+}
+.workshop-nav a:hover{color:var(--white);background:rgba(255,255,255,0.1);}
+.workshop-nav a[aria-current="page"]{background:var(--sky);color:var(--navy);font-weight:600;}
 
 /* ── TOP NAV ── */
 .top-bar{
@@ -59,9 +78,7 @@ body{
   flex-wrap:wrap; gap:12px;
 }
 .top-logo{display:flex;align-items:center;gap:10px;}
-.cloud{width:32px;height:22px;background:var(--sky);border-radius:50% 50% 50% 50%/55% 55% 45% 45%;position:relative;flex-shrink:0;}
-.cloud::before{content:'';position:absolute;width:18px;height:18px;background:var(--sky);border-radius:50%;top:-8px;left:4px;}
-.cloud::after{content:'';position:absolute;width:13px;height:13px;background:var(--sky);border-radius:50%;top:-5px;left:16px;}
+.sf-brand-logo{display:block;height:30px;width:auto;object-fit:contain;flex-shrink:0;background:transparent;}
 .top-brand{font-size:13px;font-weight:700;color:var(--navy);letter-spacing:-0.01em;}
 .top-brand span{font-weight:300;color:#6A8BAA;}
 
@@ -338,9 +355,16 @@ body{
 </head>
 <body>
 
+<nav class="workshop-nav" aria-label="Workshop pages">
+  <a href="index.html">Agenda</a>
+  <a href="framework.html">9 Pathways Framework</a>
+  <a href="sample-sprint-plan.html" aria-current="page">Sample 90 Day Sprint Plan</a>
+  <a href="sample-playbook.html">Sample Playbook Output</a>
+</nav>
+
 <div class="top-bar">
   <div class="top-logo">
-    <div class="cloud"></div>
+    <img class="sf-brand-logo" src="assets/sfdc@2x.png" width="140" height="98" alt="Salesforce" />
     <div class="top-brand">Salesforce <span>· Agentic Sprint Planner</span></div>
   </div>
   <div class="top-legend">

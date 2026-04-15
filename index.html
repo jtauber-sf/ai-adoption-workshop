@@ -27,6 +27,43 @@
     .page { box-shadow: none; }
   }
 
+  /* Workshop site navigation */
+  .workshop-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    min-height: 48px;
+    padding: 8px 16px;
+    background: rgba(3, 45, 96, 0.98);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .workshop-nav a {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.78);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: color 0.2s, background 0.2s;
+    white-space: nowrap;
+  }
+  .workshop-nav a:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .workshop-nav a[aria-current="page"] {
+    background: var(--sky);
+    color: var(--navy);
+    font-weight: 600;
+  }
+
   body {
     font-family: 'Sora', sans-serif;
     background: #D4E4F5;
@@ -34,7 +71,7 @@
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    padding: 32px 16px;
+    padding: 88px 16px 32px;
   }
 
   .page {
@@ -86,28 +123,13 @@
     display: flex; align-items: center; gap: 10px;
   }
 
-  .sf-cloud {
-    width: 36px; height: 26px;
-    background: var(--sky);
-    border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
-    position: relative;
+  .sf-brand-logo {
+    display: block;
+    height: 32px;
+    width: auto;
+    object-fit: contain;
     flex-shrink: 0;
-  }
-  .sf-cloud::before {
-    content: '';
-    position: absolute;
-    width: 20px; height: 20px;
-    background: var(--sky);
-    border-radius: 50%;
-    top: -9px; left: 5px;
-  }
-  .sf-cloud::after {
-    content: '';
-    position: absolute;
-    width: 15px; height: 15px;
-    background: var(--sky);
-    border-radius: 50%;
-    top: -6px; left: 18px;
+    background: transparent;
   }
 
   .sf-name {
@@ -349,6 +371,13 @@
 </head>
 <body>
 
+<nav class="workshop-nav" aria-label="Workshop pages">
+  <a href="index.html" aria-current="page">Agenda</a>
+  <a href="framework.html">9 Pathways Framework</a>
+  <a href="sample-sprint-plan.html">Sample 90 Day Sprint Plan</a>
+  <a href="sample-playbook.html">Sample Playbook Output</a>
+</nav>
+
 <div class="page">
 
   <!-- HEADER -->
@@ -358,7 +387,7 @@
     <div class="header-inner">
       <div class="header-top">
         <div class="sf-logo">
-          <div class="sf-cloud"></div>
+          <img class="sf-brand-logo" src="assets/sfdc@2x.png" width="140" height="98" alt="Salesforce" />
           <div>
             <div class="sf-name">Salesforce</div>
             <div class="sf-sub">Strategic AI Advisory · Catalyst ANZ</div>

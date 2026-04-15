@@ -41,35 +41,181 @@ body{
   padding:40px 20px 80px;
 }
 
-/* NAV */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  background:rgba(3,45,96,0.97);
+/* Workshop site navigation */
+.workshop-nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:6px 10px;
+  min-height:48px;padding:8px 16px;
+  background:rgba(3,45,96,0.98);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.workshop-nav a{
+  font-size:12px;font-weight:500;
+  color:rgba(255,255,255,0.78);text-decoration:none;
+  padding:6px 12px;border-radius:20px;
+  transition:color .2s,background .2s;
+  white-space:nowrap;
+}
+.workshop-nav a:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.workshop-nav a[aria-current="page"]{background:var(--sky);color:var(--navy);font-weight:600;}
+
+/* Playbook in-page navigation (below workshop nav) */
+.nav.playbook-toc{
+  position:fixed;top:48px;left:0;right:0;z-index:200;
+  background:linear-gradient(180deg,#021E42 0%,#03254D 100%);
   backdrop-filter:blur(12px);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 40px;height:52px;
-  border-bottom:1px solid rgba(255,255,255,0.08);
+  border-bottom:1px solid rgba(27,150,255,0.22);
+  box-shadow:0 8px 24px rgba(2,20,50,0.35);
+  padding:10px 0 14px;
 }
-.nav-brand{display:flex;align-items:center;gap:10px;}
-.nav-cloud{width:26px;height:19px;background:var(--sky);border-radius:50% 50% 50% 50%/55% 55% 45% 45%;position:relative;flex-shrink:0;}
-.nav-cloud::before{content:'';position:absolute;width:15px;height:15px;background:var(--sky);border-radius:50%;top:-7px;left:3px;}
-.nav-cloud::after{content:'';position:absolute;width:11px;height:11px;background:var(--sky);border-radius:50%;top:-4px;left:13px;}
-.nav-title{font-size:12px;font-weight:600;color:white;letter-spacing:0.01em;}
-.nav-pages{display:flex;gap:4px;}
-.nav-btn{
+.playbook-toc-inner{
+  max-width:1100px;margin:0 auto;
+  padding:0 20px;
+}
+.playbook-toc-head{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:10px;
+}
+.nav-brand{display:flex;align-items:center;gap:10px;min-width:0;}
+.nav-brand .sf-brand-logo{display:block;height:28px;width:auto;object-fit:contain;flex-shrink:0;background:transparent;}
+.nav-title{font-size:13px;font-weight:700;color:#fff;letter-spacing:-0.02em;line-height:1.25;}
+.nav-kicker{
   font-family:'JetBrains Mono',monospace;
-  font-size:10px;font-weight:500;letter-spacing:0.06em;
-  padding:4px 12px;border-radius:20px;
-  border:1px solid rgba(255,255,255,0.15);
-  color:rgba(255,255,255,0.55);
-  background:transparent;cursor:pointer;
-  transition:all 0.2s;
+  font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(27,150,255,0.85);
+  margin-top:2px;
 }
-.nav-btn:hover{color:white;border-color:rgba(255,255,255,0.4);}
-.nav-btn.active{background:var(--sky);color:var(--navy);border-color:var(--sky);font-weight:700;}
+.playbook-toc-rail{
+  display:flex;gap:8px;overflow-x:auto;
+  padding:6px 4px 8px 2px;
+  scroll-snap-type:x proximity;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(27,150,255,0.4) transparent;
+}
+.playbook-toc-rail::-webkit-scrollbar{height:5px;}
+.playbook-toc-rail::-webkit-scrollbar-thumb{background:rgba(27,150,255,0.35);border-radius:4px;}
+.playbook-step{
+  flex:0 0 auto;scroll-snap-align:start;
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px 11px 12px;
+  min-height:46px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.14);
+  background:rgba(255,255,255,0.07);
+  color:rgba(255,255,255,0.88);
+  font-family:'Sora',sans-serif;
+  font-size:13px;font-weight:600;
+  letter-spacing:-0.01em;
+  line-height:1.2;
+  cursor:pointer;
+  transition:background .18s,border-color .18s,color .18s,box-shadow .18s,transform .15s;
+  text-align:left;
+}
+.playbook-step:hover{
+  background:rgba(255,255,255,0.12);
+  border-color:rgba(255,255,255,0.28);
+  color:#fff;
+}
+.playbook-step:focus-visible{
+  outline:2px solid var(--sky);outline-offset:2px;
+}
+.playbook-step.active{
+  background:var(--sky);
+  color:var(--navy);
+  border-color:var(--sky);
+  box-shadow:0 4px 16px rgba(27,150,255,0.35);
+}
+.playbook-step.active:hover{
+  background:#4dadff;
+  border-color:#4dadff;
+  color:var(--navy);
+}
+.step-badge{
+  flex-shrink:0;
+  width:28px;height:28px;
+  border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;font-weight:700;
+  background:rgba(255,255,255,0.12);
+  color:rgba(255,255,255,0.95);
+  transition:background .18s,color .18s;
+}
+.playbook-step.active .step-badge{
+  background:rgba(3,45,96,0.18);
+  color:var(--navy);
+}
+.playbook-step--cover .step-badge{
+  font-size:12px;line-height:1;
+  background:rgba(27,150,255,0.2);
+}
+.playbook-step.active.playbook-step--cover .step-badge{
+  background:rgba(3,45,96,0.15);
+}
+.step-text{display:flex;flex-direction:column;gap:1px;}
+.step-text strong{font-weight:700;}
+.step-text span.step-sub{
+  font-size:10px;font-weight:500;
+  color:rgba(255,255,255,0.45);
+  letter-spacing:0.02em;
+}
+.playbook-step.active .step-text span.step-sub{color:rgba(3,45,96,0.55);}
+.playbook-step--cover .step-text{gap:0;}
+.playbook-step--cover .step-sub:first-of-type{margin-top:2px;}
+
+/* Page prev/next */
+.page-pager{
+  display:flex;justify-content:space-between;align-items:stretch;
+  flex-wrap:wrap;gap:12px;
+  padding:18px 48px 20px;
+  background:var(--offwhite);
+  border-top:1px solid #D4E4F0;
+}
+.page-pager--first{justify-content:flex-end;}
+.page-pager--last{justify-content:flex-start;}
+.page-pager-btn{
+  display:flex;flex-direction:column;align-items:flex-start;gap:4px;
+  max-width:min(100%,320px);
+  padding:12px 18px;
+  border-radius:12px;
+  border:1px solid #C5D8EE;
+  background:var(--white);
+  color:var(--navy);
+  font-family:'Sora',sans-serif;
+  cursor:pointer;
+  text-align:left;
+  transition:background .15s,border-color .15s,box-shadow .15s;
+  box-shadow:0 2px 8px rgba(3,45,96,0.06);
+}
+.page-pager-btn:hover{
+  border-color:var(--sky);
+  box-shadow:0 4px 16px rgba(27,150,255,0.15);
+}
+.page-pager-btn:focus-visible{
+  outline:2px solid var(--sky);outline-offset:2px;
+}
+.page-pager-btn .page-pager-dir{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  color:#7AAED4;
+}
+.page-pager-btn .page-pager-title{
+  font-size:15px;font-weight:700;
+  color:var(--navy);
+  letter-spacing:-0.02em;line-height:1.25;
+}
+.page-pager-next .page-pager-dir::after{content:' →';color:var(--sky);}
+.page-pager-prev .page-pager-dir::before{content:'← ';color:var(--sky);}
+#page-cover .page-pager{border-top-color:rgba(255,255,255,0.12);background:#EEF4FB;}
 
 /* PAGES */
-.pages-wrap{margin-top:72px;}
+.pages-wrap{margin-top:188px;}
+@media (max-width:600px){
+  .pages-wrap{margin-top:200px;}
+  .playbook-step{padding:10px 12px;min-height:44px;font-size:12px;}
+}
 
 .page{
   max-width:900px;margin:0 auto 32px;
@@ -103,9 +249,7 @@ body{
 
 .cover-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:48px;}
 .cover-logo{display:flex;align-items:center;gap:12px;}
-.cover-cloud{width:42px;height:30px;background:var(--sky);border-radius:50% 50% 50% 50%/55% 55% 45% 45%;position:relative;flex-shrink:0;}
-.cover-cloud::before{content:'';position:absolute;width:24px;height:24px;background:var(--sky);border-radius:50%;top:-11px;left:5px;}
-.cover-cloud::after{content:'';position:absolute;width:17px;height:17px;background:var(--sky);border-radius:50%;top:-7px;left:22px;}
+.cover-logo .sf-brand-logo{display:block;height:44px;width:auto;object-fit:contain;flex-shrink:0;background:transparent;}
 .cover-brand{font-size:15px;font-weight:700;color:white;}
 .cover-brand-sub{font-size:10px;font-weight:300;color:rgba(255,255,255,0.45);margin-top:1px;letter-spacing:0.04em;}
 .cover-tag{
@@ -538,19 +682,51 @@ body{
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <div class="nav-brand">
-    <div class="nav-cloud"></div>
-    <div class="nav-title">Agentic Enterprise Playbook</div>
-  </div>
-  <div class="nav-pages">
-    <button class="nav-btn active" onclick="showPage('cover',this)">Cover</button>
-    <button class="nav-btn" onclick="showPage('p1',this)">1 — Critical Path</button>
-    <button class="nav-btn" onclick="showPage('p2',this)">2 — Readiness</button>
-    <button class="nav-btn" onclick="showPage('p3',this)">3 — 90-Day Sprint</button>
-    <button class="nav-btn" onclick="showPage('p4',this)">4 — Dependencies</button>
-    <button class="nav-btn" onclick="showPage('p5',this)">5 — Commitments</button>
+<nav class="workshop-nav" aria-label="Workshop pages">
+  <a href="index.html">Agenda</a>
+  <a href="framework.html">9 Pathways Framework</a>
+  <a href="sample-sprint-plan.html">Sample 90 Day Sprint Plan</a>
+  <a href="sample-playbook.html" aria-current="page">Sample Playbook Output</a>
+</nav>
+
+<!-- Playbook section navigation -->
+<nav class="nav playbook-toc" aria-label="Playbook document">
+  <div class="playbook-toc-inner">
+    <div class="playbook-toc-head">
+      <div class="nav-brand">
+        <img class="sf-brand-logo" src="assets/sfdc@2x.png" width="140" height="98" alt="Salesforce" />
+        <div>
+          <div class="nav-title">Agentic Enterprise Playbook</div>
+          <div class="nav-kicker">Jump to a section</div>
+        </div>
+      </div>
+    </div>
+    <div class="playbook-toc-rail" role="tablist" aria-label="Playbook sections">
+      <button type="button" role="tab" class="playbook-step playbook-step--cover active" data-page="cover" aria-selected="true" onclick="showPage('cover',this)">
+        <span class="step-badge" aria-hidden="true">◆</span>
+        <span class="step-text"><strong>Cover</strong><span class="step-sub">North Star</span><span class="step-sub">Statement</span></span>
+      </button>
+      <button type="button" role="tab" class="playbook-step" data-page="p1" aria-selected="false" onclick="showPage('p1',this)">
+        <span class="step-badge" aria-hidden="true">1</span>
+        <span class="step-text"><strong>Critical path</strong><span class="step-sub">Where to start</span></span>
+      </button>
+      <button type="button" role="tab" class="playbook-step" data-page="p2" aria-selected="false" onclick="showPage('p2',this)">
+        <span class="step-badge" aria-hidden="true">2</span>
+        <span class="step-text"><strong>Readiness</strong><span class="step-sub">Gates &amp; signals</span></span>
+      </button>
+      <button type="button" role="tab" class="playbook-step" data-page="p3" aria-selected="false" onclick="showPage('p3',this)">
+        <span class="step-badge" aria-hidden="true">3</span>
+        <span class="step-text"><strong>90-day sprint</strong><span class="step-sub">Execution plan</span></span>
+      </button>
+      <button type="button" role="tab" class="playbook-step" data-page="p4" aria-selected="false" onclick="showPage('p4',this)">
+        <span class="step-badge" aria-hidden="true">4</span>
+        <span class="step-text"><strong>Dependencies</strong><span class="step-sub">Cross-team links</span></span>
+      </button>
+      <button type="button" role="tab" class="playbook-step" data-page="p5" aria-selected="false" onclick="showPage('p5',this)">
+        <span class="step-badge" aria-hidden="true">5</span>
+        <span class="step-text"><strong>Commitments</strong><span class="step-sub">Decision register</span></span>
+      </button>
+    </div>
   </div>
 </nav>
 
@@ -565,7 +741,7 @@ body{
     <div class="cover-inner">
       <div class="cover-top">
         <div class="cover-logo">
-          <div class="cover-cloud"></div>
+          <img class="sf-brand-logo" src="assets/sfdc@2x.png" width="140" height="98" alt="Salesforce" />
           <div>
             <div class="cover-brand">Salesforce</div>
             <div class="cover-brand-sub">Strategic AI Advisory · Catalyst ANZ</div>
@@ -595,6 +771,12 @@ body{
       <div class="cover-footer-r">DRAFT — POST-WORKSHOP OUTPUT</div>
     </div>
   </div>
+  <nav class="page-pager page-pager--first" aria-label="Adjacent sections">
+    <button type="button" class="page-pager-btn page-pager-next" onclick="goToPlaybookPage('p1')">
+      <span class="page-pager-dir">Next section</span>
+      <span class="page-pager-title">Critical path</span>
+    </button>
+  </nav>
 </div>
 
 <!-- ════════ PAGE 1 — CRITICAL PATH ════════ -->
@@ -672,6 +854,16 @@ body{
 
     </div>
   </div>
+  <nav class="page-pager" aria-label="Adjacent sections">
+    <button type="button" class="page-pager-btn page-pager-prev" onclick="goToPlaybookPage('cover')">
+      <span class="page-pager-dir">Previous section</span>
+      <span class="page-pager-title">Cover</span>
+    </button>
+    <button type="button" class="page-pager-btn page-pager-next" onclick="goToPlaybookPage('p2')">
+      <span class="page-pager-dir">Next section</span>
+      <span class="page-pager-title">Readiness</span>
+    </button>
+  </nav>
   <div class="page-footer">
     <div class="pf-l"><strong>Salesforce</strong> · Agentic Enterprise Playbook · Customer</div>
     <div class="pf-r">PAGE 1 — CRITICAL PATH</div>
@@ -783,6 +975,16 @@ body{
       </div>
     </div>
   </div>
+  <nav class="page-pager" aria-label="Adjacent sections">
+    <button type="button" class="page-pager-btn page-pager-prev" onclick="goToPlaybookPage('p1')">
+      <span class="page-pager-dir">Previous section</span>
+      <span class="page-pager-title">Critical path</span>
+    </button>
+    <button type="button" class="page-pager-btn page-pager-next" onclick="goToPlaybookPage('p3')">
+      <span class="page-pager-dir">Next section</span>
+      <span class="page-pager-title">90-day sprint</span>
+    </button>
+  </nav>
   <div class="page-footer">
     <div class="pf-l"><strong>Salesforce</strong> · Agentic Enterprise Playbook · Customer</div>
     <div class="pf-r">PAGE 2 — READINESS ASSESSMENT</div>
@@ -838,6 +1040,16 @@ body{
       <tr><td>Define production readiness checklist<br><span class="sprint-tag tech">Production</span></td><td>CTO + CRO</td><td>Security, architecture team — 1 week</td><td>Checklist reviewed and approved before Wave 1 enters validation</td></tr>
     </table>
   </div>
+  <nav class="page-pager" aria-label="Adjacent sections">
+    <button type="button" class="page-pager-btn page-pager-prev" onclick="goToPlaybookPage('p2')">
+      <span class="page-pager-dir">Previous section</span>
+      <span class="page-pager-title">Readiness</span>
+    </button>
+    <button type="button" class="page-pager-btn page-pager-next" onclick="goToPlaybookPage('p4')">
+      <span class="page-pager-dir">Next section</span>
+      <span class="page-pager-title">Dependencies</span>
+    </button>
+  </nav>
   <div class="page-footer">
     <div class="pf-l"><strong>Salesforce</strong> · Agentic Enterprise Playbook · Customer</div>
     <div class="pf-r">PAGE 3 — 90-DAY SPRINT</div>
@@ -929,6 +1141,16 @@ body{
       </div>
     </div>
   </div>
+  <nav class="page-pager" aria-label="Adjacent sections">
+    <button type="button" class="page-pager-btn page-pager-prev" onclick="goToPlaybookPage('p3')">
+      <span class="page-pager-dir">Previous section</span>
+      <span class="page-pager-title">90-day sprint</span>
+    </button>
+    <button type="button" class="page-pager-btn page-pager-next" onclick="goToPlaybookPage('p5')">
+      <span class="page-pager-dir">Next section</span>
+      <span class="page-pager-title">Commitments</span>
+    </button>
+  </nav>
   <div class="page-footer">
     <div class="pf-l"><strong>Salesforce</strong> · Agentic Enterprise Playbook · Customer</div>
     <div class="pf-r">PAGE 4 — DEPENDENCY MAP</div>
@@ -1004,7 +1226,7 @@ body{
         <td class="box-name">Ownership</td>
         <td class="commitment-text">Named business &amp; technical owner confirmed for every Wave 1 agent before end of Week 1.</td>
         <td><div class="owner-chip"><div class="owner-dot customer"></div>COO</div></td>
-        <td><div class="owner-chip"><div class="owner-dot sf"></div">Justin Tauber</div></td>
+        <td><div class="owner-chip"><div class="owner-dot sf"></div>Justin Tauber</div></td>
         <td><div class="date-chip">Day 7</div></td>
         <td><div class="rag-badge r" style="font-size:10px">Not Started</div></td>
       </tr>
@@ -1033,15 +1255,18 @@ body{
         <td class="box-name">Production</td>
         <td class="commitment-text">Production readiness checklist approved. Observability dashboard spec signed off before any agent goes live.</td>
         <td><div class="owner-chip"><div class="owner-dot customer"></div>CTO</div></td>
-        <td><div class="owner-chip"><div class="owner-dot sf"></div">Justin Tauber</div></td>
+        <td><div class="owner-chip"><div class="owner-dot sf"></div>Justin Tauber</div></td>
         <td><div class="date-chip">Day 75</div></td>
         <td><div class="rag-badge r" style="font-size:10px">Not Started</div></td>
       </tr>
     </table>
-        </div>
-      </div>
-    </div>
   </div>
+  <nav class="page-pager page-pager--last" aria-label="Adjacent sections">
+    <button type="button" class="page-pager-btn page-pager-prev" onclick="goToPlaybookPage('p4')">
+      <span class="page-pager-dir">Previous section</span>
+      <span class="page-pager-title">Dependencies</span>
+    </button>
+  </nav>
   <div class="page-footer">
     <div class="pf-l"><strong>Salesforce</strong> · Agentic Enterprise Playbook · Customer</div>
     <div class="pf-r">PAGE 5 — COMMITMENT REGISTER</div>
@@ -1053,10 +1278,20 @@ body{
 <script>
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.playbook-step').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
   document.getElementById('page-' + id).classList.add('active');
   btn.classList.add('active');
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  btn.setAttribute('aria-selected', 'true');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+}
+
+function goToPlaybookPage(id) {
+  const btn = document.querySelector('.playbook-step[data-page="' + id + '"]');
+  if (btn) showPage(id, btn);
 }
 </script>
 </body>
