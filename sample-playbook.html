@@ -2,17 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Agentic Enterprise Playbook</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{
-  scroll-behavior:smooth;
-  min-width:1320px;
-  overflow-x:auto;
-  -webkit-text-size-adjust:100%;
-}
+html{scroll-behavior:smooth;}
 :root{
   --navy:#032D60;
   --blue:#0176D3;
@@ -44,6 +39,8 @@ body{
   font-family:'Sora',sans-serif;
   background:#B8CDE0;
   padding:40px 20px 80px;
+  padding-left:max(20px,env(safe-area-inset-left));
+  padding-right:max(20px,env(safe-area-inset-right));
 }
 
 /* Workshop site navigation */
@@ -52,6 +49,9 @@ body{
   display:flex;align-items:center;justify-content:center;
   flex-wrap:wrap;gap:6px 10px;
   min-height:48px;padding:8px 16px;
+  padding-left:max(16px,env(safe-area-inset-left));
+  padding-right:max(16px,env(safe-area-inset-right));
+  padding-top:max(8px,env(safe-area-inset-top));
   background:rgba(3,45,96,0.98);
   border-bottom:1px solid rgba(255,255,255,0.1);
 }
@@ -61,6 +61,7 @@ body{
   padding:6px 12px;border-radius:20px;
   transition:color .2s,background .2s;
   white-space:nowrap;
+  flex-shrink:0;
 }
 .workshop-nav a:hover{color:#fff;background:rgba(255,255,255,0.1);}
 .workshop-nav a[aria-current="page"]{background:var(--sky);color:var(--navy);font-weight:600;}
@@ -73,6 +74,8 @@ body{
   border-bottom:1px solid rgba(27,150,255,0.22);
   box-shadow:0 8px 24px rgba(2,20,50,0.35);
   padding:10px 0 14px;
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
 }
 .playbook-toc-inner{
   max-width:1100px;margin:0 auto;
@@ -96,6 +99,8 @@ body{
   padding:6px 4px 8px 2px;
   scroll-snap-type:x proximity;
   -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;
+  touch-action:pan-x;
   scrollbar-width:thin;
   scrollbar-color:rgba(27,150,255,0.4) transparent;
 }
@@ -152,11 +157,11 @@ body{
   background:rgba(3,45,96,0.18);
   color:var(--navy);
 }
-.playbook-step--cover .step-badge{
+.playbook-step[data-page="cover"] .step-badge{
   font-size:12px;line-height:1;
   background:rgba(27,150,255,0.2);
 }
-.playbook-step.active.playbook-step--cover .step-badge{
+.playbook-step.active[data-page="cover"] .step-badge{
   background:rgba(3,45,96,0.15);
 }
 .step-text{display:flex;flex-direction:column;gap:1px;}
@@ -167,8 +172,6 @@ body{
   letter-spacing:0.02em;
 }
 .playbook-step.active .step-text span.step-sub{color:rgba(3,45,96,0.55);}
-.playbook-step--cover .step-text{gap:0;}
-.playbook-step--cover .step-sub:first-of-type{margin-top:2px;}
 
 /* Page prev/next */
 .page-pager{
@@ -217,9 +220,52 @@ body{
 
 /* PAGES */
 .pages-wrap{margin-top:188px;}
-@media (max-width:600px){
-  .pages-wrap{margin-top:200px;}
-  .playbook-step{padding:10px 12px;min-height:44px;font-size:12px;}
+
+/* Mobile-friendly navigation: scrollable site nav + larger touch targets on section rail */
+@media (max-width:768px){
+  body{
+    padding:32px 0 56px;
+    padding-left:max(0px,env(safe-area-inset-left));
+    padding-right:max(0px,env(safe-area-inset-right));
+  }
+  .workshop-nav{
+    justify-content:flex-start;
+    overflow-x:auto;
+    flex-wrap:nowrap;
+    gap:8px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .workshop-nav::-webkit-scrollbar{display:none;}
+  .workshop-nav a{
+    font-size:11px;
+    padding:9px 12px;
+  }
+  .nav.playbook-toc{padding-top:8px;padding-bottom:12px;}
+  .playbook-toc-inner{padding:0 12px;}
+  .playbook-toc-head{margin-bottom:8px;}
+  .nav-title{font-size:12px;}
+  .nav-kicker{font-size:8px;letter-spacing:0.1em;}
+  .nav-brand .sf-brand-logo{height:24px;}
+  .playbook-toc-rail{
+    gap:6px;
+    padding:4px 0 10px;
+    scroll-snap-type:x mandatory;
+  }
+  .playbook-step{
+    min-height:48px;
+    padding:10px 12px;
+    font-size:12px;
+    scroll-snap-align:start;
+  }
+  .step-badge{width:26px;height:26px;font-size:10px;}
+  .pages-wrap{margin-top:168px;}
+  .page-pager{padding:14px 16px 16px;}
+  .page{max-width:100%;margin-left:12px;margin-right:12px;border-radius:12px;}
+}
+@media (max-width:480px){
+  .pages-wrap{margin-top:158px;}
+  .workshop-nav a{font-size:10px;padding:8px 10px;}
 }
 
 .page{
@@ -707,9 +753,9 @@ body{
       </div>
     </div>
     <div class="playbook-toc-rail" role="tablist" aria-label="Playbook sections">
-      <button type="button" role="tab" class="playbook-step playbook-step--cover active" data-page="cover" aria-selected="true" onclick="showPage('cover',this)">
+      <button type="button" role="tab" class="playbook-step active" data-page="cover" aria-selected="true" aria-label="North Star statement" onclick="showPage('cover',this)">
         <span class="step-badge" aria-hidden="true">◆</span>
-        <span class="step-text"><strong>Cover</strong><span class="step-sub">North Star</span><span class="step-sub">Statement</span></span>
+        <span class="step-text"><strong>North Star</strong><span class="step-sub">Statement</span></span>
       </button>
       <button type="button" role="tab" class="playbook-step" data-page="p1" aria-selected="false" onclick="showPage('p1',this)">
         <span class="step-badge" aria-hidden="true">1</span>
@@ -862,7 +908,7 @@ body{
   <nav class="page-pager" aria-label="Adjacent sections">
     <button type="button" class="page-pager-btn page-pager-prev" onclick="goToPlaybookPage('cover')">
       <span class="page-pager-dir">Previous section</span>
-      <span class="page-pager-title">Cover</span>
+      <span class="page-pager-title">North Star</span>
     </button>
     <button type="button" class="page-pager-btn page-pager-next" onclick="goToPlaybookPage('p2')">
       <span class="page-pager-dir">Next section</span>
