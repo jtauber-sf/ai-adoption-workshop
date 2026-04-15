@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Enterprise Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+:root{
+  --navy:#032D60;
+  --blue:#0176D3;
+  --sky:#1B96FF;
+  --teal:#06A59A;
+  --purple:#7B5EA7;
+  --white:#FFFFFF;
+  --offwhite:#F4F7FB;
+  --slate:#3E4A5A;
+  --mist:#E8F4FD;
+  --tech:#1B96FF;
+  --tech-bg:#E6F1FB;
+  --tech-dark:#0C447C;
+  --people:#06A59A;
+  --people-bg:#E1F5EE;
+  --people-dark:#085041;
+  --exec:#7B5EA7;
+  --exec-bg:#EEEDFE;
+  --exec-dark:#3C3489;
+  --green:#2E844A;
+  --green-bg:#EAF5EE;
+  --amber:#E45B00;
+  --amber-bg:#FFF0E6;
+  --red:#BA0517;
+  --red-bg:#FDECEA;
+}
+
+body{
+  font-family:'Sora',sans-serif;
+  background:#B8CDE0;
+  padding:40px 20px 80px;
+}
+
+/* NAV */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(3,45,96,0.97);
+  backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:52px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.nav-brand{display:flex;align-items:center;gap:10px;}
+.nav-cloud{width:26px;height:19px;background:var(--sky);border-radius:50% 50% 50% 50%/55% 55% 45% 45%;position:relative;flex-shrink:0;}
+.nav-cloud::before{content:'';position:absolute;width:15px;height:15px;background:var(--sky);border-radius:50%;top:-7px;left:3px;}
+.nav-cloud::after{content:'';position:absolute;width:11px;height:11px;background:var(--sky);border-radius:50%;top:-4px;left:13px;}
+.nav-title{font-size:12px;font-weight:600;color:white;letter-spacing:0.01em;}
+.nav-pages{display:flex;gap:4px;}
+.nav-btn{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:500;letter-spacing:0.06em;
+  padding:4px 12px;border-radius:20px;
+  border:1px solid rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.55);
+  background:transparent;cursor:pointer;
+  transition:all 0.2s;
+}
+.nav-btn:hover{color:white;border-color:rgba(255,255,255,0.4);}
+.nav-btn.active{background:var(--sky);color:var(--navy);border-color:var(--sky);font-weight:700;}
+
+/* PAGES */
+.pages-wrap{margin-top:72px;}
+
+.page{
+  max-width:900px;margin:0 auto 32px;
+  background:var(--white);
+  border-radius:16px;
+  box-shadow:0 12px 60px rgba(3,45,96,0.18);
+  overflow:hidden;
+  display:none;
+  animation:fadeUp 0.3s ease both;
+}
+.page.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+/* ════════════════ COVER ════════════════ */
+.cover{
+  min-height:720px;
+  background:var(--navy);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+}
+.cover-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(27,150,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(27,150,255,0.05) 1px,transparent 1px);
+  background-size:52px 52px;
+}
+.cover-glow1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(27,150,255,0.12) 0%,transparent 65%);top:-250px;right:-150px;pointer-events:none;}
+.cover-glow2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(123,94,167,0.14) 0%,transparent 65%);bottom:-100px;left:10%;pointer-events:none;}
+
+.cover-inner{position:relative;z-index:1;padding:56px 64px 48px;flex:1;display:flex;flex-direction:column;justify-content:space-between;}
+
+.cover-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:48px;}
+.cover-logo{display:flex;align-items:center;gap:12px;}
+.cover-cloud{width:42px;height:30px;background:var(--sky);border-radius:50% 50% 50% 50%/55% 55% 45% 45%;position:relative;flex-shrink:0;}
+.cover-cloud::before{content:'';position:absolute;width:24px;height:24px;background:var(--sky);border-radius:50%;top:-11px;left:5px;}
+.cover-cloud::after{content:'';position:absolute;width:17px;height:17px;background:var(--sky);border-radius:50%;top:-7px;left:22px;}
+.cover-brand{font-size:15px;font-weight:700;color:white;}
+.cover-brand-sub{font-size:10px;font-weight:300;color:rgba(255,255,255,0.45);margin-top:1px;letter-spacing:0.04em;}
+.cover-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+  background:rgba(27,150,255,0.2);border:1px solid rgba(27,150,255,0.35);
+  color:var(--sky);padding:5px 14px;border-radius:20px;
+}
+
+.cover-body{}
+.cover-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.4);margin-bottom:16px;
+}
+.cover-client{
+  font-size:13px;font-weight:500;letter-spacing:0.04em;
+  color:var(--sky);margin-bottom:8px;text-transform:uppercase;
+}
+.cover-title{
+  font-size:clamp(36px,5vw,62px);font-weight:900;
+  color:white;letter-spacing:-0.03em;line-height:1.0;
+  margin-bottom:20px;
+}
+.cover-title em{color:var(--sky);font-style:normal;}
+
+.cover-northstar{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-left:3px solid var(--sky);
+  border-radius:12px;
+  padding:24px 28px;
+  max-width:660px;
+  margin-bottom:40px;
+}
+.ns-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--sky);margin-bottom:10px;
+}
+.ns-text{
+  font-size:17px;font-weight:400;line-height:1.7;
+  color:rgba(255,255,255,0.88);font-style:italic;
+}
+.ns-text strong{color:white;font-style:normal;font-weight:600;}
+
+.cover-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.cover-pill{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:500;letter-spacing:0.06em;
+  padding:5px 14px;border-radius:20px;
+  border:1px solid rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.6);
+}
+
+.cover-footer{
+  position:relative;z-index:1;
+  background:rgba(0,0,0,0.25);
+  padding:16px 64px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid rgba(255,255,255,0.07);
+}
+.cover-footer-l{font-size:11px;font-weight:300;color:rgba(255,255,255,0.35);letter-spacing:0.04em;}
+.cover-footer-r{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:0.08em;}
+
+/* ════════════════ INNER PAGE SHELL ════════════════ */
+.page-header{
+  background:var(--navy);
+  padding:28px 48px 22px;
+  position:relative;overflow:hidden;
+}
+.page-header-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(27,150,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(27,150,255,0.04) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.page-header-inner{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+.page-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--sky);margin-bottom:6px;
+}
+.page-title{font-size:24px;font-weight:800;color:white;letter-spacing:-0.02em;line-height:1.1;}
+.page-subtitle{font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);margin-top:5px;line-height:1.5;max-width:520px;}
+.page-header-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:600;letter-spacing:0.08em;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.6);padding:5px 14px;border-radius:20px;
+  white-space:nowrap;margin-top:4px;
+}
+
+.page-body{padding:36px 48px 40px;}
+
+/* ════════════════ PAGE 1 — CRITICAL PATH ════════════════ */
+.critical-cards{display:flex;flex-direction:column;gap:16px;}
+
+.critical-card{
+  border-radius:12px;
+  overflow:hidden;
+  border:1.5px solid;
+}
+.critical-card.exec{border-color:rgba(123,94,167,0.4);}
+.critical-card.people{border-color:rgba(6,165,154,0.4);}
+.critical-card.exec2{border-color:rgba(123,94,167,0.4);}
+
+.cc-header{
+  padding:14px 20px;
+  display:flex;align-items:center;gap:14px;
+}
+.critical-card.exec .cc-header{background:var(--exec-bg);}
+.critical-card.people .cc-header{background:var(--people-bg);}
+.critical-card.exec2 .cc-header{background:var(--exec-bg);}
+
+.cc-num{
+  width:36px;height:36px;border-radius:50%;
+  font-size:16px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.critical-card.exec .cc-num,.critical-card.exec2 .cc-num{background:var(--exec);color:white;}
+.critical-card.people .cc-num{background:var(--people);color:white;}
+
+.cc-header-text{}
+.cc-pathway{font-size:10px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;}
+.critical-card.exec .cc-pathway,.critical-card.exec2 .cc-pathway{color:var(--exec-dark);}
+.critical-card.people .cc-pathway{color:var(--people-dark);}
+.cc-box{font-size:17px;font-weight:700;color:var(--navy);}
+
+.cc-body{padding:18px 20px 20px;background:white;}
+.cc-why-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:#7AAED4;margin-bottom:6px;
+}
+.cc-why{font-size:13px;font-weight:400;color:var(--slate);line-height:1.65;margin-bottom:16px;}
+
+.cc-action-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:#7AAED4;margin-bottom:8px;
+}
+.cc-action{
+  display:flex;align-items:flex-start;gap:10px;
+  background:var(--offwhite);
+  border-radius:8px;padding:12px 14px;
+  border-left:3px solid;
+}
+.critical-card.exec .cc-action,.critical-card.exec2 .cc-action{border-color:var(--exec);}
+.critical-card.people .cc-action{border-color:var(--people);}
+.cc-action-icon{font-size:14px;margin-top:1px;flex-shrink:0;}
+.cc-action-text{font-size:13px;font-weight:500;color:var(--navy);line-height:1.5;}
+
+/* ════════════════ PAGE 2 — READINESS ════════════════ */
+.rag-intro{
+  font-size:13px;font-weight:300;color:var(--slate);line-height:1.7;
+  margin-bottom:28px;padding-bottom:20px;border-bottom:1.5px solid #E5EFF8;
+}
+.rag-legend{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+.rag-leg{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--slate);}
+.rag-dot{width:12px;height:12px;border-radius:50%;}
+.rag-dot.g{background:var(--green);}
+.rag-dot.a{background:var(--amber);}
+.rag-dot.r{background:var(--red);}
+
+.rag-section-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  margin-bottom:10px;margin-top:20px;
+}
+.rag-section-label.tech{color:var(--tech-dark);}
+.rag-section-label.people{color:var(--people-dark);}
+.rag-section-label.exec{color:var(--exec-dark);}
+
+.rag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:4px;}
+
+.rag-card{
+  border-radius:10px;
+  border:1.5px solid #E0ECF8;
+  overflow:hidden;
+}
+.rag-card-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;
+  border-bottom:1px solid #F0F5FB;
+}
+.rag-box-name{font-size:14px;font-weight:700;color:var(--navy);}
+.rag-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:700;letter-spacing:0.06em;
+  padding:3px 10px;border-radius:20px;
+}
+.rag-badge.g{background:var(--green-bg);color:var(--green);}
+.rag-badge.a{background:var(--amber-bg);color:var(--amber);}
+.rag-badge.r{background:var(--red-bg);color:var(--red);}
+
+.rag-bar-wrap{height:4px;background:#EEF5FB;margin:0;}
+.rag-bar{height:100%;}
+.rag-bar.g{background:var(--green);width:80%;}
+.rag-bar.a{background:var(--amber);width:50%;}
+.rag-bar.r{background:var(--red);width:15%;}
+
+.rag-card-body{padding:10px 14px 12px;}
+.rag-assessment{font-size:11.5px;font-weight:400;color:var(--slate);line-height:1.55;}
+.rag-gap{
+  margin-top:8px;
+  font-size:11px;font-weight:300;color:#7AAED4;
+  font-style:italic;
+}
+
+/* ════════════════ PAGE 3 — 90-DAY SPRINT ════════════════ */
+.sprint-intro{
+  font-size:13px;font-weight:300;color:var(--slate);line-height:1.7;
+  margin-bottom:24px;
+}
+.sprint-section-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid;
+}
+.sprint-section-label.tech{color:var(--tech-dark);border-color:var(--tech);}
+.sprint-section-label.people{color:var(--people-dark);border-color:var(--people);}
+.sprint-section-label.exec{color:var(--exec-dark);border-color:var(--exec);}
+
+.sprint-table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:12px;}
+.sprint-table th{
+  text-align:left;padding:8px 12px;
+  background:var(--offwhite);
+  color:var(--slate);font-weight:600;font-size:11px;
+  border-bottom:1.5px solid #D8E8F5;
+}
+.sprint-table td{
+  padding:10px 12px;
+  border-bottom:1px solid #EEF5FB;
+  vertical-align:top;color:var(--slate);
+  line-height:1.5;
+}
+.sprint-table tr:last-child td{border-bottom:none;}
+.sprint-table td:first-child{font-weight:600;color:var(--navy);font-size:12px;width:28%;}
+.sprint-tag{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.08em;
+  padding:2px 8px;border-radius:10px;margin-top:4px;
+}
+.sprint-tag.tech{background:var(--tech-bg);color:var(--tech-dark);}
+.sprint-tag.people{background:var(--people-bg);color:var(--people-dark);}
+.sprint-tag.exec{background:var(--exec-bg);color:var(--exec-dark);}
+
+/* ════════════════ PAGE 4 — DEPENDENCY MAP ════════════════ */
+.dep-map-wrap{
+  background:var(--offwhite);
+  border-radius:12px;
+  padding:24px;
+  border:1px solid #E0ECF8;
+}
+.dep-map-note{
+  font-size:12px;font-weight:300;color:var(--slate);
+  line-height:1.6;margin-bottom:24px;
+  padding-bottom:16px;border-bottom:1px solid #D8E8F5;
+}
+
+.dep-visual{display:flex;flex-direction:column;gap:0;}
+
+.dep-row{
+  display:flex;align-items:stretch;gap:0;
+  margin-bottom:4px;
+}
+
+.dep-node{
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  width:140px;min-height:64px;
+  border-radius:10px;border:2px solid;
+  padding:8px 10px;text-align:center;
+  flex-shrink:0;
+  position:relative;
+}
+.dep-node.tech{background:var(--tech-bg);border-color:var(--tech);color:var(--tech-dark);}
+.dep-node.people{background:var(--people-bg);border-color:var(--people);color:var(--people-dark);}
+.dep-node.exec{background:var(--exec-bg);border-color:var(--exec);color:var(--exec-dark);}
+.dep-node-name{font-size:13px;font-weight:700;line-height:1.2;}
+.dep-node-type{font-size:10px;font-weight:400;opacity:0.7;margin-top:2px;}
+
+.dep-arrows{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:0 12px;
+  flex-direction:column;gap:6px;
+}
+
+.dep-arrow{
+  display:flex;align-items:center;gap:6px;
+  width:100%;
+}
+.dep-arrow-line{
+  flex:1;height:2px;
+  position:relative;
+}
+.dep-arrow-line::after{
+  content:'▶';
+  position:absolute;right:-6px;top:50%;transform:translateY(-50%);
+  font-size:10px;
+}
+.dep-arrow.critical .dep-arrow-line{background:#E45B00;}
+.dep-arrow.critical .dep-arrow-line::after{color:#E45B00;}
+.dep-arrow.standard .dep-arrow-line{background:#B0CDE8;}
+.dep-arrow.standard .dep-arrow-line::after{color:#B0CDE8;}
+.dep-arrow-label{
+  font-size:10px;font-weight:500;
+  white-space:nowrap;
+}
+.dep-arrow.critical .dep-arrow-label{color:#E45B00;}
+.dep-arrow.standard .dep-arrow-label{color:#7AAED4;}
+
+.dep-full-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:12px;
+}
+
+.dep-full-item{
+  background:white;
+  border-radius:8px;
+  border:1px solid #E0ECF8;
+  padding:12px 14px;
+}
+.dep-full-from{
+  font-size:11px;font-weight:700;color:var(--navy);
+  margin-bottom:4px;
+  display:flex;align-items:center;gap:6px;
+}
+.dep-arrow-mini{font-size:12px;color:#E45B00;}
+.dep-full-to{font-size:11px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.dep-full-text{font-size:11px;font-weight:300;color:var(--slate);line-height:1.5;}
+.dep-full-type{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  margin-top:6px;
+}
+.dep-full-type.critical{color:#E45B00;}
+.dep-full-type.standard{color:#7AAED4;}
+
+/* ════════════════ PAGE 5 — COMMITMENT REGISTER ════════════════ */
+.commit-intro{
+  font-size:13px;font-weight:300;color:var(--slate);line-height:1.7;
+  margin-bottom:8px;
+}
+.commit-warning{
+  background:#FFF8E6;border:1px solid rgba(228,91,0,0.25);border-left:3px solid #E45B00;
+  border-radius:8px;padding:12px 16px;
+  font-size:12px;font-weight:400;color:#7A3A00;
+  margin-bottom:24px;line-height:1.55;
+}
+
+.commit-section-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  margin-bottom:10px;margin-top:20px;
+  padding-bottom:6px;border-bottom:2px solid;
+}
+.commit-section-label.tech{color:var(--tech-dark);border-color:var(--tech);}
+.commit-section-label.people{color:var(--people-dark);border-color:var(--people);}
+.commit-section-label.exec{color:var(--exec-dark);border-color:var(--exec);}
+
+.commit-table{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:12px;}
+.commit-table th{
+  text-align:left;padding:8px 12px;
+  background:var(--offwhite);
+  color:var(--slate);font-weight:600;font-size:11px;
+  border-bottom:1.5px solid #D8E8F5;
+}
+.commit-table td{
+  padding:11px 12px;
+  border-bottom:1px solid #EEF5FB;
+  vertical-align:top;
+  line-height:1.5;
+}
+.commit-table tr:last-child td{border-bottom:none;}
+.commit-table td.box-name{font-weight:700;color:var(--navy);font-size:13px;}
+.commit-table td.commitment-text{font-size:12px;color:var(--slate);font-weight:400;}
+.owner-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--offwhite);border:1px solid #D8E8F5;
+  border-radius:20px;padding:3px 10px;
+  font-size:11px;font-weight:500;color:var(--navy);
+  white-space:nowrap;
+}
+.owner-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.owner-dot.customer{background:var(--blue);}
+.owner-dot.sf{background:var(--sky);}
+.date-chip{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:500;
+  color:#7AAED4;white-space:nowrap;
+}
+
+.commit-sig-section{
+  margin-top:28px;
+  padding:20px 0 0;
+  border-top:2px solid #E0ECF8;
+}
+.commit-sig-title{
+  font-size:14px;font-weight:700;color:var(--navy);margin-bottom:16px;
+}
+.commit-sig-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.sig-box{
+  border:1.5px dashed #C0D8EE;
+  border-radius:10px;padding:20px;
+  text-align:center;
+}
+.sig-line{
+  height:1.5px;background:#C0D8EE;
+  margin:32px 0 8px;
+}
+.sig-name{font-size:12px;font-weight:600;color:var(--navy);}
+.sig-role{font-size:11px;font-weight:300;color:#7AAED4;margin-top:2px;}
+
+/* FOOTER */
+.page-footer{
+  background:#021E42;
+  padding:10px 48px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.pf-l{font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.04em;}
+.pf-l strong{color:var(--sky);font-weight:500;}
+.pf-r{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:0.08em;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-cloud"></div>
+    <div class="nav-title">Agentic Enterprise Playbook</div>
+  </div>
+  <div class="nav-pages">
+    <button class="nav-btn active" onclick="showPage('cover',this)">Cover</button>
+    <button class="nav-btn" onclick="showPage('p1',this)">1 — Critical Path</button>
+    <button class="nav-btn" onclick="showPage('p2',this)">2 — Readiness</button>
+    <button class="nav-btn" onclick="showPage('p3',this)">3 — 90-Day Sprint</button>
+    <button class="nav-btn" onclick="showPage('p4',this)">4 — Dependencies</button>
+    <button class="nav-btn" onclick="showPage('p5',this)">5 — Commitments</button>
+  </div>
+</nav>
+
+<div class="pages-wrap">
+
+<!-- ════════ COVER ════════ -->
+<div class="page active" id="page-cover">
+  <div class="cover">
+    <div class="cover-grid"></div>
+    <div class="cover-glow1"></div>
+    <div class="cover-glow2"></div>
+    <div class="cover-inner">
+      <div class="cover-top">
+        <div class="cover-logo">
+          <div class="cover-cloud"></div>
+          <div>
+            <div class="cover-brand">Salesforce</div>
+            <div class="cover-brand-sub">Strategic AI Advisory · Catalyst ANZ</div>
+          </div>
+        </div>
+        <div class="cover-tag">Confidential · ELT Workshop Output</div>
+      </div>
+      <div class="cover-body">
+        <div class="cover-eyebrow">Agentic Enterprise Transformation</div>
+        <div class="cover-client">Customer</div>
+        <div class="cover-title">Agentic<br><em>Enterprise</em><br>Playbook</div>
+        <div class="cover-northstar">
+          <div class="ns-label">North Star Statement</div>
+          <div class="ns-text">By 2027, <strong>Customer will use agents to give every resident, tenant, and investor a faster, more responsive experience</strong> — resolving maintenance requests without human queues, surfacing investment opportunities before they are publicly listed, and freeing our people to focus on the relationships and decisions that no agent can replace. We will not automate our business. We will <strong>amplify the humans who make it exceptional.</strong></div>
+        </div>
+        <div class="cover-pills">
+          <div class="cover-pill">9 Pathways</div>
+          <div class="cover-pill">27 Sprint Actions</div>
+          <div class="cover-pill">90-Day Horizon</div>
+          <div class="cover-pill">Named Owners</div>
+          <div class="cover-pill">V2MOM Framework</div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-l">Facilitated by Sarah Weiss &amp; Justin Tauber · Salesforce Strategic AI Advisory</div>
+      <div class="cover-footer-r">DRAFT — POST-WORKSHOP OUTPUT</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ PAGE 1 — CRITICAL PATH ════════ -->
+<div class="page" id="page-p1">
+  <div class="page-header">
+    <div class="page-header-grid"></div>
+    <div class="page-header-inner">
+      <div>
+        <div class="page-num">Page 1 of 5</div>
+        <div class="page-title">The Critical Path</div>
+        <div class="page-subtitle">Of the 9 conversations, these 3 are the genuine load-bearing ones right now. Everything else can move if these move. Nothing moves if these don't.</div>
+      </div>
+      <div class="page-header-badge">3 Load-bearing boxes</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="critical-cards">
+
+      <div class="critical-card exec">
+        <div class="cc-header">
+          <div class="cc-num">1</div>
+          <div class="cc-header-text">
+            <div class="cc-pathway">Executive pathway</div>
+            <div class="cc-box">Strategy</div>
+          </div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-why-label">Why this is load-bearing</div>
+          <div class="cc-why">Without a board-level mandate, every other initiative is vulnerable to deprioritisation the moment competing pressures emerge. In a large, capital-intensive organisation, agentic AI will always lose a budget battle unless the board has explicitly approved the investment horizon and risk appetite. Strategy is not the most technically complex box — it is the most politically fragile. If it isn't resolved in Month 1, nothing in Month 2 is safe.</div>
+          <div class="cc-action-label">Single most important action</div>
+          <div class="cc-action">
+            <div class="cc-action-icon">→</div>
+            <div class="cc-action-text">Schedule and confirm the board AI strategy briefing within 30 days — with a named executive owner accountable for the materials, the narrative, and the outcome.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="critical-card people">
+        <div class="cc-header">
+          <div class="cc-num">2</div>
+          <div class="cc-header-text">
+            <div class="cc-pathway">People pathway</div>
+            <div class="cc-box">Controls</div>
+          </div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-why-label">Why this is load-bearing</div>
+          <div class="cc-why">In a complex, regulated operating environment — spanning retail, commercial, and residential property — regulatory and liability exposure is acute. Agents taking actions in tenancy management, financial reporting, or customer-facing services without defined encapsulation boundaries creates legal and reputational risk that the organisation is not yet structured to absorb. Controls must be designed before agents are validated — not added after an incident forces the issue.</div>
+          <div class="cc-action-label">Single most important action</div>
+          <div class="cc-action">
+            <div class="cc-action-icon">→</div>
+            <div class="cc-action-text">Define and agree the 3-tier autonomy model (supervised / assisted / autonomous) with risk, legal, and compliance within 30 days — before any Wave 1 use case enters the validation environment.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="critical-card exec2">
+        <div class="cc-header">
+          <div class="cc-num">3</div>
+          <div class="cc-header-text">
+            <div class="cc-pathway">Executive pathway</div>
+            <div class="cc-box">Culture</div>
+          </div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-why-label">Why this is load-bearing</div>
+          <div class="cc-why">A large property organisation has a significant proportion of its workforce in operational, facilities, and customer-facing roles — not digital-native knowledge workers. Change fatigue from prior technology programs is likely real. If the workforce doesn't feel safe experimenting, if middle managers aren't equipped to lead adoption, and if leadership signals are inconsistent, even technically excellent agents will fail in deployment. Culture is not a soft risk. In this context, it is the most operationally consequential one.</div>
+          <div class="cc-action-label">Single most important action</div>
+          <div class="cc-action">
+            <div class="cc-action-icon">→</div>
+            <div class="cc-action-text">Run an AI sentiment baseline survey within the first 2 weeks — and have the CHRO personally present the results to the ELT before any adoption program is launched.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="pf-l"><strong>Salesforce</strong> · Agentic Enterprise Playbook · Customer</div>
+    <div class="pf-r">PAGE 1 — CRITICAL PATH</div>
+  </div>
+</div>
+
+<!-- ════════ PAGE 2 — READINESS ════════ -->
+<div class="page" id="page-p2">
+  <div class="page-header">
+    <div class="page-header-grid"></div>
+    <div class="page-header-inner">
+      <div>
+        <div class="page-num">Page 2 of 5</div>
+        <div class="page-title">The Readiness Assessment</div>
+        <div class="page-subtitle">Traffic-light across all 9 boxes. Not aspirational — honest. This is the starting line, not the finish line.</div>
+      </div>
+      <div class="page-header-badge">RAG · As of Workshop</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="rag-intro">Green = we have this. Amber = we have foundations but not maturity. Red = starting from scratch. These ratings are the honest assessment from the room — not the aspirational view.</div>
+    <div class="rag-legend">
+      <div class="rag-leg"><div class="rag-dot g"></div>Green — foundations and maturity in place</div>
+      <div class="rag-leg"><div class="rag-dot a"></div>Amber — foundations exist, maturity gap</div>
+      <div class="rag-leg"><div class="rag-dot r"></div>Red — starting from scratch</div>
+    </div>
+
+    <div class="rag-section-label exec">Executive pathway</div>
+    <div class="rag-grid">
+      <div class="rag-card">
+        <div class="rag-card-top"><div class="rag-box-name">Strategy</div><div class="rag-badge r">Red</div></div>
+        <div class="rag-bar-wrap"><div class="rag-bar r"></div></div>
+        <div class="rag-card-body">
+          <div class="rag-assessment">No board-level mandate exists. Agentic AI is not in the strategic plan. Investment horizon and risk appetite are undefined.</div>
+          <div class="rag-gap">Gap: Board narrative, exec sponsorship, investment line</div>
+        </div>
+      </div>
+      <div class="rag-card">
+        <div class="rag-card-top"><div class="rag-box-name">Structure</div><div class="rag-badge a">Amber</div></div>
+        <div class="rag-bar-wrap"><div class="rag-bar a"></div></div>
+        <div class="rag-card-body">
+          <div class="rag-assessment">Governance frameworks exist for technology programs. They have not been mapped to agent lifecycle requirements. Structural blockers unidentified.</div>
+          <div class="rag-gap">Gap: Agent lifecycle governance mapping, CoE model decision</div>
+        </div>
+      </div>
+      <div class="rag-card">
+        <div class="rag-card-top"><div class="rag-box-name">Culture</div><div class="rag-badge r">Red</div></div>
+        <div class="rag-bar-wrap"><div class="rag-bar r"></div></div>
+        <div class="rag-card-body">
+          <div class="rag-assessment">No AI sentiment baseline. No Ambassador network. Change fatigue from prior programs likely. Middle manager readiness is unknown.</div>
+          <div class="rag-gap">Gap: Sentiment baseline, ambassador program, leadership signal clarity</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rag-section-label people">People pathway</div>
+    <div class="rag-grid">
+      <div class="rag-card">
+        <div class="rag-card-top"><div class="rag-box-name">Roles</div><div class="rag-badge a">Amber</div></div>
+        <div class="rag-bar-wrap"><div class="rag-bar a"></div></div>
+        <div class="rag-card-body">
+          <div class="rag-assessment">Job descriptions exist. No agent-augmented role descriptions drafted. Career frameworks do not reference agent collaboration competencies.</div>
+          <div class="rag-gap">Gap: Agent-augmented role descriptions for top 5 impacted roles</div>
+        </div>
+      </div>
+      <div class="rag-card">
+        <div class="rag-card-top"><div class="rag-box-name">Controls</div><div class="rag-badge r">Red</div></div>
+        <div class="rag-bar-wrap"><div class="rag-bar r"></div></div>
+        <div class="rag-card-body">
+          <div class="rag-assessment">No autonomy tier framework. No escalation runbooks. Regulatory compliance has not been mapped to agent actions. Audit trail architecture undefined.</div>
+          <div class="rag-gap">Gap: Autonomy model, escalation runbooks, compliance mapping</div>
+        </div>
+      </div>
+      <div class="rag-card">
+        <div class="rag-card-top"><div class="rag-box-name">Ownership</div><div class="rag-badge a">Amber</div></div>
+        <div class="rag-bar-wrap"><div class="rag-bar a"></div></div>
+        <div class="rag-card-body">
+          <div class="rag-assessment">Ownership concepts understood. No formal RACI, no performance dashboard spec, no decommission criteria. Wave 1 owners not yet named.</div>
+          <div class="rag-gap">Gap: Named owners for Wave 1, dashboard spec, RACI</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rag-section-label tech">Technology pathway</div>
+    <div class="rag-grid">
+      <div class="rag-card">
+        <div class="rag-card-top"><div class="rag-box-name">Use Case</div><div class="rag-badge a">Amber</div></div>
+        <div class="rag-bar-wrap"><div class="rag-bar a"></div></div>
+        <div class="rag-card-body">
+          <div class="rag-assessment">Use case ideas exist informally across business units. No formal scoring rubric applied. Wave 1 not selected. Data readiness not assessed.</div>
+          <div class="rag-gap">Gap: Harvest sprint, scoring, Wave 1 selection, data assessment</div>
+        </div>
+      </div>
+      <div class="rag-card">
+        <div class="rag-card-top"><div class="rag-box-name">Validation</div><div class="rag-badge r">Red</div></div>
+        <div class="rag-bar-wrap"><div class="rag-bar r"></div></div>
+        <div class="rag-card-body">
+          <div class="rag-assessment">No POC environment. No Definition of Done framework. No gate structure. SME review process undefined. Rollback plan absent.</div>
+          <div class="rag-gap">Gap: DoD, POC environment, gate criteria, SME review process</div>
+        </div>
+      </div>
+      <div class="rag-card">
+        <div class="rag-card-top"><div class="rag-box-name">Production</div><div class="rag-badge a">Amber</div></div>
+        <div class="rag-bar-wrap"><div class="rag-bar a"></div></div>
+        <div class="rag-card-body">
+          <div class="rag-assessment">Existing production and security review processes are mature. Agent-specific requirements (observability, adaptability, SLAs) not yet defined or applied.</div>
+          <div class="rag-gap">Gap: Agent-specific production checklist, observability spec, SLAs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="pf-l"><strong>Salesforce</strong> · Agentic Enterprise Playbook · Customer</div>
+    <div class="pf-r">PAGE 2 — READINESS ASSESSMENT</div>
+  </div>
+</div>
+
+<!-- ════════ PAGE 3 — 90-DAY SPRINT ════════ -->
+<div class="page" id="page-p3">
+  <div class="page-header">
+    <div class="page-header-grid"></div>
+    <div class="page-header-inner">
+      <div>
+        <div class="page-num">Page 3 of 5</div>
+        <div class="page-title">The 90-Day Sprint</div>
+        <div class="page-subtitle">3 specific actions per pathway. Named owners. Resourcing requirement. Success criteria. These start Monday.</div>
+      </div>
+      <div class="page-header-badge">27 Actions · 90 Days</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="sprint-intro">This is not a roadmap. Not a strategy. These are the specific things that begin this week, with named owners and a clear definition of done. Every action has a resourcing requirement and a measurable success criterion.</div>
+
+    <div class="sprint-section-label exec">Executive pathway</div>
+    <table class="sprint-table">
+      <tr><th>Action</th><th>Owner</th><th>Resource needed</th><th>Success criterion</th></tr>
+      <tr><td>Define 3 flagship Agentforce programs<br><span class="sprint-tag exec">Strategy</span></td><td>CEO / COO</td><td>2 x ELT half-days</td><td>3 named programs with exec sponsors confirmed by Week 3</td></tr>
+      <tr><td>Schedule board AI strategy briefing<br><span class="sprint-tag exec">Strategy</span></td><td>CEO</td><td>Board secretary, 30-min slot</td><td>Board presentation confirmed in calendar before Week 4</td></tr>
+      <tr><td>Map governance to agent lifecycle — name top 5 blockers<br><span class="sprint-tag exec">Structure</span></td><td>CRO / General Counsel</td><td>Risk &amp; legal 2-day workshop</td><td>Blocker register with owners delivered by Week 4</td></tr>
+      <tr><td>Propose operating model changes to ExCo<br><span class="sprint-tag exec">Structure</span></td><td>COO</td><td>ExCo agenda slot, 1 x analyst</td><td>Operating model proposal accepted at ExCo by Week 8</td></tr>
+      <tr><td>Run AI sentiment baseline survey<br><span class="sprint-tag exec">Culture</span></td><td>CHRO</td><td>People team, survey tool</td><td>Baseline results presented to ELT by Week 2</td></tr>
+      <tr><td>Launch Agent Ambassador program (1 per BU)<br><span class="sprint-tag exec">Culture</span></td><td>CHRO</td><td>0.2 FTE L&amp;D, BU nominations</td><td>1 Ambassador per BU onboarded and active by Week 8</td></tr>
+    </table>
+
+    <div class="sprint-section-label people">People pathway</div>
+    <table class="sprint-table">
+      <tr><th>Action</th><th>Owner</th><th>Resource needed</th><th>Success criterion</th></tr>
+      <tr><td>Draft agent-augmented role descriptions for top 5 roles<br><span class="sprint-tag people">Roles</span></td><td>CHRO + BU Heads</td><td>HR business partners, 3 days</td><td>5 role descriptions reviewed and approved by Week 6</td></tr>
+      <tr><td>Define channel model per Wave 1 use case<br><span class="sprint-tag people">Roles</span></td><td>CX Lead / Product</td><td>CX team, 1-week sprint</td><td>Channel model documented per use case by Week 7</td></tr>
+      <tr><td>Define 3-tier autonomy model<br><span class="sprint-tag people">Controls</span></td><td>CRO + CTO</td><td>Risk, legal, tech — 3-day workshop</td><td>Autonomy framework agreed and signed off by Week 4</td></tr>
+      <tr><td>Create escalation runbook per Wave 1 use case<br><span class="sprint-tag people">Controls</span></td><td>Risk Lead</td><td>Risk team 0.5 FTE, 4 weeks</td><td>Runbook per use case completed before validation begins</td></tr>
+      <tr><td>Assign named owners for all Wave 1 agents<br><span class="sprint-tag people">Ownership</span></td><td>COO</td><td>ELT decision — 30 mins</td><td>Named business + technical owner confirmed by end of Week 1</td></tr>
+      <tr><td>Build agent performance dashboard spec<br><span class="sprint-tag people">Ownership</span></td><td>CTO + Business Owner</td><td>Data team, 2-week sprint</td><td>Dashboard spec signed off before any agent goes to production</td></tr>
+    </table>
+
+    <div class="sprint-section-label tech">Technology pathway</div>
+    <table class="sprint-table">
+      <tr><th>Action</th><th>Owner</th><th>Resource needed</th><th>Success criterion</th></tr>
+      <tr><td>Run Use Case Harvest Sprint and score top candidates<br><span class="sprint-tag tech">Use Case</span></td><td>CTO + ELT</td><td>Half-day workshop, scoring template</td><td>Ranked use case pipeline with top 5 candidates by Week 2</td></tr>
+      <tr><td>Select Wave 1 use cases with named sponsors<br><span class="sprint-tag tech">Use Case</span></td><td>CEO + CTO</td><td>ELT decision session</td><td>3–5 Wave 1 use cases confirmed with named sponsors by Week 4</td></tr>
+      <tr><td>Conduct data readiness assessment for Wave 1<br><span class="sprint-tag tech">Use Case</span></td><td>CDO / CTO</td><td>Data team 1 FTE, 3 weeks</td><td>Data readiness report per use case completed by Week 7</td></tr>
+      <tr><td>Agree Definition of Done per Wave 1 use case<br><span class="sprint-tag tech">Validation</span></td><td>Product Lead + Risk</td><td>Cross-functional workshop, 1 day</td><td>DoD signed off before any build commences — Week 5</td></tr>
+      <tr><td>Build isolated POC environment<br><span class="sprint-tag tech">Validation</span></td><td>CTO</td><td>Engineering team, Agentforce sandbox</td><td>POC environment live with representative data by Week 8</td></tr>
+      <tr><td>Define production readiness checklist<br><span class="sprint-tag tech">Production</span></td><td>CTO + CRO</td><td>Security, architecture team — 1 week</td><td>Checklist reviewed and approved before Wave 1 enters validation</td></tr>
+    </table>
+  </div>
+  <div class="page-footer">
+    <div class="pf-l"><strong>Salesforce</strong> · Agentic Enterprise Playbook · Customer</div>
+    <div class="pf-r">PAGE 3 — 90-DAY SPRINT</div>
+  </div>
+</div>
+
+<!-- ════════ PAGE 4 — DEPENDENCY MAP ════════ -->
+<div class="page" id="page-p4">
+  <div class="page-header">
+    <div class="page-header-grid"></div>
+    <div class="page-header-inner">
+      <div>
+        <div class="page-num">Page 4 of 5</div>
+        <div class="page-title">The Dependency Map</div>
+        <div class="page-subtitle">Which boxes are linked — and what breaks if one is delayed. Critical dependencies in orange. Supporting dependencies in blue.</div>
+      </div>
+      <div class="page-header-badge">Cross-pathway links</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="dep-map-wrap">
+      <div class="dep-map-note">Read this map as: <strong>the box on the left must be in motion before the box on the right can progress.</strong> Critical dependencies (orange) will cause direct failure or rework if ignored. Supporting dependencies (blue) will cause delay or quality degradation.</div>
+
+      <div class="dep-full-grid">
+
+        <div class="dep-full-item">
+          <div class="dep-full-from"><span style="font-size:11px;font-weight:700;color:var(--exec-dark)">Strategy</span> <span class="dep-arrow-mini">→</span></div>
+          <div class="dep-full-to" style="color:var(--exec-dark)">Structure + Culture</div>
+          <div class="dep-full-text">Board mandate unlocks operating model change and makes culture investment defensible to the board.</div>
+          <div class="dep-full-type critical">Critical dependency</div>
+        </div>
+
+        <div class="dep-full-item">
+          <div class="dep-full-from"><span style="font-size:11px;font-weight:700;color:var(--exec-dark)">Controls</span> <span class="dep-arrow-mini">→</span></div>
+          <div class="dep-full-to" style="color:var(--tech-dark)">Validation + Production</div>
+          <div class="dep-full-text">Autonomy tier model must be defined before any agent enters the POC environment. Controls gate both Validation and Production readiness.</div>
+          <div class="dep-full-type critical">Critical dependency</div>
+        </div>
+
+        <div class="dep-full-item">
+          <div class="dep-full-from"><span style="font-size:11px;font-weight:700;color:var(--tech-dark)">Use Case</span> <span class="dep-arrow-mini">→</span></div>
+          <div class="dep-full-to" style="color:var(--people-dark)">Roles + Ownership</div>
+          <div class="dep-full-text">Wave 1 selection determines which roles are affected and who the business owners need to be. Role redesign and owner assignment cannot proceed without it.</div>
+          <div class="dep-full-type critical">Critical dependency</div>
+        </div>
+
+        <div class="dep-full-item">
+          <div class="dep-full-from"><span style="font-size:11px;font-weight:700;color:var(--tech-dark)">Use Case</span> <span class="dep-arrow-mini">→</span></div>
+          <div class="dep-full-to" style="color:var(--tech-dark)">Validation</div>
+          <div class="dep-full-text">Definition of Done and POC environment cannot be built until Wave 1 use cases are selected and scoped. Data readiness assessment follows use case selection.</div>
+          <div class="dep-full-type critical">Critical dependency</div>
+        </div>
+
+        <div class="dep-full-item">
+          <div class="dep-full-from"><span style="font-size:11px;font-weight:700;color:var(--exec-dark)">Structure</span> <span class="dep-arrow-mini">→</span></div>
+          <div class="dep-full-to" style="color:var(--people-dark)">Controls + Ownership</div>
+          <div class="dep-full-text">Governance and decision rights must be clarified before controls frameworks and ownership RACI can be finalised. Structural blockers affect both.</div>
+          <div class="dep-full-type standard">Supporting dependency</div>
+        </div>
+
+        <div class="dep-full-item">
+          <div class="dep-full-from"><span style="font-size:11px;font-weight:700;color:var(--exec-dark)">Culture</span> <span class="dep-arrow-mini">→</span></div>
+          <div class="dep-full-to" style="color:var(--people-dark)">Roles</div>
+          <div class="dep-full-text">Psychological safety baseline informs how role redesign consultations should be run. A low safety score changes the pace and approach to role change communication.</div>
+          <div class="dep-full-type standard">Supporting dependency</div>
+        </div>
+
+        <div class="dep-full-item">
+          <div class="dep-full-from"><span style="font-size:11px;font-weight:700;color:var(--tech-dark)">Validation</span> <span class="dep-arrow-mini">→</span></div>
+          <div class="dep-full-to" style="color:var(--tech-dark)">Production</div>
+          <div class="dep-full-text">All three validation gates must be passed before production readiness is assessed. Production checklist is built in parallel but cannot be closed until Validation completes.</div>
+          <div class="dep-full-type critical">Critical dependency</div>
+        </div>
+
+        <div class="dep-full-item">
+          <div class="dep-full-from"><span style="font-size:11px;font-weight:700;color:var(--people-dark)">Ownership</span> <span class="dep-arrow-mini">→</span></div>
+          <div class="dep-full-to" style="color:var(--tech-dark)">Production</div>
+          <div class="dep-full-text">Named owners must be confirmed before any agent enters production. Observability dashboards and SLAs are meaningless without a named owner to act on them.</div>
+          <div class="dep-full-type critical">Critical dependency</div>
+        </div>
+
+        <div class="dep-full-item">
+          <div class="dep-full-from"><span style="font-size:11px;font-weight:700;color:var(--exec-dark)">Culture</span> <span class="dep-arrow-mini">→</span></div>
+          <div class="dep-full-to" style="color:var(--tech-dark)">Production (adoption)</div>
+          <div class="dep-full-text">Technically production-ready agents will fail to be adopted if the cultural foundations — psychological safety, fluency, Ambassador network — are not in place.</div>
+          <div class="dep-full-type standard">Supporting dependency</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="pf-l"><strong>Salesforce</strong> · Agentic Enterprise Playbook · Customer</div>
+    <div class="pf-r">PAGE 4 — DEPENDENCY MAP</div>
+  </div>
+</div>
+
+<!-- ════════ PAGE 5 — COMMITMENT REGISTER ════════ -->
+<div class="page" id="page-p5">
+  <div class="page-header">
+    <div class="page-header-grid"></div>
+    <div class="page-header-inner">
+      <div>
+        <div class="page-num">Page 5 of 5</div>
+        <div class="page-title">The Commitment Register</div>
+        <div class="page-subtitle">Named commitments made in the room. One owner per box per party. This is the accountability page — the one most likely to be what people actually look at in 90 days.</div>
+      </div>
+      <div class="page-header-badge">9 Boxes · 2 Parties</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="commit-intro">Each row represents a box in the 9-pathway framework. The Customer owner and the Salesforce owner are both named, with a commitment statement and a review date. Blank fields must be completed before the playbook is circulated.</div>
+    <div class="commit-warning">⚠ This register is the only page that creates formal accountability. If a name is blank, the commitment does not exist. Every blank is a risk.</div>
+
+    <div class="commit-section-label exec">Executive pathway</div>
+    <table class="commit-table">
+      <tr><th style="width:12%">Box</th><th style="width:28%">Commitment</th><th style="width:18%">Customer owner</th><th style="width:18%">Salesforce owner</th><th style="width:14%">Review date</th><th style="width:10%">Status</th></tr>
+      <tr>
+        <td class="box-name">Strategy</td>
+        <td class="commitment-text">Board AI briefing confirmed in calendar. 3 flagship programs named with exec sponsors.</td>
+        <td><div class="owner-chip"><div class="owner-dot customer"></div>CEO</div></td>
+        <td><div class="owner-chip"><div class="owner-dot sf"></div>Sarah Weiss</div></td>
+        <td><div class="date-chip">Day 30</div></td>
+        <td><div class="rag-badge a" style="font-size:10px">In Progress</div></td>
+      </tr>
+      <tr>
+        <td class="box-name">Structure</td>
+        <td class="commitment-text">Governance blocker register delivered. Operating model proposal to ExCo within 60 days.</td>
+        <td><div class="owner-chip"><div class="owner-dot customer"></div>COO</div></td>
+        <td><div class="owner-chip"><div class="owner-dot sf"></div>Justin Tauber</div></td>
+        <td><div class="date-chip">Day 60</div></td>
+        <td><div class="rag-badge r" style="font-size:10px">Not Started</div></td>
+      </tr>
+      <tr>
+        <td class="box-name">Culture</td>
+        <td class="commitment-text">Sentiment baseline completed and presented to ELT. Ambassador program launched.</td>
+        <td><div class="owner-chip"><div class="owner-dot customer"></div>CHRO</div></td>
+        <td><div class="owner-chip"><div class="owner-dot sf"></div>Sarah Weiss</div></td>
+        <td><div class="date-chip">Day 14</div></td>
+        <td><div class="rag-badge r" style="font-size:10px">Not Started</div></td>
+      </tr>
+    </table>
+
+    <div class="commit-section-label people">People pathway</div>
+    <table class="commit-table">
+      <tr><th style="width:12%">Box</th><th style="width:28%">Commitment</th><th style="width:18%">Customer owner</th><th style="width:18%">Salesforce owner</th><th style="width:14%">Review date</th><th style="width:10%">Status</th></tr>
+      <tr>
+        <td class="box-name">Roles</td>
+        <td class="commitment-text">Agent-augmented role descriptions for top 5 impacted roles reviewed and approved.</td>
+        <td><div class="owner-chip"><div class="owner-dot customer"></div>CHRO</div></td>
+        <td><div class="owner-chip"><div class="owner-dot sf"></div>Justin Tauber</div></td>
+        <td><div class="date-chip">Day 45</div></td>
+        <td><div class="rag-badge r" style="font-size:10px">Not Started</div></td>
+      </tr>
+      <tr>
+        <td class="box-name">Controls</td>
+        <td class="commitment-text">3-tier autonomy model agreed with risk &amp; legal. Escalation runbooks per Wave 1 use case complete.</td>
+        <td><div class="owner-chip"><div class="owner-dot customer"></div>CRO</div></td>
+        <td><div class="owner-chip"><div class="owner-dot sf"></div>Sarah Weiss</div></td>
+        <td><div class="date-chip">Day 30</div></td>
+        <td><div class="rag-badge r" style="font-size:10px">Not Started</div></td>
+      </tr>
+      <tr>
+        <td class="box-name">Ownership</td>
+        <td class="commitment-text">Named business &amp; technical owner confirmed for every Wave 1 agent before end of Week 1.</td>
+        <td><div class="owner-chip"><div class="owner-dot customer"></div>COO</div></td>
+        <td><div class="owner-chip"><div class="owner-dot sf"></div">Justin Tauber</div></td>
+        <td><div class="date-chip">Day 7</div></td>
+        <td><div class="rag-badge r" style="font-size:10px">Not Started</div></td>
+      </tr>
+    </table>
+
+    <div class="commit-section-label tech">Technology pathway</div>
+    <table class="commit-table">
+      <tr><th style="width:12%">Box</th><th style="width:28%">Commitment</th><th style="width:18%">Customer owner</th><th style="width:18%">Salesforce owner</th><th style="width:14%">Review date</th><th style="width:10%">Status</th></tr>
+      <tr>
+        <td class="box-name">Use Case</td>
+        <td class="commitment-text">Use Case Harvest Sprint complete. Wave 1 (3–5 use cases) selected with named sponsors by Week 4.</td>
+        <td><div class="owner-chip"><div class="owner-dot customer"></div>CTO</div></td>
+        <td><div class="owner-chip"><div class="owner-dot sf"></div>Justin Tauber</div></td>
+        <td><div class="date-chip">Day 28</div></td>
+        <td><div class="rag-badge a" style="font-size:10px">In Progress</div></td>
+      </tr>
+      <tr>
+        <td class="box-name">Validation</td>
+        <td class="commitment-text">Definition of Done agreed per use case before build. POC environment live with representative data.</td>
+        <td><div class="owner-chip"><div class="owner-dot customer"></div>CTO</div></td>
+        <td><div class="owner-chip"><div class="owner-dot sf"></div>Sarah Weiss</div></td>
+        <td><div class="date-chip">Day 56</div></td>
+        <td><div class="rag-badge r" style="font-size:10px">Not Started</div></td>
+      </tr>
+      <tr>
+        <td class="box-name">Production</td>
+        <td class="commitment-text">Production readiness checklist approved. Observability dashboard spec signed off before any agent goes live.</td>
+        <td><div class="owner-chip"><div class="owner-dot customer"></div>CTO</div></td>
+        <td><div class="owner-chip"><div class="owner-dot sf"></div">Justin Tauber</div></td>
+        <td><div class="date-chip">Day 75</div></td>
+        <td><div class="rag-badge r" style="font-size:10px">Not Started</div></td>
+      </tr>
+    </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="pf-l"><strong>Salesforce</strong> · Agentic Enterprise Playbook · Customer</div>
+    <div class="pf-r">PAGE 5 — COMMITMENT REGISTER</div>
+  </div>
+</div>
+
+</div><!-- end pages-wrap -->
+
+<script>
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>

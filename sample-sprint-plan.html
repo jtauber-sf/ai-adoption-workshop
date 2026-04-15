@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>90-Day Agentic Sprint Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+:root{
+  --navy:#032D60;
+  --blue:#0176D3;
+  --sky:#1B96FF;
+  --white:#FFFFFF;
+  --offwhite:#F4F7FB;
+  --slate:#3E4A5A;
+  --mist:#E8F4FD;
+
+  --tech:#1B96FF;
+  --tech-bg:#E6F1FB;
+  --tech-dark:#0C447C;
+  --tech-mid:#378ADD;
+
+  --people:#06A59A;
+  --people-bg:#E1F5EE;
+  --people-dark:#085041;
+  --people-mid:#1D9E75;
+
+  --exec:#7B5EA7;
+  --exec-bg:#EEEDFE;
+  --exec-dark:#3C3489;
+  --exec-mid:#7F77DD;
+
+  --dep:#E45B00;
+  --dep-bg:#FFF0E6;
+
+  --w1:#032D60;
+  --w2:#0055A5;
+  --w3:#1B96FF;
+}
+
+@media print{
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .page-wrap{box-shadow:none;}
+}
+
+body{
+  font-family:'Sora',sans-serif;
+  background:#C8D8EC;
+  min-height:100vh;
+  padding:32px 20px 60px;
+}
+
+/* ── TOP NAV ── */
+.top-bar{
+  max-width:1320px; margin:0 auto 24px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:12px;
+}
+.top-logo{display:flex;align-items:center;gap:10px;}
+.cloud{width:32px;height:22px;background:var(--sky);border-radius:50% 50% 50% 50%/55% 55% 45% 45%;position:relative;flex-shrink:0;}
+.cloud::before{content:'';position:absolute;width:18px;height:18px;background:var(--sky);border-radius:50%;top:-8px;left:4px;}
+.cloud::after{content:'';position:absolute;width:13px;height:13px;background:var(--sky);border-radius:50%;top:-5px;left:16px;}
+.top-brand{font-size:13px;font-weight:700;color:var(--navy);letter-spacing:-0.01em;}
+.top-brand span{font-weight:300;color:#6A8BAA;}
+
+.top-legend{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--slate);}
+.leg-dot{width:10px;height:10px;border-radius:50%;}
+.leg-dep{width:14px;height:8px;border-radius:2px;background:var(--dep);opacity:0.85;}
+
+/* ── PAGE WRAP ── */
+.page-wrap{
+  max-width:1320px;margin:0 auto;
+  background:var(--white);
+  border-radius:16px;
+  box-shadow:0 12px 60px rgba(3,45,96,0.16);
+  overflow:hidden;
+}
+
+/* ── HEADER ── */
+.header{
+  background:var(--navy);
+  padding:32px 48px 28px;
+  position:relative;overflow:hidden;
+}
+.hdr-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(27,150,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(27,150,255,0.05) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.hdr-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(27,150,255,0.11) 0%,transparent 65%);top:-280px;right:-80px;pointer-events:none;}
+.hdr-inner{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.hdr-left{}
+.hdr-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--sky);margin-bottom:8px;
+}
+.hdr-title{font-size:32px;font-weight:800;color:white;letter-spacing:-0.03em;line-height:1.05;margin-bottom:8px;}
+.hdr-title span{color:var(--sky);}
+.hdr-sub{font-size:13px;font-weight:300;color:rgba(255,255,255,0.55);line-height:1.6;max-width:520px;}
+
+.hdr-stats{display:flex;gap:0;margin-top:4px;}
+.hdr-stat{
+  padding:14px 24px;
+  border-left:1px solid rgba(255,255,255,0.1);
+  text-align:center;
+}
+.hdr-stat:first-child{border-left:none;padding-left:0;}
+.hdr-stat-num{font-size:26px;font-weight:800;color:white;line-height:1;}
+.hdr-stat-num span{color:var(--sky);}
+.hdr-stat-label{font-size:10px;font-weight:300;color:rgba(255,255,255,0.45);margin-top:3px;letter-spacing:0.04em;}
+
+/* ── WEEK HEADER BAR ── */
+.week-header{
+  display:grid;
+  background:var(--offwhite);
+  border-bottom:1.5px solid #D8E8F5;
+  padding:0 24px 0 260px;
+}
+.week-header-inner{
+  display:grid;
+  grid-template-columns:repeat(13,1fr);
+  gap:0;
+}
+.week-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+  color:#7AAED4;
+  padding:10px 4px;
+  text-align:center;
+  border-right:1px dashed #D0E4F4;
+}
+.week-label:last-child{border-right:none;}
+.week-label.month-start{
+  color:var(--navy);font-weight:600;
+  border-right:1px solid #B0CDE8;
+}
+
+/* Phase markers */
+.phase-bar{
+  display:grid;
+  padding:0 24px 0 260px;
+  background:white;
+  border-bottom:1px solid #E5EFF8;
+}
+.phase-bar-inner{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:4px;
+  padding:6px 0;
+}
+.phase-chip{
+  text-align:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  padding:5px 8px;border-radius:20px;
+}
+.phase-chip.m1{background:rgba(3,45,96,0.08);color:var(--navy);}
+.phase-chip.m2{background:rgba(1,118,211,0.1);color:var(--blue);}
+.phase-chip.m3{background:rgba(27,150,255,0.12);color:var(--sky);}
+
+/* ── SWIM LANE CONTAINER ── */
+.swim-container{padding:0 24px 24px;}
+
+/* pathway group */
+.pathway-group{margin-top:20px;}
+.pathway-label{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 0 6px 0;
+  margin-bottom:4px;
+  border-bottom:2px solid;
+}
+.pathway-label.tech{border-color:var(--tech);}
+.pathway-label.people{border-color:var(--people);}
+.pathway-label.exec{border-color:var(--exec);}
+
+.pl-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  padding:3px 12px;border-radius:20px;
+}
+.tech .pl-badge{background:var(--tech-bg);color:var(--tech-dark);}
+.people .pl-badge{background:var(--people-bg);color:var(--people-dark);}
+.exec .pl-badge{background:var(--exec-bg);color:var(--exec-dark);}
+.pl-name{font-size:13px;font-weight:700;color:var(--navy);}
+
+/* swim lane row */
+.lane{
+  display:grid;
+  grid-template-columns:236px 1fr;
+  gap:0;
+  margin-bottom:6px;
+  min-height:68px;
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid #E0ECF8;
+}
+
+.lane-label{
+  padding:10px 14px;
+  display:flex;flex-direction:column;justify-content:center;
+  background:var(--offwhite);
+  border-right:2px solid;
+  flex-shrink:0;
+}
+.tech .lane-label{border-color:var(--tech-mid);}
+.people .lane-label{border-color:var(--people-mid);}
+.exec .lane-label{border-color:var(--exec-mid);}
+
+.lane-box-name{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:2px;}
+.lane-box-topic{font-size:10px;font-weight:400;color:#7AAED4;}
+
+.lane-track{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(13,1fr);
+  background:white;
+  padding:8px 0;
+  gap:0;
+}
+
+/* grid lines */
+.lane-track::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:repeating-linear-gradient(90deg,transparent,transparent calc(100%/13 - 1px),rgba(208,228,244,0.5) calc(100%/13 - 1px),rgba(208,228,244,0.5) calc(100%/13));
+  pointer-events:none;z-index:0;
+}
+
+/* action bars */
+.action-bar{
+  position:absolute;
+  height:20px;
+  border-radius:4px;
+  display:flex;align-items:center;
+  padding:0 8px;
+  font-size:10px;font-weight:600;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  cursor:pointer;
+  transition:filter 0.15s,transform 0.15s;
+  z-index:2;
+}
+.action-bar:hover{filter:brightness(1.08);transform:translateY(-1px);}
+
+.tech-bar{background:var(--tech);color:white;}
+.people-bar{background:var(--people);color:white;}
+.exec-bar{background:var(--exec);color:white;}
+
+/* dependency badge on bar */
+.dep-flag{
+  position:absolute;
+  right:-1px;top:-6px;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--dep);
+  border:2px solid white;
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;font-weight:700;color:white;
+  z-index:3;
+}
+
+/* tooltip */
+.tooltip{
+  position:absolute;
+  bottom:calc(100% + 8px);
+  left:50%;transform:translateX(-50%);
+  background:var(--navy);
+  color:white;
+  font-size:11px;font-weight:400;
+  line-height:1.5;
+  padding:10px 14px;
+  border-radius:8px;
+  min-width:240px;max-width:300px;
+  white-space:normal;
+  pointer-events:none;
+  opacity:0;transition:opacity 0.18s;
+  z-index:100;
+  box-shadow:0 8px 24px rgba(3,45,96,0.25);
+}
+.tooltip::after{
+  content:'';
+  position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;
+  border-top-color:var(--navy);
+}
+.tooltip .tt-title{font-weight:700;margin-bottom:4px;color:var(--sky);}
+.tooltip .tt-dep{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.15);font-size:10px;color:#F0A060;}
+.action-bar:hover .tooltip{opacity:1;}
+
+/* month dividers on track */
+.month-div{
+  position:absolute;top:0;bottom:0;width:1.5px;
+  background:rgba(1,118,211,0.18);
+  pointer-events:none;z-index:1;
+}
+
+/* ── DEPENDENCY KEY ── */
+.dep-key{
+  margin:20px 24px 0;
+  background:var(--dep-bg);
+  border:1px solid rgba(228,91,0,0.2);
+  border-radius:10px;
+  padding:14px 20px;
+}
+.dep-key-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--dep);margin-bottom:10px;
+}
+.dep-items{display:flex;flex-wrap:wrap;gap:8px;}
+.dep-item{
+  font-size:11px;font-weight:400;color:var(--slate);
+  background:white;border:1px solid rgba(228,91,0,0.2);
+  border-radius:6px;padding:5px 10px;
+  display:flex;align-items:center;gap:6px;
+}
+.dep-num{
+  width:16px;height:16px;border-radius:50%;
+  background:var(--dep);color:white;
+  font-size:8px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+
+/* ── FOOTER ── */
+.footer{
+  background:var(--navy);
+  padding:12px 48px;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:8px;
+  margin-top:28px;
+}
+.footer-l{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.04em;}
+.footer-l strong{color:var(--sky);font-weight:500;}
+.footer-r{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:0.08em;}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="top-logo">
+    <div class="cloud"></div>
+    <div class="top-brand">Salesforce <span>· Agentic Sprint Planner</span></div>
+  </div>
+  <div class="top-legend">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--tech)"></div>Technology pathway</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--people)"></div>People pathway</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--exec)"></div>Executive pathway</div>
+    <div class="leg-item"><div class="leg-dep"></div>Has dependency</div>
+    <div class="leg-item" style="font-size:10px;color:#7AAED4;">Hover actions for detail</div>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="hdr-grid"></div>
+    <div class="hdr-glow"></div>
+    <div class="hdr-inner">
+      <div class="hdr-left">
+        <div class="hdr-eyebrow">Agentic Enterprise Transformation</div>
+        <div class="hdr-title">90-Day <span>Sprint Plan</span></div>
+        <div class="hdr-sub">3 priority actions per pathway box, sequenced across Month 1 (Foundation), Month 2 (Build), and Month 3 (Validate). Dependencies shown in orange — hover any action bar for detail.</div>
+      </div>
+      <div class="hdr-stats">
+        <div class="hdr-stat"><div class="hdr-stat-num">9<span>×</span></div><div class="hdr-stat-label">Pathway boxes</div></div>
+        <div class="hdr-stat"><div class="hdr-stat-num">27<span>×</span></div><div class="hdr-stat-label">Sprint actions</div></div>
+        <div class="hdr-stat"><div class="hdr-stat-num">3<span>×</span></div><div class="hdr-stat-label">Pathways</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE BAR -->
+  <div class="phase-bar">
+    <div class="phase-bar-inner">
+      <div class="phase-chip m1">Month 1 — Foundation (Weeks 1–4)</div>
+      <div class="phase-chip m2">Month 2 — Build (Weeks 5–9)</div>
+      <div class="phase-chip m3">Month 3 — Validate (Weeks 10–13)</div>
+    </div>
+  </div>
+
+  <!-- WEEK HEADER -->
+  <div class="week-header">
+    <div class="week-header-inner" id="weekHeader"></div>
+  </div>
+
+  <!-- SWIM LANES -->
+  <div class="swim-container" id="swimContainer"></div>
+
+  <!-- DEPENDENCY KEY -->
+  <div class="dep-key">
+    <div class="dep-key-title">Dependency register — actions marked with orange dot require another action to be in progress or complete first</div>
+    <div class="dep-items" id="depItems"></div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-l"><strong>Salesforce</strong> · Strategic AI Advisory · Catalyst ANZ · Agentforce</div>
+    <div class="footer-r">SAMPLE 90-DAY SPRINT · CONFIDENTIAL</div>
+  </div>
+
+</div>
+
+<script>
+const WEEKS = 13;
+
+/* ─── DATA ─── */
+/* col = 0-indexed week start (0–12), span = weeks duration */
+const DATA = [
+  {
+    pathway:'exec', label:'Executive pathway',
+    lanes:[
+      {
+        box:'Strategy', topic:'Business transformation',
+        actions:[
+          { label:'Define 3 flagship Agentforce programs with exec sponsors', col:0, span:3, dep:null,
+            detail:'Name 3 flagship programs tied directly to corporate OKRs. Each must have a named C-suite sponsor confirmed before Week 3.' },
+          { label:'Embed agentic KPIs in exec scorecards', col:3, span:4, dep:1,
+            detail:'Add agentic adoption and delivery KPIs to all executive scorecards in the next planning cycle. Requires flagship programs to be named first.',
+            depRef:'D1' },
+          { label:'Conduct board AI strategy briefing', col:8, span:5, dep:2,
+            detail:'Present agentic strategy to the board within 90 days. Requires exec scorecards to be aligned so board sees a unified leadership position.',
+            depRef:'D2' },
+        ]
+      },
+      {
+        box:'Structure', topic:'Operating model & governance',
+        actions:[
+          { label:'Map governance to agent lifecycle — identify top 5 blockers', col:0, span:4, dep:null,
+            detail:'Complete governance-to-agent lifecycle mapping within 30 days. Identify and log top 5 structural blockers with remediation owners.' },
+          { label:'Propose operating model changes to ExCo', col:4, span:4, dep:3,
+            detail:'Based on blocker mapping, propose operating model changes to ExCo within 60 days.',
+            depRef:'D3' },
+          { label:'Establish cross-functional agent coordination forum', col:8, span:5, dep:null,
+            detail:'Stand up a fortnightly cross-pathway coordination forum. Assign a chair and agree terms of reference before Week 10.' },
+        ]
+      },
+      {
+        box:'Culture', topic:'People & org readiness',
+        actions:[
+          { label:'Baseline AI sentiment pulse survey', col:0, span:2, dep:null,
+            detail:'Run an AI sentiment baseline survey across all people-leader cohorts in Week 1–2. This is the benchmark for all future measurement.' },
+          { label:'Launch Agent Ambassador program (1 per BU)', col:3, span:5, dep:null,
+            detail:'Identify and onboard 1 Agent Ambassador per business unit. Run kick-off session within 60 days.' },
+          { label:'Run agent familiarisation sessions for all people leaders', col:7, span:6, dep:4,
+            detail:'Deliver agent familiarisation workshops to all people-leader cohorts. Requires Ambassadors to be onboarded to co-facilitate.',
+            depRef:'D4' },
+        ]
+      },
+    ]
+  },
+  {
+    pathway:'people', label:'People pathway',
+    lanes:[
+      {
+        box:'Roles', topic:'Human-agent collaboration',
+        actions:[
+          { label:'Draft agent-augmented role descriptions for top 5 roles', col:0, span:4, dep:5,
+            detail:'Produce agent-augmented role descriptions for the 5 most impacted roles. Requires Use Case selection to identify which roles are affected.',
+            depRef:'D5' },
+          { label:'Define channel model per Wave 1 use case', col:3, span:4, dep:null,
+            detail:'Define whether each Wave 1 agent operates via voice, chat, async, or embedded workflow — and design interaction patterns per channel.' },
+          { label:'Update career frameworks to include agent orchestration', col:8, span:5, dep:null,
+            detail:'Embed agent orchestration competency into job descriptions, performance criteria, and career ladders. Target: all people-leader roles by end of Month 3.' },
+        ]
+      },
+      {
+        box:'Controls', topic:'Risk, governance & trust',
+        actions:[
+          { label:'Define 3-tier autonomy model (supervised / assisted / autonomous)', col:0, span:3, dep:null,
+            detail:'Agree the autonomy tier framework with risk and legal. Define criteria for movement between tiers in both directions. Target: agreed within 30 days.' },
+          { label:'Create escalation runbook per Wave 1 use case', col:3, span:5, dep:6,
+            detail:'Build a documented escalation runbook for each Wave 1 use case. Requires autonomy tier model to be agreed before runbooks can be calibrated.',
+            depRef:'D6' },
+          { label:'Complete regulatory compliance mapping', col:7, span:6, dep:null,
+            detail:'Map all applicable regulations (data protection, financial services, employment law) to agent actions. Produce a compliance register with named owners.' },
+        ]
+      },
+      {
+        box:'Ownership', topic:'Accountability & lifecycle',
+        actions:[
+          { label:'Assign named business & technical owner for all Wave 1 agents', col:0, span:2, dep:7,
+            detail:'Every Wave 1 use case must have a named business owner and technical owner confirmed before leaving the workshop.',
+            depRef:'D7' },
+          { label:'Build agent performance dashboard spec', col:3, span:5, dep:null,
+            detail:'Define the metrics, data sources, and refresh cadence for the agent performance dashboard. Spec must be complete before production go-live.' },
+          { label:'Define decommission criteria and succession process', col:8, span:5, dep:null,
+            detail:'Document the criteria that would trigger an agent decommission and the process for ownership succession when an owner leaves.' },
+        ]
+      },
+    ]
+  },
+  {
+    pathway:'tech', label:'Technology pathway',
+    lanes:[
+      {
+        box:'Use Case', topic:'Opportunity identification',
+        actions:[
+          { label:'Run Use Case Harvest Sprint — score top candidates', col:0, span:2, dep:null,
+            detail:'Each exec submits 3 use case candidates. Apply value × feasibility × risk scoring rubric. Output: ranked pipeline by end of Week 2.' },
+          { label:'Select Wave 1 use cases (top 3–5) with named sponsors', col:2, span:3, dep:null,
+            detail:'Select Wave 1 from the scored pipeline. Assign a named business sponsor to each use case confirmed before Week 5.' },
+          { label:'Conduct data readiness assessment for Wave 1', col:5, span:5, dep:8,
+            detail:'Assess data availability, quality, governance, and access for each Wave 1 use case. Required before any validation work begins.',
+            depRef:'D8' },
+        ]
+      },
+      {
+        box:'Validation', topic:'Testing & production readiness',
+        actions:[
+          { label:'Agree Definition of Done for each Wave 1 use case', col:2, span:3, dep:9,
+            detail:'Define specific, measurable production-approval criteria per use case. Must be agreed before build starts — not negotiated at the end.',
+            depRef:'D9' },
+          { label:'Build isolated POC environment with representative data', col:4, span:4, dep:10,
+            detail:'Stand up a POC environment with representative (not live) data within 30 days of use case selection. Requires data readiness assessment to confirm data availability.',
+            depRef:'D10' },
+          { label:'Run SME review cycles (min. 2 rounds) — gate decision', col:8, span:5, dep:null,
+            detail:'Conduct at least 2 structured SME review rounds before the production gate. Gate decision must be made by an independent reviewer, not the build team.' },
+        ]
+      },
+      {
+        box:'Production', topic:'Deployment & scale',
+        actions:[
+          { label:'Define production readiness checklist (security, privacy, interop)', col:1, span:4, dep:null,
+            detail:'Build the production readiness checklist covering security review, privacy obligations, interoperability standards, commercial viability, and observability requirements.' },
+          { label:'Build observability dashboard for each Wave 1 agent', col:5, span:4, dep:11,
+            detail:'Develop the live observability dashboard in parallel with agent build. Must be ready before go-live, not after.',
+            depRef:'D11' },
+          { label:'Define SLAs and post-release evolution sprint cadence', col:9, span:4, dep:null,
+            detail:'Establish uptime, latency, and accuracy SLAs per agent class. Define a quarterly evolution sprint cadence and resource it before launch.' },
+        ]
+      },
+    ]
+  },
+];
+
+/* Dependency register */
+const DEPS = [
+  { id:'D1',  text:'Exec KPIs require flagship programs to be named first' },
+  { id:'D2',  text:'Board briefing requires exec scorecards to be aligned' },
+  { id:'D3',  text:'ExCo operating model proposal requires governance blocker mapping' },
+  { id:'D4',  text:'People-leader sessions require Ambassadors to be onboarded first' },
+  { id:'D5',  text:'Role descriptions require Wave 1 use cases to be selected first' },
+  { id:'D6',  text:'Escalation runbooks require autonomy tier model to be agreed first' },
+  { id:'D7',  text:'Owner assignment requires Wave 1 use cases to be selected first' },
+  { id:'D8',  text:'Data readiness requires Wave 1 use cases to be selected first' },
+  { id:'D9',  text:'Definition of Done requires use case selection to be complete' },
+  { id:'D10', text:'POC environment requires data readiness assessment to confirm availability' },
+  { id:'D11', text:'Observability dashboard requires production readiness checklist to define requirements' },
+];
+
+/* ─── RENDER WEEK HEADERS ─── */
+const wh = document.getElementById('weekHeader');
+for(let w=1;w<=WEEKS;w++){
+  const d = document.createElement('div');
+  d.className = 'week-label' + (w===1||w===5||w===10?' month-start':'');
+  d.textContent = w===1?'Wk 1':w===5?'Wk 5':w===10?'Wk 10':'W'+w;
+  wh.appendChild(d);
+}
+
+/* ─── RENDER SWIM LANES ─── */
+const container = document.getElementById('swimContainer');
+
+DATA.forEach(pg=>{
+  const group = document.createElement('div');
+  group.className = 'pathway-group';
+
+  const plabel = document.createElement('div');
+  plabel.className = `pathway-label ${pg.pathway}`;
+  plabel.innerHTML = `<div class="pl-badge">${pg.label}</div>`;
+  group.appendChild(plabel);
+
+  pg.lanes.forEach(lane=>{
+    const row = document.createElement('div');
+    row.className = `lane ${pg.pathway}`;
+
+    // label
+    const ll = document.createElement('div');
+    ll.className = 'lane-label';
+    ll.innerHTML = `<div class="lane-box-name">${lane.box}</div><div class="lane-box-topic">${lane.topic}</div>`;
+    row.appendChild(ll);
+
+    // track
+    const track = document.createElement('div');
+    track.className = 'lane-track';
+    track.style.position = 'relative';
+
+    // month dividers
+    [4,9].forEach(w=>{
+      const div = document.createElement('div');
+      div.className = 'month-div';
+      div.style.left = ((w/WEEKS)*100)+'%';
+      track.appendChild(div);
+    });
+
+    // action bars — position by % of 13 cols
+    lane.actions.forEach((a,ai)=>{
+      const bar = document.createElement('div');
+      const cls = pg.pathway==='tech'?'tech-bar':pg.pathway==='people'?'people-bar':'exec-bar';
+      bar.className = `action-bar ${cls}`;
+
+      const leftPct = (a.col/WEEKS)*100;
+      const widthPct = (a.span/WEEKS)*100;
+      const topPx = 8 + ai*24;
+
+      bar.style.left = leftPct+'%';
+      bar.style.width = 'calc('+widthPct+'% - 4px)';
+      bar.style.top = topPx+'px';
+
+      bar.innerHTML = `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%">${a.label}</span>`;
+
+      if(a.depRef){
+        const flag = document.createElement('div');
+        flag.className = 'dep-flag';
+        flag.textContent = a.depRef.replace('D','');
+        bar.appendChild(flag);
+      }
+
+      // tooltip
+      const tip = document.createElement('div');
+      tip.className = 'tooltip';
+      tip.innerHTML = `<div class="tt-title">${a.label}</div>${a.detail}${a.depRef?`<div class="tt-dep">⚠ Dependency ${a.depRef}: ${DEPS.find(d=>d.id===a.depRef)?.text||''}</div>`:''}`;
+      bar.appendChild(tip);
+
+      track.appendChild(bar);
+    });
+
+    // set track height
+    track.style.height = (8 + lane.actions.length*24 + 12)+'px';
+
+    row.appendChild(track);
+    group.appendChild(row);
+  });
+
+  container.appendChild(group);
+});
+
+/* ─── DEPENDENCY ITEMS ─── */
+const di = document.getElementById('depItems');
+DEPS.forEach(d=>{
+  const item = document.createElement('div');
+  item.className = 'dep-item';
+  item.innerHTML = `<div class="dep-num">${d.id.replace('D','')}</div>${d.text}`;
+  di.appendChild(item);
+});
+</script>
+</body>
+</html>
