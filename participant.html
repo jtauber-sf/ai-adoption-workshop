@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nine Critical Conversations — Pathways to Agentic Success</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:    #032D60;
+  --blue:    #0176D3;
+  --sky:     #1B96FF;
+  --teal:    #06A59A;
+  --purple:  #5C2D91;
+  --violet:  #7B5EA7;
+  --white:   #FFFFFF;
+  --offwhite:#F8FAFD;
+  --slate:   #3E4A5A;
+  --mist:    #EAF3FB;
+
+  --tech-bg:    #E6F1FB;
+  --tech-mid:   #378ADD;
+  --tech-dark:  #0C447C;
+  --people-bg:  #E1F5EE;
+  --people-mid: #1D9E75;
+  --people-dark:#085041;
+  --exec-bg:    #EEEDFE;
+  --exec-mid:   #7F77DD;
+  --exec-dark:  #3C3489;
+
+  --v2mom-vision:   #0176D3;
+  --v2mom-values:   #06A59A;
+  --v2mom-methods:  #5C2D91;
+  --v2mom-obstacles:#E45B00;
+  --v2mom-measures: #2E844A;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--offwhite);
+  color: var(--navy);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--offwhite); }
+::-webkit-scrollbar-thumb { background: #C5D8EE; border-radius: 3px; }
+
+/* ══════════════ HERO ══════════════ */
+.hero {
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: center;
+  padding: 100px 80px 80px;
+  position: relative; overflow: hidden;
+}
+
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(27,150,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(27,150,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-glow-1 {
+  position: absolute; width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(27,150,255,0.12) 0%, transparent 70%);
+  top: -200px; right: -100px; pointer-events: none;
+}
+.hero-glow-2 {
+  position: absolute; width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(92,45,145,0.15) 0%, transparent 70%);
+  bottom: -100px; left: 20%; pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 760px; }
+
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 28px;
+}
+.hero-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--sky); color: var(--navy);
+  padding: 5px 14px; border-radius: 20px;
+}
+.hero-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.2); }
+.hero-eyebrow-text {
+  font-size: 12px; font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.06em;
+}
+
+.hero h1 {
+  font-size: clamp(40px, 6vw, 80px);
+  font-weight: 800; line-height: 1.02;
+  color: white; letter-spacing: -0.03em;
+  margin-bottom: 10px;
+}
+.hero h1 span { color: var(--sky); }
+
+.hero-sub {
+  font-size: 18px; font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.65; max-width: 560px;
+  margin-bottom: 48px;
+}
+
+.hero-stats {
+  display: flex; gap: 40px; flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.hero-stat-num {
+  font-size: 36px; font-weight: 800; color: white;
+  line-height: 1;
+}
+.hero-stat-num span { color: var(--sky); }
+.hero-stat-label {
+  font-size: 12px; font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  margin-top: 4px; letter-spacing: 0.04em;
+}
+
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 80px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 11px; font-weight: 500;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  animation: bounce 2s ease-in-out infinite;
+}
+.hero-scroll::after {
+  content: '';
+  display: block; width: 1px; height: 32px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* ══════════════ MATRIX SECTION ══════════════ */
+.matrix-section {
+  padding: 80px 60px;
+  background: white;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sky); margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800; line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--navy); margin-bottom: 12px;
+}
+
+.section-desc {
+  font-size: 15px; font-weight: 300;
+  color: var(--slate); line-height: 1.7;
+  max-width: 600px; margin-bottom: 48px;
+}
+
+.filter-row {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.filter-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 6px 16px; border-radius: 20px;
+  border: 1.5px solid #D0E4F5;
+  background: white; color: var(--slate);
+  cursor: pointer; transition: all 0.2s;
+}
+.filter-chip:hover { border-color: var(--sky); color: var(--blue); }
+.filter-chip.active { background: var(--navy); color: white; border-color: var(--navy); }
+.filter-chip.tech.active  { background: var(--tech-dark);   border-color: var(--tech-dark); }
+.filter-chip.people.active{ background: var(--people-dark); border-color: var(--people-dark); }
+.filter-chip.exec.active  { background: var(--exec-dark);   border-color: var(--exec-dark); }
+
+/* Matrix layout */
+.matrix-outer {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 0;
+}
+
+.matrix-y-axis {
+  display: flex; flex-direction: column;
+  padding-top: 52px;
+}
+
+.y-label {
+  flex: 1; display: flex;
+  flex-direction: column; justify-content: center;
+  align-items: flex-end; padding-right: 16px;
+  border-right: 2px solid #E0ECFA;
+  position: relative;
+}
+.y-label::after {
+  content: '';
+  position: absolute; right: -5px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--navy);
+}
+.y-label-main {
+  font-size: 11px; font-weight: 600;
+  color: var(--navy); text-align: right;
+  writing-mode: horizontal-tb;
+  white-space: nowrap;
+}
+.y-label-sub {
+  font-size: 9px; font-weight: 400;
+  color: #8FA8C0; text-align: right;
+  margin-top: 2px;
+}
+
+.matrix-inner { display: flex; flex-direction: column; gap: 8px; }
+
+.matrix-col-headers {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  margin-bottom: 4px;
+}
+
+.col-header {
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.04em; text-align: center;
+}
+.col-header.tech   { background: var(--tech-bg);   color: var(--tech-dark); }
+.col-header.people { background: var(--people-bg); color: var(--people-dark); }
+.col-header.exec   { background: var(--exec-bg);   color: var(--exec-dark); }
+
+.matrix-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+}
+
+.box {
+  border-radius: 12px;
+  border: 1.5px solid #E0ECFA;
+  padding: 18px 20px 30px;
+  cursor: pointer;
+  background: white;
+  transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
+  position: relative; overflow: hidden;
+}
+
+.box::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; border-radius: 12px 12px 0 0;
+  opacity: 0; transition: opacity 0.2s;
+}
+.box.tech::before   { background: var(--tech-mid); }
+.box.people::before { background: var(--people-mid); }
+.box.exec::before   { background: var(--exec-mid); }
+
+.box:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(1,118,211,0.12); }
+.box:hover::before { opacity: 1; }
+
+.box.active {
+  border-width: 2px;
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(1,118,211,0.16);
+}
+.box.active::before { opacity: 1; }
+.box.tech.active   { border-color: var(--tech-mid);   background: var(--tech-bg); }
+.box.people.active { border-color: var(--people-mid); background: var(--people-bg); }
+.box.exec.active   { border-color: var(--exec-mid);   background: var(--exec-bg); }
+
+.box.dimmed { opacity: 0.25; transform: none; box-shadow: none; pointer-events: none; }
+
+.box-topic {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.box.tech   .box-topic { color: var(--tech-mid); }
+.box.people .box-topic { color: var(--people-mid); }
+.box.exec   .box-topic { color: var(--exec-mid); }
+
+.box-name {
+  font-size: 17px; font-weight: 700;
+  color: var(--navy); margin-bottom: 5px;
+  line-height: 1.1;
+}
+
+.box-desc {
+  font-size: 11px; font-weight: 400;
+  color: var(--slate); line-height: 1.5;
+}
+
+.box-count {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-top: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  padding: 3px 9px; border-radius: 10px;
+}
+.box.tech   .box-count { background: rgba(55,138,221,0.1); color: var(--tech-dark); }
+.box.people .box-count { background: rgba(29,158,117,0.1); color: var(--people-dark); }
+.box.exec   .box-count { background: rgba(127,119,221,0.1); color: var(--exec-dark); }
+
+.box-status-strip {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 3px;
+  width: 110px;
+}
+
+.box-status-cell {
+  height: 8px;
+  border-radius: 2px;
+  border: 1px solid #D8E6F4;
+  background: #FFFFFF;
+}
+
+.box-status-cell.red { background: #BA0517; border-color: #A00415; }
+.box-status-cell.amber { background: #E45B00; border-color: #C94F00; }
+.box-status-cell.green { background: #2E844A; border-color: #23693B; }
+.box-status-cell.na { background: #6B7280; border-color: #565C67; }
+
+/* ══════════════ DETAIL PANEL ══════════════ */
+.detail-section {
+  padding: 0 60px 80px;
+  background: white;
+  display: none;
+}
+.detail-section.visible { display: block; }
+
+.detail-card {
+  background: var(--offwhite);
+  border-radius: 20px;
+  border: 1.5px solid #E0ECFA;
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.detail-header {
+  padding: 36px 40px 28px;
+  background: var(--navy);
+  position: relative; overflow: hidden;
+}
+
+.detail-header::after {
+  content: attr(data-name);
+  position: absolute; right: 40px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 100px; font-weight: 800;
+  color: rgba(255,255,255,0.04);
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.dh-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+
+.dh-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  padding: 4px 12px; border-radius: 20px;
+  letter-spacing: 0.06em;
+}
+.dh-badge.row {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.dh-topic {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 6px;
+}
+
+.dh-name {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 800; color: white;
+  letter-spacing: -0.02em; line-height: 1;
+  margin-bottom: 12px;
+}
+
+.dh-question {
+  font-size: 15px; font-weight: 300;
+  color: rgba(255,255,255,0.65);
+  font-style: italic; line-height: 1.6;
+  max-width: 620px;
+}
+
+
+
+/* Aspects body */
+.detail-body { padding: 32px 40px 36px; }
+
+.aspects-intro {
+  font-size: 13px; color: var(--slate);
+  margin-bottom: 24px; line-height: 1.6;
+}
+
+.aspects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+
+.aspect-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #E0ECFA;
+  padding: 18px 20px;
+  transition: all 0.18s;
+  animation: fadeIn 0.25s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.aspect-card:hover { border-color: #B5D4F4; box-shadow: 0 4px 16px rgba(1,118,211,0.08); }
+
+.aspect-header {
+  display: flex; align-items: flex-start;
+  gap: 12px; margin-bottom: 8px;
+}
+
+.aspect-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  min-width: 24px; height: 24px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+  background: #E6EEF7;
+  color: #526C86;
+  border: 1px solid #CFDDEC;
+}
+
+.aspect-num-wrap {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  min-width: 24px;
+}
+
+.aspect-meta {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  min-height: 18px;
+}
+
+.aspect-num.is-red {
+  background: #BA0517;
+  border-color: #A00415;
+  color: white;
+}
+.aspect-num.is-amber {
+  background: #E45B00;
+  border-color: #C94F00;
+  color: white;
+}
+.aspect-num.is-green {
+  background: #2E844A;
+  border-color: #23693B;
+  color: white;
+}
+.aspect-num.is-na {
+  background: #6B7280;
+  border-color: #565C67;
+  color: white;
+}
+
+.aspect-comment-indicator {
+  font-size: 11px;
+  line-height: 1;
+  color: #638BB0;
+}
+
+.aspect-title {
+  font-size: 13px; font-weight: 600;
+  color: var(--navy); line-height: 1.35;
+}
+
+.aspect-desc {
+  font-size: 12.5px; font-weight: 300;
+  color: var(--slate); line-height: 1.6;
+  padding-left: 36px;
+}
+
+.aspect-controls {
+  margin-top: 14px;
+  margin-left: 36px;
+  padding-top: 12px;
+  border-top: 1px dashed #D3E5F6;
+  display: grid;
+  gap: 10px;
+}
+
+.aspect-controls-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7B9BB8;
+}
+
+.confidence-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.confidence-btn {
+  border: 1px solid transparent;
+  border-radius: 18px;
+  min-width: 72px;
+  height: 34px;
+  padding: 0 12px;
+  font-family: 'Sora', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  color: #123B5F;
+  transition: transform 0.12s, box-shadow 0.12s, filter 0.12s, border-color 0.12s;
+}
+
+.confidence-btn.red {
+  background: #F7D8DC;
+  border-color: #EAB7BF;
+}
+.confidence-btn.amber {
+  background: #FDE4CE;
+  border-color: #F2C9A2;
+}
+.confidence-btn.green {
+  background: #DDEEDF;
+  border-color: #BFDCC6;
+}
+.confidence-btn.na {
+  background: #E6EAF0;
+  border-color: #C6CED9;
+  color: #1F3E5B;
+}
+
+.confidence-btn:hover { filter: brightness(1.05); }
+
+.confidence-btn.is-selected {
+  border-color: rgba(3,45,96,0.45);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 4px rgba(3,45,96,0.2);
+  color: white;
+}
+
+.confidence-btn.red.is-selected { background: #BA0517; }
+.confidence-btn.amber.is-selected { background: #E45B00; }
+.confidence-btn.green.is-selected { background: #2E844A; }
+.confidence-btn.na.is-selected {
+  background: #6B7280;
+  border-color: rgba(3,45,96,0.45);
+  color: white;
+}
+
+.aspect-comment-wrap {
+  display: grid;
+  gap: 8px;
+}
+
+.aspect-controls.is-hidden {
+  display: none;
+}
+
+.aspect-comment {
+  width: 100%;
+  min-height: 72px;
+  resize: vertical;
+  border: 1px solid #CFE2F4;
+  border-radius: 8px;
+  background: #F9FCFF;
+  padding: 8px 10px;
+  font-family: 'Sora', sans-serif;
+  font-size: 12px;
+  color: var(--navy);
+  line-height: 1.45;
+}
+
+.confidence-btn:focus,
+.confidence-legend-toggle:focus,
+.aspect-comment:focus {
+  outline: 2px solid rgba(27,150,255,0.35);
+  border-color: var(--sky);
+}
+
+.detail-body-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.confidence-legend-wrap {
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+}
+
+.detail-body-label {
+  margin-bottom: 0;
+}
+
+.aspects-mode-hint {
+  font-size: 11px;
+  font-weight: 400;
+  color: #6F93B0;
+  margin-top: 4px;
+}
+
+.confidence-legend-toggle {
+  border: 1px solid #BED7EE;
+  background: #F4FAFF;
+  color: #2E5F86;
+  border-radius: 16px;
+  padding: 7px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.confidence-legend-toggle:hover {
+  background: #EAF5FF;
+  border-color: #9EC5E9;
+  color: #1A4D75;
+}
+
+.confidence-legend {
+  display: none;
+  border: 1px solid #D1E4F6;
+  background: #F7FBFF;
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 320px;
+}
+
+.confidence-legend.is-open { display: block; }
+
+.confidence-legend-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6E93B1;
+  margin-bottom: 8px;
+}
+
+.confidence-legend ul {
+  margin-left: 16px;
+  display: grid;
+  gap: 6px;
+}
+
+.confidence-legend li {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: #365976;
+  line-height: 1.45;
+}
+
+/* V2MOM tabs removed — now a canvas section below aspects */
+
+.dh-scroll-hint {
+  margin-top: 20px; padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 12px; font-weight: 400;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.04em;
+}
+
+.detail-body-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #8FA8C0;
+  margin-bottom: 0;
+}
+
+/* ── V2MOM CANVAS ── */
+.v2mom-canvas-section {
+  margin-top: 48px;
+  border-top: 2px solid #E0ECFA;
+  padding-top: 36px;
+}
+
+.v2mom-canvas-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 28px; flex-wrap: wrap;
+}
+
+.v2mom-canvas-title {
+  font-size: 22px; font-weight: 800;
+  color: var(--navy); letter-spacing: -0.02em;
+}
+
+.v2mom-canvas-sub {
+  font-size: 13px; font-weight: 300;
+  color: var(--slate); line-height: 1.6;
+  max-width: 640px; margin-bottom: 28px;
+}
+
+.v2mom-canvas-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #8FA8C0; margin-bottom: 8px;
+}
+
+.v2mom-cards { display: flex; flex-direction: column; gap: 12px; }
+
+.v2mom-card {
+  border-radius: 14px;
+  border: 1.5px solid;
+  overflow: hidden;
+  transition: box-shadow 0.18s;
+}
+.v2mom-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.07); }
+
+.v2mom-card-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.v2mom-card-letter {
+  font-size: 28px; font-weight: 800;
+  line-height: 1; flex-shrink: 0;
+  width: 36px; text-align: center;
+}
+
+.v2mom-card-title-group { flex: 1; }
+.v2mom-card-word {
+  font-size: 14px; font-weight: 700;
+  line-height: 1.1;
+}
+.v2mom-card-tagline {
+  font-size: 11px; font-weight: 400;
+  opacity: 0.65; margin-top: 2px;
+}
+
+.v2mom-chevron {
+  font-size: 14px; transition: transform 0.2s;
+  flex-shrink: 0; opacity: 0.5;
+}
+.v2mom-card.open .v2mom-chevron { transform: rotate(180deg); }
+
+.v2mom-card-body {
+  display: none;
+  padding: 0 20px 20px 70px;
+}
+.v2mom-card.open .v2mom-card-body { display: block; }
+
+.v2mom-statement {
+  font-size: 14px; font-weight: 400;
+  line-height: 1.75; color: var(--slate);
+  margin-bottom: 16px;
+}
+
+.v2mom-bullets { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.v2mom-bullet {
+  font-size: 13px; font-weight: 300;
+  color: var(--slate); line-height: 1.6;
+  padding-left: 18px; position: relative;
+}
+.v2mom-bullet::before {
+  content: '→';
+  position: absolute; left: 0;
+  font-size: 11px; font-weight: 600;
+  top: 2px;
+}
+
+/* Per-V2MOM colours */
+.v2mom-vision    { border-color: #93C5FD; background: #F0F7FF; }
+.v2mom-vision    .v2mom-card-header { background: #DBEAFE; }
+.v2mom-vision    .v2mom-card-letter, .v2mom-vision .v2mom-card-word { color: #1D4ED8; }
+.v2mom-vision    .v2mom-bullet::before { color: #1D4ED8; }
+
+.v2mom-values    { border-color: #6EE7D0; background: #F0FDF9; }
+.v2mom-values    .v2mom-card-header { background: #CCFBF1; }
+.v2mom-values    .v2mom-card-letter, .v2mom-values .v2mom-card-word { color: #0F766E; }
+.v2mom-values    .v2mom-bullet::before { color: #0F766E; }
+
+.v2mom-methods   { border-color: #C4B5FD; background: #F8F5FF; }
+.v2mom-methods   .v2mom-card-header { background: #EDE9FE; }
+.v2mom-methods   .v2mom-card-letter, .v2mom-methods .v2mom-card-word { color: #6D28D9; }
+.v2mom-methods   .v2mom-bullet::before { color: #6D28D9; }
+
+.v2mom-obstacles { border-color: #FDBA74; background: #FFFBF5; }
+.v2mom-obstacles .v2mom-card-header { background: #FFEDD5; }
+.v2mom-obstacles .v2mom-card-letter, .v2mom-obstacles .v2mom-card-word { color: #C2410C; }
+.v2mom-obstacles .v2mom-bullet::before { color: #C2410C; }
+
+.v2mom-measures  { border-color: #86EFAC; background: #F0FDF4; }
+.v2mom-measures  .v2mom-card-header { background: #DCFCE7; }
+.v2mom-measures  .v2mom-card-letter, .v2mom-measures .v2mom-card-word { color: #15803D; }
+.v2mom-measures  .v2mom-bullet::before { color: #15803D; }
+
+/* Detail nav */
+.detail-nav {
+  display: flex; align-items: center; gap: 8px;
+  padding: 20px 40px;
+  border-top: 1px solid #E8F4FD;
+  background: white;
+  flex-wrap: wrap;
+}
+
+.dnav-btn {
+  font-size: 12px; font-weight: 500;
+  padding: 8px 16px; border-radius: 8px;
+  border: 1px solid #D0E4F5;
+  background: white; color: var(--slate);
+  cursor: pointer; transition: all 0.15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.dnav-btn:hover { background: var(--mist); color: var(--navy); border-color: var(--sky); }
+.dnav-btn.close-btn {
+  margin-left: auto;
+  background: var(--navy); color: white; border-color: var(--navy);
+}
+.dnav-btn.close-btn:hover { background: var(--blue); }
+
+/* ══════════════ ALL ASPECTS VIEW ══════════════ */
+.all-section {
+  padding: 80px 60px;
+  background: var(--offwhite);
+}
+
+.all-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.all-card {
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #E0ECFA;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.all-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(1,118,211,0.1); border-color: #B5D4F4; }
+
+.all-card-header {
+  padding: 14px 18px 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.all-card-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+
+.all-card-meta { flex: 1; }
+.all-card-pathway { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+.all-card-row { font-size: 10px; color: #8FA8C0; }
+.all-card-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  padding: 2px 8px; border-radius: 8px;
+  background: var(--offwhite);
+  color: var(--slate);
+}
+
+.all-card-body { padding: 0 18px 16px; }
+.all-card-name { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.all-card-topic { font-size: 11px; font-weight: 400; color: #8FA8C0; margin-bottom: 10px; }
+.all-card-q { font-size: 12px; font-weight: 300; color: var(--slate); font-style: italic; line-height: 1.5; }
+
+/* ══════════════ FOOTER ══════════════ */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.4);
+  padding: 28px 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+  font-size: 11px; letter-spacing: 0.08em;
+}
+footer strong { color: var(--sky); }
+
+/* ══════════════ RESPONSIVE ══════════════ */
+@media (max-width: 900px) {
+  .hero { padding: 100px 32px 60px; }
+  .hero-scroll { left: 32px; }
+  .matrix-section, .detail-section, .all-section { padding-left: 24px; padding-right: 24px; }
+  .matrix-outer { grid-template-columns: 64px 1fr; }
+  .box-name { font-size: 14px; }
+  .detail-header { padding: 24px 24px 20px; }
+  .detail-body { padding: 20px 24px 24px; }
+  .detail-nav { padding: 16px 24px; }
+  footer { padding: 20px 24px; }
+}
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: 36px; }
+  .hero-stats { gap: 24px; }
+  .matrix-col-headers { grid-template-columns: 1fr; gap: 4px; }
+  .matrix-row { grid-template-columns: 1fr; }
+  .detail-body-head { flex-direction: column; }
+  .confidence-legend-wrap { justify-items: start; width: 100%; }
+  .confidence-legend { min-width: 0; width: 100%; }
+  .aspects-grid { grid-template-columns: 1fr; }
+  .aspect-desc { padding-left: 0; }
+  .aspect-controls { margin-left: 0; }
+  .confidence-actions { gap: 6px; }
+  .all-grid { grid-template-columns: 1fr; }
+  .matrix-outer { grid-template-columns: 1fr; }
+  .matrix-y-axis { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero" id="top">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-badge">Agentforce · Catalyst ANZ</div>
+      <div class="hero-divider"></div>
+      <div class="hero-eyebrow-text">Executive Workshop Framework</div>
+    </div>
+    <h1>Nine Critical<br><span>Conversations</span></h1>
+    <p class="hero-sub">A strategic framework for executive teams navigating agentic AI adoption — across Technology, People, and Executive dimensions, mapped through the Salesforce V2MOM lens.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">9<span>×</span></div>
+        <div class="hero-stat-label">Critical conversations</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">10<span>×</span></div>
+        <div class="hero-stat-label">Strategic aspects each</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">3<span>×</span></div>
+        <div class="hero-stat-label">Adoption pathways</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">V2MOM</div>
+        <div class="hero-stat-label">Operating framework</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">Explore the matrix</div>
+</section>
+
+<!-- ══════════════ MATRIX SECTION ══════════════ -->
+<section class="matrix-section" id="matrix-section">
+  <div class="section-label">The Framework</div>
+  <div class="section-title">Nine Critical Conversations</div>
+  <p class="section-desc">Each box represents a critical conversation your organisation must have. Click any box to explore the 10 strategic aspects that need identification before you can move forward.</p>
+
+  <div class="filter-row" id="filterRow">
+    <button class="filter-chip active" data-filter="all">All pathways</button>
+    <button class="filter-chip tech" data-filter="tech">Technology pathway</button>
+    <button class="filter-chip people" data-filter="people">People pathway</button>
+    <button class="filter-chip exec" data-filter="exec">Executive pathway</button>
+  </div>
+
+  <div class="matrix-outer">
+    <div class="matrix-y-axis">
+      <div class="y-label">
+        <div class="y-label-main">See it in action</div>
+        <div class="y-label-sub">In production</div>
+      </div>
+      <div class="y-label">
+        <div class="y-label-main">Put it in context</div>
+        <div class="y-label-sub">Contextualise</div>
+      </div>
+      <div class="y-label">
+        <div class="y-label-main">Set an intention</div>
+        <div class="y-label-sub">Strategic intent</div>
+      </div>
+    </div>
+
+    <div class="matrix-inner">
+      <div class="matrix-col-headers">
+        <div class="col-header tech">Technology pathway</div>
+        <div class="col-header people">People pathway</div>
+        <div class="col-header exec">Executive pathway</div>
+      </div>
+
+      <!-- Row 1: See it in action -->
+      <div class="matrix-row" id="row-action">
+        <div class="box tech" data-key="production">
+          <div class="box-topic">Deployment & scale</div>
+          <div class="box-name">Production</div>
+          <div class="box-desc">Security, interoperability, commercial viability & adaptability</div>
+          <div class="box-count">10 aspects</div>
+        </div>
+        <div class="box people" data-key="ownership">
+          <div class="box-topic">Accountability & lifecycle</div>
+          <div class="box-name">Ownership</div>
+          <div class="box-desc">Named owners, performance monitoring & planned evolution</div>
+          <div class="box-count">10 aspects</div>
+        </div>
+        <div class="box exec" data-key="culture">
+          <div class="box-topic">People & org readiness</div>
+          <div class="box-name">Culture</div>
+          <div class="box-desc">Psychological safety, AI fluency & talent development</div>
+          <div class="box-count">10 aspects</div>
+        </div>
+      </div>
+
+      <!-- Row 2: Put it in context -->
+      <div class="matrix-row" id="row-context">
+        <div class="box tech" data-key="validation">
+          <div class="box-topic">Testing & readiness</div>
+          <div class="box-name">Validation</div>
+          <div class="box-desc">POC environment, testing mindset & accuracy vs. impact balance</div>
+          <div class="box-count">10 aspects</div>
+        </div>
+        <div class="box people" data-key="controls">
+          <div class="box-topic">Risk, governance & trust</div>
+          <div class="box-name">Controls</div>
+          <div class="box-desc">Encapsulation, escalation paths & audit architecture</div>
+          <div class="box-count">10 aspects</div>
+        </div>
+        <div class="box exec" data-key="structure">
+          <div class="box-topic">Operating model & governance</div>
+          <div class="box-name">Structure</div>
+          <div class="box-desc">Governance frameworks, disincentives & org design evolution</div>
+          <div class="box-count">10 aspects</div>
+        </div>
+      </div>
+
+      <!-- Row 3: Set an intention -->
+      <div class="matrix-row" id="row-intention">
+        <div class="box tech" data-key="usecase">
+          <div class="box-topic">Opportunity identification</div>
+          <div class="box-name">Use Case</div>
+          <div class="box-desc">Identify, score & prioritise truly agentic work</div>
+          <div class="box-count">10 aspects</div>
+        </div>
+        <div class="box people" data-key="roles">
+          <div class="box-topic">Human-agent collaboration</div>
+          <div class="box-name">Roles</div>
+          <div class="box-desc">Scope of responsibility, channels, data access & career implications</div>
+          <div class="box-count">10 aspects</div>
+        </div>
+        <div class="box exec" data-key="strategy">
+          <div class="box-topic">Business transformation</div>
+          <div class="box-name">Strategy</div>
+          <div class="box-desc">Define strategic value, purpose & competitive direction</div>
+          <div class="box-count">10 aspects</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ DETAIL PANEL ══════════════ -->
+<section class="detail-section" id="detailSection">
+  <div class="detail-card" id="detailCard">
+    <div class="detail-header" id="detailHeader">
+      <div class="dh-badges" id="dhBadges"></div>
+      <div class="dh-topic" id="dhTopic"></div>
+      <div class="dh-name" id="dhName"></div>
+      <div class="dh-question" id="dhQuestion"></div>
+      <div class="dh-scroll-hint">Scroll down to explore 10 strategic aspects and the V2MOM canvas ↓</div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-body-head">
+        <div>
+          <div class="detail-body-label">10 Strategic Aspects</div>
+          <div class="aspects-mode-hint" id="aspectsModeHint">Click any aspect card to enter edit mode.</div>
+        </div>
+        <div class="confidence-legend-wrap">
+          <button type="button" class="confidence-legend-toggle" aria-expanded="false" aria-controls="confidence-legend" onclick="toggleConfidenceLegend(this)">Confidence Level Key</button>
+          <div class="confidence-legend" id="confidence-legend">
+            <div class="confidence-legend-title">Confidence Level Key</div>
+            <ul>
+              <li><strong>Red / Low</strong> - low confidence, not discussed, no plan in place.</li>
+              <li><strong>Amber / Medium</strong> - discussion started, needs additional work to build confidence.</li>
+              <li><strong>Green / High</strong> - high confidence in shared understanding and clarity on plan and accountabilities.</li>
+              <li><strong>N/A</strong> - not applicable to this aspect right now.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="aspects-grid" id="aspectsGrid"></div>
+      <div class="v2mom-canvas-section" id="v2momCanvas"></div>
+    </div>
+    <div class="detail-nav" id="detailNav"></div>
+  </div>
+</section>
+
+<!-- ══════════════ ALL BOXES CARDS ══════════════ -->
+<section class="all-section" id="allSection">
+  <div class="section-label">All nine conversations</div>
+  <div class="section-title">Browse by dimension</div>
+  <p class="section-desc">Select any conversation below to explore its 10 strategic aspects in full, or use the matrix above to navigate the full landscape.</p>
+  <div class="all-grid" id="allGrid"></div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <span><strong>Nine Critical Conversations</strong> · Pathways to Agentic Success · Catalyst ANZ · AI &amp; Innovation</span>
+  <span>V2MOM Framework · Agentforce · Salesforce</span>
+</footer>
+
+<script>
+const PATHWAY_META = {
+  tech:   { label: 'Technology pathway', color: '#378ADD', bg: '#E6F1FB', dark: '#0C447C', dot: '#0176D3' },
+  people: { label: 'People pathway',     color: '#1D9E75', bg: '#E1F5EE', dark: '#085041', dot: '#06A59A' },
+  exec:   { label: 'Executive pathway',  color: '#7F77DD', bg: '#EEEDFE', dark: '#3C3489', dot: '#5C2D91' }
+};
+
+const ROW_META = {
+  production: 'See it in action',
+  ownership:  'See it in action',
+  culture:    'See it in action',
+  validation: 'Put it in context',
+  controls:   'Put it in context',
+  structure:  'Put it in context',
+  usecase:    'Set an intention',
+  roles:      'Set an intention',
+  strategy:   'Set an intention'
+};
+
+const V2MOM_DATA = {
+  strategy: {
+    vision:    { statement: 'Agentforce is embedded in our 3-year strategic plan as a primary lever for competitive differentiation — not an IT initiative, but a board-level strategic commitment with named executive accountability.', bullets: ['Agents drive measurable competitive advantage, not just operational efficiency', 'Board has explicitly approved investment horizon and risk appetite', 'Agentic transformation features in our market positioning narrative'] },
+    values:    { statement: 'We lead with purpose before technology. Every agent deployment must connect to organisational purpose and be expressible in business value terms — not just technical capability.', bullets: ['Strategic value is articulated in business language before build begins', 'Purpose and organisational values are legible in how agents behave', 'We lead through uncertainty with confidence, not paralysis'] },
+    methods:   { statement: 'We will define three flagship Agentforce programs tied directly to corporate OKRs, embed agentic KPIs in exec scorecards, and present our agentic strategy to the board within one quarter.', bullets: ['Name 3 flagship programs with named executive sponsors by end of workshop', 'Add agentic KPIs to all executive scorecards in next planning cycle', 'Conduct board strategy presentation within 90 days', 'Define build vs. buy vs. partner position for core capabilities'] },
+    obstacles: { statement: 'The most significant blockers are unclear ROI models, competing strategic priorities, board unfamiliarity with agentic concepts, and risk aversion that prevents strategic commitment.', bullets: ['ROI models are nascent — baselines must be established before pilots begin', 'Competing priorities make agentic investment vulnerable to deprioritisation', 'Board members may conflate Agentforce with prior automation or chatbot initiatives', 'Risk aversion without risk frameworks produces stasis, not caution'] },
+    measures:  { statement: 'We will know strategy is working when agentic programs are embedded in planning cycles, board reporting is routine, and external market position reflects our agentic capability.', bullets: ['% of strategic initiatives with a named Agentforce component (target: 3 by Q2)', 'Frequency of board AI progress reporting (target: quarterly)', 'Analyst and market position assessment on AI readiness (biannual)', 'Strategic OKR hit rate for agentic programs (target: >70%)'] }
+  },
+  structure: {
+    vision:    { statement: 'Our operating model has evolved so that agentic AI is embedded in governance, reporting lines, and decision rights — not bolted on as a parallel structure or managed as a technology project.', bullets: ['Agent lifecycle is governed within existing enterprise risk and compliance frameworks', 'Decision rights for agent deployment are clear, fast, and cross-functional', 'The operating model actively enables, not impedes, agentic adoption'] },
+    values:    { statement: 'We leverage existing governance structures rather than creating parallel bureaucracies. We actively identify and remove disincentives, and we evolve our operating model with intention rather than waiting for it to break.', bullets: ['Extend existing risk frameworks to agents rather than creating new ones', 'Treat disincentive removal as a structural priority, not a cultural afterthought', 'Hard policy for mandatory compliance; soft protocol for contextual decisions'] },
+    methods:   { statement: 'We will map current governance to the agent lifecycle, identify the top structural blockers, propose operating model changes, and implement within a 90-day timeline.', bullets: ['Complete governance-to-agent lifecycle mapping within 30 days', 'Identify and log top 5 structural blockers with remediation owners', 'Propose operating model changes to ExCo within 60 days', 'Establish cross-functional agent coordination forum with fortnightly cadence'] },
+    obstacles: { statement: 'Legacy org design, siloed ownership, slow procurement cycles, and embedded disincentives — including headcount targets and cost centre models — are the primary structural blockers.', bullets: ['Procurement cycles average 12+ weeks — too slow for agent build cadences', 'Headcount-based performance models create disincentives for agent adoption', 'Legal entity complexity creates liability ambiguity in multi-jurisdiction deployments', 'Shadow AI is already occurring and is not yet being systematically tracked'] },
+    measures:  { statement: 'We will know structural change is working when governance approvals are faster, blockers are being removed on a documented cadence, and the operating model is audibly enabling adoption.', bullets: ['# structural blockers removed per quarter (target: 2 per quarter)', 'Time to approve new agent use case through governance (target: <4 weeks)', '% of agent lifecycle stages covered by existing governance (target: 100%)', 'Shadow AI incidents identified and resolved per quarter'] }
+  },
+  culture: {
+    vision:    { statement: 'We are an organisation where working with agents is familiar, expected, and celebrated — where psychological safety enables experimentation, and AI fluency is a core part of every professional\'s identity.', bullets: ['Employees experiment with agents without fear of judgment or job insecurity', 'Leadership visibly models agent use in their own day-to-day work', 'AI fluency is a valued professional skill, not a technical niche'] },
+    values:    { statement: 'Psychological safety comes first. We will be honest about displacement — not just reassuring. We invest in talent development as a strategic priority. And we balance hard policy with soft protocol to allow genuine adoption.', bullets: ['Safety before scale — we will not push adoption faster than trust allows', 'Honesty over reassurance — we name displacement risks directly', 'Talent development is funded and structured, not aspirational'] },
+    methods:   { statement: 'We will launch an Agent Ambassador program, run team-level familiarisation sessions, celebrate agent wins in all-hands communications, and build AI fluency into leadership development pathways.', bullets: ['Launch Agent Ambassador program with 1 nominee per BU within 60 days', 'Run agent familiarisation sessions for all people-leader cohorts in 90 days', 'Feature agent wins in all-hands at least once per quarter', 'Embed AI fluency modules in leadership development programs by H2'] },
+    obstacles: { statement: 'Fear of job displacement, inconsistent leadership signals, change fatigue from prior digital programs, and skills gaps at middle management are the primary cultural blockers.', bullets: ['Middle managers are the most underserved cohort — they neither build nor are protected', 'Change fatigue is real — this program must be visibly different from prior initiatives', 'Inconsistent signals from senior leaders undermine grassroots adoption efforts', 'Reward systems often penalise the time investment required for genuine experimentation'] },
+    measures:  { statement: 'We will know culture is shifting when sentiment scores rise, experimentation rates increase, and fluency becomes a visible part of how people describe their professional identity.', bullets: ['AI sentiment score in quarterly pulse (baseline now, target +15pts in 12 months)', '% employees who have completed at least one agentic interaction (target: 60% by H2)', '# active Agent Ambassadors per BU (target: 1 per BU, active and reporting)', 'AI fluency assessment completion rate (target: 80% of people leaders by Q3)'] }
+  },
+  roles: {
+    vision:    { statement: 'Every team member has a clear, documented relationship with agents — as orchestrators, reviewers, or beneficiaries — with career paths that reward human-agent collaboration as a core professional competency.', bullets: ['Agent scope of responsibility is explicit and consistently enforced', 'Humans remain in control at all decision points that matter most', 'Career advancement recognises agent collaboration as a valued skill'] },
+    values:    { statement: 'Scope agent responsibility carefully and explicitly. Data and context boundaries must be defined before deployment. Agents support people — people lead. And we consult affected employees before we redesign their roles.', bullets: ['No agent is deployed without explicit scope, channel, and data boundary definitions', 'Escalation paths are named individuals, not teams or queues', 'Role redesign is done with incumbents, not announced to them'] },
+    methods:   { statement: 'We will build agent-augmented role descriptions for our top 5 roles, define scope and channel models per use case, map data and context requirements, and integrate agent collaboration into career frameworks.', bullets: ['Draft agent-augmented role descriptions for top 5 impacted roles within 60 days', 'Define channel model (voice, chat, async, embedded) per Wave 1 use case', 'Map data access and context requirements before any agent enters validation', 'Update career frameworks to include agent orchestration competency by H2'] },
+    obstacles: { statement: 'Anxiety about role displacement, HR systems not designed for hybrid workflows, manager resistance, labour relations complexity, and undefined escalation paths are the primary blockers.', bullets: ['HR systems do not yet support hybrid human-agent performance tracking', 'Labour relations frameworks predate agentic AI — consultation processes are unclear', 'Managers are often the most resistant — and the most critical to adoption', 'Escalation paths named on paper but untested in practice are the most dangerous kind'] },
+    measures:  { statement: 'We will know roles are well-designed when employees can articulate their relationship with agents, escalations work as designed, and career frameworks actively incentivise collaboration.', bullets: ['% of impacted roles with documented agent interaction model (target: 100% before go-live)', 'Employee NPS for agent collaboration (baseline + quarterly tracking)', '# agent-augmented role descriptions in active use (target: 5 by end of Wave 1)', 'Escalation test pass rate (target: 100% tested before production)'] }
+  },
+  controls: {
+    vision:    { statement: 'Agents operate within well-defined, tested boundaries — with clear escalation paths, living audit trails, and a risk framework that builds trust progressively as agents prove themselves across autonomy tiers.', bullets: ['Every agent has defined encapsulation boundaries enforced technically, not just documented', 'Escalation paths are tested regularly, not just written in a runbook', 'Audit trails are a design requirement, not a retrospective obligation'] },
+    values:    { statement: 'Encapsulation before scale. Escalation clarity before autonomy. Audit as a feature. We expect imperfection and scope for trust — controls exist to build confidence, not to create bureaucracy.', bullets: ['Controls are proportionate to risk — not uniform across all use cases', 'Transparency with users interacting with agents is a default, not an afterthought', 'Shadow AI is a symptom of over-control elsewhere — we address root causes'] },
+    methods:   { statement: 'We will define a 3-tier autonomy model, create escalation runbooks per use case, establish Agentforce-specific risk and audit standards, and build a structured incident response playbook.', bullets: ['Define and agree 3-tier autonomy model (supervised, assisted, autonomous) within 30 days', 'Create escalation runbook for each Wave 1 use case before validation begins', 'Establish risk classification framework with criteria for each tier within 60 days', 'Complete regulatory compliance mapping for all applicable jurisdictions'] },
+    obstacles: { statement: 'Over-control that stifles innovation, shadow AI bypassing governance, evolving regulatory uncertainty, and audit trail complexity in multi-agent orchestration are the primary blockers.', bullets: ['Over-control creates shadow AI — the very risk it was designed to prevent', 'Multi-agent audit trails are complex — no current standard exists for agentic chains', 'Regulatory landscape is evolving — static controls will become non-compliant', 'Consent and disclosure requirements vary by jurisdiction and context'] },
+    measures:  { statement: 'We will know controls are working when agents operate within approved tiers, escalations are detected and resolved quickly, and audits pass without major findings.', bullets: ['% of production agents operating within approved autonomy tier (target: 100%)', '# escalations triggered, received, and resolved within SLA (weekly tracking)', 'Audit pass rate for agent deployments (target: 100% major findings = zero)', 'Time-to-detect and remediate agent incidents (target: <4 hours for P1)'] }
+  },
+  ownership: {
+    vision:    { statement: 'Every agent has a named, empowered business owner and technical owner — accountable for performance, driving evolution, and responsible for the agent\'s outcomes as they would be for any team member or critical business system.', bullets: ['Ownership is a named individual, not a team, committee, or role title', 'Business and technical owners are jointly accountable — neither alone is sufficient', 'Ownership is in KPIs and performance reviews, not just policy documents'] },
+    values:    { statement: 'Empower owners with the information and authority they need to act. Monitor continuously. Plan evolution from day one. Ownership must be an asset, not a burden — or it will be avoided.', bullets: ['Owners without visibility cannot drive improvement — dashboards are mandatory', 'Evolution is planned and resourced, not reactive and underfunded', 'Ownership must be recognised and rewarded — otherwise it will be nominal'] },
+    methods:   { statement: 'We will assign named business and technical owners before any agent enters production, build performance dashboards, define quarterly evolution sprints, and create formal decommission and succession processes.', bullets: ['Assign named owners for all Wave 1 use cases before leaving this workshop', 'Build agent performance dashboard spec within 30 days of production go-live', 'Define evolution sprint cadence (quarterly) and resource it before launch', 'Create decommission criteria and ownership succession process within 60 days'] },
+    obstacles: { statement: 'Ownership ambiguity between IT and business, high turnover creating orphaned agents, executives reluctant to own agent risk, and no decommission process are the primary blockers.', bullets: ['Without explicit assignment, ownership defaults to IT — which is wrong', 'Staff turnover is the most common cause of orphaned agents within 6 months', 'Ownership feels like risk with no reward — this must be addressed structurally', 'No decommission criteria means agents accumulate as technical debt indefinitely'] },
+    measures:  { statement: 'We will know ownership is working when every agent has an active, engaged owner, performance reviews happen on schedule, and no agents are orphaned for more than 30 days.', bullets: ['% of production agents with active named owner (target: 100% at all times)', '# orphaned agents identified at any point in time (target: zero)', 'Quarterly agent performance review completion rate (target: 100%)', 'Owner engagement score — do owners feel equipped and supported? (quarterly survey)'] }
+  },
+  usecase: {
+    vision:    { statement: 'A prioritised, living portfolio of genuinely agentic use cases — scored by value, complexity, and risk, refreshed quarterly, with named sponsors and short build cycles that deliver visible value fast.', bullets: ['Every use case in the portfolio is demonstrably agentic — not automation or chatbot', 'Wave 1 is selected, scoped, and sponsored before we leave this workshop', 'The pipeline is a living register, not a one-time exercise'] },
+    values:    { statement: 'Select for high value. Differentiate truly agentic from automation. Evaluate complexity honestly. Short build cycles over big-bang delivery. Risk classification before prioritisation.', bullets: ['Value is estimated before build begins — not assumed or deferred', 'We will not oversell agentic complexity or undersell automation alternatives', 'Broad scope is the most common cause of failure — we scope tightly by default'] },
+    methods:   { statement: 'We will run a Use Case Harvest Sprint today, apply a value × feasibility × risk scoring rubric, select Wave 1 before the end of this workshop, and assign a named business sponsor to each.', bullets: ['Run Use Case Harvest Sprint: each exec submits 3 candidates using the one-pager template', 'Apply scoring rubric: value (1–5) × feasibility (1–5) × risk inverse (1–5)', 'Select top 3–5 for Wave 1 before close of workshop today', 'Assign named business sponsor to each use case — confirmed before leaving the room'] },
+    obstacles: { statement: 'Use cases too broad to scope, data unavailability, integration complexity underestimated, political battles over function priority, and confusion between agentic and automation are the primary blockers.', bullets: ['The most common failure is scoping a use case so broadly it cannot be built in weeks', 'Data dependencies are consistently underestimated until they cause project stalls', 'Political battles over who goes first can delay Wave 1 by months', '"Agentic" is being applied to basic automation — this dilutes the portfolio'] },
+    measures:  { statement: 'We will know use case management is working when the pipeline stays active, conversion rates from idea to production improve, and the portfolio genuinely balances functions and risk levels.', bullets: ['# use cases in active pipeline at any time (target: 10+ beyond current wave)', 'Conversion rate: ideation to production (baseline now, improve each wave)', 'Average time from approved idea to first testable demo (target: <8 weeks)', '% use cases meeting "truly agentic" criteria on independent review (target: 100%)'] }
+  },
+  validation: {
+    vision:    { statement: 'Agents are proven accurate, trusted, and valuable with real subject matter experts in representative environments before broad deployment — with a testing mindset that is honest about the tradeoff between accuracy and impact.', bullets: ['Definition of done is agreed before build, not negotiated at the end', 'Validation is an investment in trust, not a compliance checkpoint', 'SMEs are active partners in refinement, not passive sign-off approvers'] },
+    values:    { statement: 'Refine and test with real SMEs — not in isolation. Expect imperfection at the pilot stage. Balance accuracy and impact explicitly. POC environments are investments, not luxuries.', bullets: ['Accuracy targets are use-case specific — not a universal standard imposed from outside', 'Imperfection in validation is expected — imperfection in production without rollback is not', 'Gate decisions are independent of the build team — motivated reasoning is a real risk'] },
+    methods:   { statement: 'We will build POC environments for Wave 1 use cases, define a 3-gate validation process, schedule SME review cycles, and agree a Definition of Done before any build begins.', bullets: ['Define "Definition of Done" for each Wave 1 use case before build starts', 'Build isolated POC environment with representative data within 30 days', 'Schedule structured SME review cycles — minimum 2 rounds before gate 2', 'Define and agree gate criteria: feasibility gate, context gate, production gate'] },
+    obstacles: { statement: 'Pressure to skip validation and ship fast, difficulty constructing representative test sets, hallucination and reliability concerns, and user acceptance issues from SMEs unfamiliar with AI outputs are the primary blockers.', bullets: ['Commercial pressure is the most common cause of validation being compressed or skipped', 'Test sets constructed without adversarial cases create false confidence before launch', 'SMEs unfamiliar with AI output characteristics often reject valid responses as wrong', 'Rollback plans documented but untested before go-live are not rollback plans'] },
+    measures:  { statement: 'We will know validation is working when agents consistently pass all gates before production, SME satisfaction is high, and post-launch rollback rates are low and declining.', bullets: ['% of agents passing all 3 validation gates before production (target: 100%)', 'Task accuracy rate in pilot against agreed threshold (use-case specific)', 'SME satisfaction score after validation process (target: >8/10)', 'Rollback rate in first 30 days post-launch (target: <5% of deployments)'] }
+  },
+  production: {
+    vision:    { statement: 'Agents in production are secure, interoperable, commercially viable, and built to adapt — with observability designed in from day one so owners can monitor, learn, and evolve without waiting for an incident to prompt action.', bullets: ['Every production agent has a live observability dashboard before go-live', 'Security review is a gate, not a retrospective — passed before production approval', 'Commercial viability at scale is modelled before commitment, not discovered after'] },
+    values:    { statement: 'Plan for observability and evolution from day one. Security and privacy are non-negotiable gates. Interoperability over island solutions. Commercial viability is a design constraint, not an afterthought.', bullets: ['Agents built to be updated — not rebuilt — when models, prompts, or tools change', 'Security review is mandatory and independent — not performed by the build team', 'Production readiness checklists are genuine gates, not compliance theatre'] },
+    methods:   { statement: 'We will define a production readiness checklist, build observability dashboards before go-live, establish SLAs for each agent class, and create post-release adaptability protocols with a regular sprint cadence.', bullets: ['Define production readiness checklist covering security, privacy, interop, commercial, observability', 'Build observability dashboard spec in parallel with agent build — not after', 'Establish SLAs (uptime, latency, accuracy) for each Wave 1 agent before launch', 'Define post-release evolution sprint cadence — quarterly as minimum standard'] },
+    obstacles: { statement: 'Legacy system integration complexity, data quality barriers, security review cycle lengths, model reliability concerns, and commercial licensing ambiguity at scale are the primary blockers.', bullets: ['Legacy system integration is consistently the longest lead-time item in production readiness', 'Prompt injection and data exfiltration risks are frequently not included in security reviews', 'Multi-agent coordination failures are emergent and difficult to test for in isolation', 'LLM provider terms can change — dependency risk is real and undermanaged'] },
+    measures:  { statement: 'We will know production is working when agents meet their SLAs, security reviews pass without major findings, owners have live visibility, and commercial models remain viable as usage scales.', bullets: ['Agent uptime against SLA (target: 99.5% for production agents)', 'Security review findings — major findings target: zero before go-live', '% of production agents with live observability dashboard (target: 100%)', 'Unit cost per agent interaction at 10x current usage (modelled quarterly)'] }
+  }
+};
+
+
+
+const BOXES = {
+  strategy: {
+    name: 'Strategy', pathway: 'exec',
+    topic: 'Business transformation',
+    question: 'How can agents shape the future of our organisation?',
+    aspects: [
+      { v2mom: 'vision',    title: 'Competitive differentiation thesis', desc: 'What specifically makes agentic AI a defensible advantage for this organisation — not just efficiency, but market position and long-term competitive moat?' },
+      { v2mom: 'vision',    title: 'Board-level mandate & risk appetite', desc: 'Has leadership explicitly defined how much uncertainty and investment the organisation is willing to absorb to pursue agentic transformation?' },
+      { v2mom: 'values',    title: 'Strategic value articulation', desc: 'Can you express agent value in business language — revenue influenced, cost avoided, time recovered — not just technical capability?' },
+      { v2mom: 'values',    title: 'Purpose and values alignment', desc: 'Does the agentic agenda reinforce or conflict with stated organisational purpose? Where are the tensions that need naming before they become blockers?' },
+      { v2mom: 'methods',   title: 'Horizon planning', desc: 'What does the 90-day, 1-year, and 3-year arc of agentic adoption look like? Which horizon is most under-defined and most urgently needs attention?' },
+      { v2mom: 'methods',   title: 'Leading through uncertainty', desc: 'How will leadership model confident decision-making in a domain where precedent is thin and the landscape is shifting rapidly?' },
+      { v2mom: 'methods',   title: 'Build vs. buy vs. partner', desc: 'Which strategic capabilities must be built internally, which can be bought via Agentforce, and which require ecosystem partners to deliver?' },
+      { v2mom: 'obstacles', title: 'Cross-enterprise coordination', desc: 'Who owns the agentic agenda across functions — a single accountable executive or a committee — and what are the real tradeoffs of each model?' },
+      { v2mom: 'measures',  title: 'Investment prioritisation', desc: 'How is budget allocated across exploration, piloting, and scaling? Is there a dedicated agentic transformation investment line, or is it hidden in other budgets?' },
+      { v2mom: 'measures',  title: 'Board & stakeholder communication', desc: 'How frequently and in what format will the board and senior stakeholders receive meaningful progress updates on agentic strategy — not just activity reports?' }
+    ]
+  },
+  structure: {
+    name: 'Structure', pathway: 'exec',
+    topic: 'Operating model & governance',
+    question: 'How do we evolve our operating model to enable agents at scale?',
+    aspects: [
+      { v2mom: 'vision',    title: 'Existing governance leverage', desc: 'Which current risk, compliance, and governance structures can be extended to cover agents — and which create structural blockers that need deliberate redesigning?' },
+      { v2mom: 'vision',    title: 'Operating model evolution', desc: 'How do reporting lines, team structures, and decision rights need to change to accommodate human-agent workflows as they scale beyond pilots?' },
+      { v2mom: 'obstacles', title: 'Disincentive identification', desc: 'What in the current operating model actively disincentivises agent adoption — headcount targets, cost centre models, slow procurement cycles, bonus structures?' },
+      { v2mom: 'obstacles', title: 'Procurement and vendor governance', desc: 'Can the organisation procure and contract for agentic services at the speed required, or does procurement create a critical and recurring bottleneck?' },
+      { v2mom: 'methods',   title: 'Centre of excellence vs. embedded model', desc: 'Should agentic capability be centralised in a CoE, embedded in business units, or a hybrid — and what are the genuine tradeoffs of each for this organisation?' },
+      { v2mom: 'values',    title: 'Policy vs. protocol clarity', desc: 'Which agent behaviours require hard policy (mandatory, auditable, enforceable) versus soft protocol (recommended, contextual, locally decided)?' },
+      { v2mom: 'methods',   title: 'Cross-functional coordination mechanisms', desc: 'What forums, cadences, and decision rights exist — or need to be created — for cross-pathway coordination on agent adoption across the enterprise?' },
+      { v2mom: 'obstacles', title: 'Legal entity and liability mapping', desc: 'In which legal entities will agents operate, and what are the liability, regulatory, and tax implications in each relevant jurisdiction?' },
+      { v2mom: 'obstacles', title: 'Shadow AI risk', desc: 'How is the organisation detecting and governing unsanctioned agent use that may already be occurring outside formal channels at significant scale?' },
+      { v2mom: 'measures',  title: 'Structural sunset planning', desc: 'Which existing structures, committees, or roles will become redundant as agents scale — and how will that transition be managed with intention rather than attrition?' }
+    ]
+  },
+  culture: {
+    name: 'Culture', pathway: 'exec',
+    topic: 'People & organisational readiness',
+    question: 'How do we build an organisation that is genuinely ready to work with agents?',
+    aspects: [
+      { v2mom: 'vision',    title: 'Psychological safety baseline', desc: 'Do employees feel safe to experiment with agents, report failures, and raise concerns — or does fear of judgment or job loss suppress authentic engagement?' },
+      { v2mom: 'values',    title: 'Leadership signal clarity', desc: 'Are senior leaders visibly and consistently modelling agent use in their own work? Inconsistent signals from leadership are the single biggest cultural blocker to adoption.' },
+      { v2mom: 'obstacles', title: 'Job displacement narrative management', desc: 'How is the organisation proactively and honestly addressing fears about role redundancy — with substantive action, not just reassuring messaging?' },
+      { v2mom: 'values',    title: 'AI fluency as professional identity', desc: 'Is agent fluency positioned as a core professional skill and career asset — or as an optional technical interest for the enthusiastic minority?' },
+      { v2mom: 'methods',   title: 'Talent and skill development strategy', desc: 'What structured development pathways exist to build agent orchestration, prompt design, and AI evaluation skills across the entire workforce, not just technical teams?' },
+      { v2mom: 'methods',   title: 'Reward and recognition alignment', desc: 'Are performance systems and incentives aligned to celebrate agent experimentation and adoption — or do they inadvertently penalise the time and risk it requires?' },
+      { v2mom: 'obstacles', title: 'Change fatigue awareness', desc: 'How does this organisation\'s history of digital transformation initiatives affect readiness — and what must genuinely be done differently this time to earn trust?' },
+      { v2mom: 'methods',   title: 'Ambassador and champion network', desc: 'Is there a structured program to identify, develop, and support internal advocates who can accelerate peer adoption in ways formal programs cannot?' },
+      { v2mom: 'methods',   title: 'Communication strategy', desc: 'How will agent launches, wins, and failures be communicated across the organisation — with what frequency, in what format, and from whom to be credible?' },
+      { v2mom: 'measures',  title: 'Hard policy vs. soft protocol balance', desc: 'Where does the organisation draw the line between mandating agent use and allowing teams to find their own adoption rhythm — and who draws that line?' }
+    ]
+  },
+  roles: {
+    name: 'Roles', pathway: 'people',
+    topic: 'Human-agent collaboration design',
+    question: 'How do agents and humans share responsibility — and what does that mean for how we work?',
+    aspects: [
+      { v2mom: 'vision',    title: 'Scope of agent responsibility', desc: 'What is the agent specifically authorised to do — and equally, what is explicitly out of scope? Ambiguity here is the most common cause of trust erosion in deployment.' },
+      { v2mom: 'methods',   title: 'Human-agent interaction model', desc: 'How do humans and agents interact — is the human in the loop, on the loop, or notified only at completion? This must be defined explicitly per use case and per risk tier.' },
+      { v2mom: 'methods',   title: 'Channel design', desc: 'Which channels does the agent operate in — voice, chat, async, embedded workflow tools — and are the interaction patterns designed specifically per channel, not genericised?' },
+      { v2mom: 'values',    title: 'Data access and context boundaries', desc: 'What data can the agent access, in what context, and with what freshness? Poorly defined data boundaries are the most common technical failure mode in production.' },
+      { v2mom: 'methods',   title: 'Escalation path definition', desc: 'When the agent cannot complete a task or encounters ambiguity, who does it escalate to — and is that person named, available, trained, and genuinely accountable for the handoff?' },
+      { v2mom: 'values',    title: 'Agent persona and tone standards', desc: 'Does the agent\'s persona, language, and tone align with brand standards across all channels? Who is accountable for governing persona drift as agents evolve post-launch?' },
+      { v2mom: 'obstacles', title: 'Role redesign for augmentation', desc: 'Which existing roles are fundamentally changed by this agent — and has a structured role redesign process been run with incumbents, not just announced to them?' },
+      { v2mom: 'measures',  title: 'Career pathway implications', desc: 'How does agent collaboration feature in job descriptions, performance reviews, and career advancement criteria across the organisation — or does it not, yet?' },
+      { v2mom: 'obstacles', title: 'Labour relations and consultation', desc: 'Has the appropriate union, works council, or employee consultation process been followed before defining agent roles at scale — and who owns that relationship?' },
+      { v2mom: 'measures',  title: 'Temporal scope of agent action', desc: 'Does the agent act in real-time only, or does it also take scheduled, batch, or triggered actions — and are all temporal modes explicitly governed and regularly tested?' }
+    ]
+  },
+  controls: {
+    name: 'Controls', pathway: 'people',
+    topic: 'Risk, governance & trust',
+    question: 'How do we govern agent behaviour safely — and build genuine trust over time?',
+    aspects: [
+      { v2mom: 'values',    title: 'Encapsulation standards', desc: 'What technical and operational boundaries prevent agents from acting outside their defined scope — and how are those boundaries enforced, monitored, and stress-tested?' },
+      { v2mom: 'methods',   title: 'Autonomy tier framework', desc: 'What are the defined levels of agent autonomy — supervised, assisted, autonomous — and what specific criteria govern movement between tiers in either direction?' },
+      { v2mom: 'methods',   title: 'Escalation design and testing', desc: 'Are escalation paths tested regularly, not just documented? Who receives escalations, and what is the expected and measured response time at each risk level?' },
+      { v2mom: 'measures',  title: 'Audit trail architecture', desc: 'Can every agent action be traced, attributed, and reconstructed for compliance, incident investigation, or regulatory review — in a form that satisfies external scrutiny?' },
+      { v2mom: 'methods',   title: 'Risk classification by use case', desc: 'Has each use case been formally risk-classified — financial, reputational, regulatory, safety — and have controls been calibrated proportionately to each classification?' },
+      { v2mom: 'obstacles', title: 'Incident response playbook', desc: 'If an agent causes harm — financial loss, data breach, incorrect action — what is the documented response process, and who is on the call list for each scenario?' },
+      { v2mom: 'obstacles', title: 'Regulatory and legal compliance mapping', desc: 'Which regulations apply to agent actions in this context — data protection, financial services, employment law — and are controls demonstrably and provably compliant?' },
+      { v2mom: 'values',    title: 'Consent and transparency standards', desc: 'Do the people interacting with agents know they are doing so? Where is disclosure legally required, where is it best practice, and who owns that policy?' },
+      { v2mom: 'obstacles', title: 'Shadow AI detection', desc: 'How does the organisation identify agents operating outside the governed framework — and what is the documented response when shadow AI is discovered at significant scale?' },
+      { v2mom: 'measures',  title: 'Control review cadence', desc: 'Controls that were appropriate at launch may be wholly insufficient at scale. What is the structured, calendared process for reviewing and updating controls as agents evolve?' }
+    ]
+  },
+  ownership: {
+    name: 'Ownership', pathway: 'people',
+    topic: 'Accountability & lifecycle management',
+    question: 'Who is accountable for each agent — and how does that accountability work in practice?',
+    aspects: [
+      { v2mom: 'vision',    title: 'Named business owner accountability', desc: 'Every agent must have a named business owner accountable for outcomes — not a team or function. Is it explicitly in their KPIs and performance review?' },
+      { v2mom: 'vision',    title: 'Named technical owner accountability', desc: 'Who is responsible for the agent\'s technical health, security posture, and platform compliance — and is this role genuinely distinct from the business owner?' },
+      { v2mom: 'methods',   title: 'Ownership RACI clarity', desc: 'Has a RACI been completed for each agent — clearly distinguishing Responsible, Accountable, Consulted, and Informed across business and technology functions?' },
+      { v2mom: 'measures',  title: 'Performance monitoring framework', desc: 'What metrics is the owner reviewing, at what frequency, and through what dashboard? Owners without meaningful visibility cannot drive meaningful evolution.' },
+      { v2mom: 'methods',   title: 'Evolution sprint cadence', desc: 'Has a structured improvement sprint cadence been defined and resourced — so agents improve on a predictable rhythm rather than only when something breaks badly?' },
+      { v2mom: 'obstacles', title: 'Orphaned agent prevention', desc: 'What process ensures ownership is formally reassigned when an owner leaves — so agents don\'t become ungoverned legacy systems within months of their original launch?' },
+      { v2mom: 'methods',   title: 'Decommission criteria and process', desc: 'What are the defined criteria for decommissioning an agent — poor performance, changed business context, superseded technology — and who has authority to approve it?' },
+      { v2mom: 'obstacles', title: 'Ownership at scale governance', desc: 'As the agent portfolio grows from 3 to 30 to 300, how does ownership governance scale without becoming an unsustainable administrative burden on already-stretched teams?' },
+      { v2mom: 'obstacles', title: 'Business-technical owner alignment', desc: 'How are conflicts between business owner priorities and technical owner constraints resolved formally — and who holds final decision rights when they genuinely conflict?' },
+      { v2mom: 'values',    title: 'Ownership incentive alignment', desc: 'Is being an agent owner genuinely recognised and rewarded — or does it feel like additional risk and accountability with no meaningful upside for the individual?' }
+    ]
+  },
+  usecase: {
+    name: 'Use Case', pathway: 'tech',
+    topic: 'Opportunity identification & prioritisation',
+    question: 'What should we build first — and how do we know it is truly agentic?',
+    aspects: [
+      { v2mom: 'vision',    title: 'Truly agentic vs. automation distinction', desc: 'Can the team clearly differentiate an agent use case from a workflow automation or a chatbot — and apply that test rigorously and consistently to every candidate in the pipeline?' },
+      { v2mom: 'measures',  title: 'Value quantification method', desc: 'How will the value of each use case be credibly estimated before build begins — and what baseline data exists to make that estimate meaningful rather than aspirational?' },
+      { v2mom: 'methods',   title: 'Complexity and feasibility assessment', desc: 'Has the technical complexity of each use case been assessed honestly — including data availability, integration requirements, and current model capability limits?' },
+      { v2mom: 'values',    title: 'Risk classification upfront', desc: 'Has each use case been classified by risk level before prioritisation — so high-value, high-risk cases aren\'t selected for Wave 1 without appropriate controls already in place?' },
+      { v2mom: 'values',    title: 'Strategic alignment scoring', desc: 'Does the use case connect to a stated strategic priority — or is it a locally popular idea that lacks enterprise-level justification and will struggle for ongoing sponsorship?' },
+      { v2mom: 'obstacles', title: 'Data readiness assessment', desc: 'Is the data required for this agent available, clean, governed, and accessible — or does the use case have a hidden data dependency that will cause it to stall or fail?' },
+      { v2mom: 'methods',   title: 'Short build cycle design', desc: 'Has the use case been scoped tightly enough to reach a testable demo in weeks, not months? Broad scope at the use case stage is the most common cause of agentic failure.' },
+      { v2mom: 'methods',   title: 'Business sponsor commitment', desc: 'Is there a named business sponsor willing to invest time in iterative refinement and testing — not just approve the idea at the start and return only at the launch?' },
+      { v2mom: 'obstacles', title: 'Portfolio balance across functions', desc: 'Is Wave 1 balanced across functions — or does it over-index on one area, creating political risk and missing cross-functional learning that would accelerate Wave 2?' },
+      { v2mom: 'measures',  title: 'Refresh and pipeline governance', desc: 'How is the use case pipeline kept actively live — with a regular intake, scoring, and prioritisation cadence that prevents stagnation after the initial excitement of Wave 1?' }
+    ]
+  },
+  validation: {
+    name: 'Validation', pathway: 'tech',
+    topic: 'Testing, quality & production readiness',
+    question: 'How do we prove an agent is genuinely ready before it goes live?',
+    aspects: [
+      { v2mom: 'vision',    title: 'Definition of done for agents', desc: 'What specific, measurable criteria must an agent meet before production approval? This must be agreed before build begins, not negotiated under pressure at the end.' },
+      { v2mom: 'methods',   title: 'POC environment design', desc: 'Is there an isolated, sufficiently representative pilot environment where agents can be tested with real-enough data without creating risk to live operations or customers?' },
+      { v2mom: 'methods',   title: 'SME-led refinement process', desc: 'Have subject matter experts been formally and calendared into the validation process — actively involved in iterative refinement, not just consulted at launch for sign-off?' },
+      { v2mom: 'values',    title: 'Accuracy vs. impact balance', desc: 'What is the acceptable accuracy threshold for this specific use case — and has the team explicitly negotiated the tradeoff between technical accuracy and real-world business value?' },
+      { v2mom: 'methods',   title: 'Test set construction methodology', desc: 'How are test cases selected — randomly, adversarially, edge-case focused, or based on historical failures? Poorly constructed test sets create false confidence before launch.' },
+      { v2mom: 'obstacles', title: 'Hallucination and reliability testing', desc: 'What specific tests exist for the key failure modes — hallucination, off-topic responses, incorrect actions — and what are the explicit pass and fail criteria for each?' },
+      { v2mom: 'methods',   title: 'User acceptance testing design', desc: 'Has a structured UAT process been defined — with real end users, realistic tasks, and a feedback collection mechanism that genuinely feeds back into refinement cycles?' },
+      { v2mom: 'values',    title: 'Gate structure and decision rights', desc: 'Who has the authority to approve an agent for production — and is that decision genuinely independent of the team that built it, to avoid motivated reasoning?' },
+      { v2mom: 'obstacles', title: 'Rollback plan', desc: 'If an agent causes harm in its first 30 days in production, what is the documented rollback process — and crucially, has it actually been tested before go-live?' },
+      { v2mom: 'measures',  title: 'Responsible AI evaluation', desc: 'Has the agent been evaluated for bias, fairness, and unintended harm — not just functional accuracy — before production approval is granted? Who owns that evaluation?' }
+    ]
+  },
+  production: {
+    name: 'Production', pathway: 'tech',
+    topic: 'Deployment, scale & sustainability',
+    question: 'What does it genuinely take to run agents safely and sustainably at scale?',
+    aspects: [
+      { v2mom: 'values',    title: 'Security and privacy architecture', desc: 'Has a formal security review been completed — covering data handling, access controls, prompt injection risks, and all relevant privacy obligations for this use case?' },
+      { v2mom: 'methods',   title: 'Interoperability with existing systems', desc: 'How does the agent connect to existing systems of record — CRM, ERP, data platforms — and what integration standards govern those connections at scale?' },
+      { v2mom: 'measures',  title: 'Commercial viability at scale', desc: 'What does the unit economics look like at 10x and 100x current usage — and at what scale does the agent become commercially unsustainable without renegotiation?' },
+      { v2mom: 'vision',    title: 'Observability by default', desc: 'Are agent actions, decisions, and outcomes logged in a way that owners can monitor in near real-time — not just reviewed retrospectively when something has already gone wrong?' },
+      { v2mom: 'methods',   title: 'Post-release adaptability design', desc: 'Has the agent been built to be updated — with clear mechanisms for model swaps, prompt adjustments, and tool additions without requiring full and costly rebuilds?' },
+      { v2mom: 'measures',  title: 'SLA definition and enforcement', desc: 'What uptime, latency, and accuracy SLAs apply to this agent — and how will breaches be automatically detected, promptly reported, and systematically remediated?' },
+      { v2mom: 'obstacles', title: 'Dependency and vendor risk', desc: 'What are the critical dependencies — LLM provider, data sources, third-party APIs — and what is the documented contingency if any of those dependencies fail or change terms?' },
+      { v2mom: 'obstacles', title: 'Multi-agent coordination risk', desc: 'If this agent operates alongside or is orchestrated by other agents, how are handoffs, conflicts, and cascading failures identified, managed, and prevented at scale?' },
+      { v2mom: 'methods',   title: 'Load and capacity planning', desc: 'Has peak load been credibly modelled — and is there a capacity plan that ensures performance doesn\'t degrade materially during high-demand periods?' },
+      { v2mom: 'values',    title: 'Production readiness checklist ownership', desc: 'Who signs off on production readiness — and is the checklist genuinely used as a gate, or treated as a compliance formality to be completed after the agent has already gone live?' }
+    ]
+  }
+};
+
+const ORDER = ['production','ownership','culture','validation','controls','structure','usecase','roles','strategy'];
+let selectedKey = null;
+let activeFilter = 'all';
+let aspectsEditMode = false;
+const ASPECT_STATE = {};
+
+function ensureAspectState(boxKey) {
+  if (!ASPECT_STATE[boxKey]) {
+    ASPECT_STATE[boxKey] = BOXES[boxKey].aspects.map(() => ({ level: '', comment: '' }));
+  }
+  return ASPECT_STATE[boxKey];
+}
+
+// ── Build all-grid ──
+function buildAllGrid() {
+  const grid = document.getElementById('allGrid');
+  ORDER.forEach(key => {
+    const d = BOXES[key];
+    const p = PATHWAY_META[d.pathway];
+    const card = document.createElement('div');
+    card.className = 'all-card';
+    card.innerHTML = `
+      <div class="all-card-header">
+        <div class="all-card-dot" style="background:${p.dot}"></div>
+        <div class="all-card-meta">
+          <div class="all-card-pathway" style="color:${p.dark}">${p.label}</div>
+          <div class="all-card-row">${ROW_META[key]}</div>
+        </div>
+        <div class="all-card-count">10 aspects</div>
+      </div>
+      <div class="all-card-body">
+        <div class="all-card-name">${d.name}</div>
+        <div class="all-card-topic">${d.topic}</div>
+        <div class="all-card-q">${d.question}</div>
+      </div>
+    `;
+    card.addEventListener('click', () => selectBox(key));
+    grid.appendChild(card);
+  });
+}
+
+// ── Filter logic ──
+function applyFilter(filter) {
+  activeFilter = filter;
+  document.querySelectorAll('.box').forEach(el => {
+    const pw = el.dataset.key ? BOXES[el.dataset.key].pathway : null;
+    if (!pw) return;
+    el.classList.toggle('dimmed', filter !== 'all' && pw !== filter);
+  });
+}
+
+function getStatusClass(level) {
+  return level === 'red' || level === 'amber' || level === 'green' || level === 'na' ? level : '';
+}
+
+function renderMatrixStatusBars() {
+  document.querySelectorAll('.box[data-key]').forEach(el => {
+    const key = el.dataset.key;
+    if (!key || !BOXES[key]) return;
+    const state = ensureAspectState(key);
+    const total = BOXES[key].aspects.length;
+    const counts = { red: 0, amber: 0, green: 0, na: 0, unset: 0 };
+
+    for (let i = 0; i < total; i += 1) {
+      const level = getStatusClass(state[i]?.level || '');
+      if (level) counts[level] += 1;
+      else counts.unset += 1;
+    }
+
+    const cells = [];
+    const pushCells = (count, cls) => {
+      for (let i = 0; i < count; i += 1) {
+        cells.push(`<span class="box-status-cell${cls ? ` ${cls}` : ''}"></span>`);
+      }
+    };
+    pushCells(counts.green, 'green');
+    pushCells(counts.amber, 'amber');
+    pushCells(counts.red, 'red');
+    pushCells(counts.na, 'na');
+    pushCells(counts.unset, '');
+
+    let strip = el.querySelector('.box-status-strip');
+    if (!strip) {
+      strip = document.createElement('div');
+      strip.className = 'box-status-strip';
+      el.appendChild(strip);
+    }
+    strip.innerHTML = cells.join('');
+    strip.title = `High: ${counts.green}, Medium: ${counts.amber}, Low: ${counts.red}, Not Applicable: ${counts.na}, Unset: ${counts.unset}`;
+  });
+}
+
+// ── Select box ──
+function selectBox(key) {
+  selectedKey = key;
+  aspectsEditMode = false;
+
+  document.querySelectorAll('.box').forEach(el => {
+    const k = el.dataset.key;
+    if (!k) return;
+    el.classList.toggle('active', k === key);
+  });
+
+  renderDetail();
+
+  const ds = document.getElementById('detailSection');
+  ds.classList.add('visible');
+  setTimeout(() => ds.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+// ── Render detail ──
+function renderDetail() {
+  const d = BOXES[selectedKey];
+  const p = PATHWAY_META[d.pathway];
+
+  // Header
+  document.getElementById('detailHeader').setAttribute('data-name', d.name);
+  document.getElementById('dhTopic').textContent = d.topic;
+  document.getElementById('dhName').textContent = d.name;
+  document.getElementById('dhQuestion').textContent = d.question;
+  document.getElementById('dhBadges').innerHTML = `
+    <span class="dh-badge pathway" style="background:${p.color};color:white;">${p.label}</span>
+    <span class="dh-badge row">${ROW_META[selectedKey]}</span>
+  `;
+
+  renderAspects();
+}
+
+// ── Render aspects ──
+function renderAspects() {
+  const d = BOXES[selectedKey];
+  const p = PATHWAY_META[d.pathway];
+  const state = ensureAspectState(selectedKey);
+  const grid = document.getElementById('aspectsGrid');
+  grid.innerHTML = '';
+  const modeHint = document.getElementById('aspectsModeHint');
+  if (modeHint) {
+    modeHint.textContent = aspectsEditMode
+      ? 'Edit mode on. Click any aspect card to finish editing.'
+      : 'View mode. Click any aspect card to edit confidence levels and comments.';
+  }
+
+  d.aspects.forEach((a, i) => {
+    const itemState = state[i] || { level: '', comment: '' };
+    const card = document.createElement('div');
+    card.className = 'aspect-card';
+    card.style.animationDelay = (i * 0.04) + 's';
+    const fieldId = `${selectedKey}-${i}`;
+    const numberStateClass = itemState.level ? `is-${itemState.level}` : '';
+    const commentIconHtml = itemState.comment && itemState.comment.trim() ? '<div class="aspect-comment-indicator" title="Comment added">💬</div>' : '';
+    const selected = (lvl) => itemState.level === lvl ? ' is-selected' : '';
+    const controlsHtml = `
+      <div class="aspect-controls${aspectsEditMode ? '' : ' is-hidden'}">
+        <div class="aspect-controls-label">Confidence level</div>
+        <div class="confidence-actions">
+          <button type="button" class="confidence-btn red${selected('red')}" data-level="red" onclick="setConfidence('${selectedKey}', ${i}, 'red')">Low</button>
+          <button type="button" class="confidence-btn amber${selected('amber')}" data-level="amber" onclick="setConfidence('${selectedKey}', ${i}, 'amber')">Medium</button>
+          <button type="button" class="confidence-btn green${selected('green')}" data-level="green" onclick="setConfidence('${selectedKey}', ${i}, 'green')">High</button>
+          <button type="button" class="confidence-btn na${selected('na')}" data-level="na" onclick="setConfidence('${selectedKey}', ${i}, 'na')">N/A</button>
+        </div>
+        <div class="aspect-comment-wrap" id="comment-wrap-${fieldId}">
+          <label class="aspect-controls-label" for="comment-${fieldId}">Comment</label>
+          <textarea class="aspect-comment" id="comment-${fieldId}" name="comment-${fieldId}" placeholder="Add a note on confidence, blockers, assumptions, etc." oninput="setAspectComment('${selectedKey}', ${i}, this.value)">${itemState.comment || ''}</textarea>
+        </div>
+      </div>
+    `;
+    card.innerHTML = `
+      <div class="aspect-header">
+        <div class="aspect-num-wrap">
+          <div class="aspect-num ${numberStateClass}" title="${itemState.level ? itemState.level.toUpperCase() : 'No confidence level selected'}">${String(i+1).padStart(2,'0')}</div>
+          <div class="aspect-meta">
+            ${commentIconHtml}
+          </div>
+        </div>
+        <div class="aspect-title">${a.title}</div>
+      </div>
+      <div class="aspect-desc">${a.desc}</div>
+      ${controlsHtml}
+    `;
+    card.addEventListener('click', () => {
+      aspectsEditMode = !aspectsEditMode;
+      renderAspects();
+    });
+    const controls = card.querySelector('.aspect-controls');
+    if (controls) {
+      controls.addEventListener('click', (e) => e.stopPropagation());
+    }
+    grid.appendChild(card);
+  });
+
+  renderMatrixStatusBars();
+  renderV2MOM();
+
+  // Detail nav
+  const nav = document.getElementById('detailNav');
+  const idx = ORDER.indexOf(selectedKey);
+  const prev = idx > 0 ? ORDER[idx-1] : null;
+  const next = idx < ORDER.length-1 ? ORDER[idx+1] : null;
+  nav.innerHTML = `
+    ${prev ? `<button class="dnav-btn" onclick="selectBox('${prev}')">← ${BOXES[prev].name}</button>` : ''}
+    ${next ? `<button class="dnav-btn" onclick="selectBox('${next}')">→ ${BOXES[next].name}</button>` : ''}
+    <button class="dnav-btn close-btn" onclick="closeDetail()">Close ✕</button>
+  `;
+}
+
+function setConfidence(boxKey, aspectIdx, level) {
+  const state = ensureAspectState(boxKey);
+  if (!state[aspectIdx]) return;
+  state[aspectIdx].level = level;
+  if (boxKey === selectedKey) {
+    renderAspects();
+  }
+}
+
+function setAspectComment(boxKey, aspectIdx, value) {
+  const state = ensureAspectState(boxKey);
+  if (!state[aspectIdx]) return;
+  state[aspectIdx].comment = value;
+}
+
+function toggleConfidenceLegend(trigger) {
+  const legend = document.getElementById('confidence-legend');
+  if (!legend) return;
+  const willOpen = !legend.classList.contains('is-open');
+  legend.classList.toggle('is-open', willOpen);
+  if (trigger) trigger.setAttribute('aria-expanded', String(willOpen));
+}
+
+// ── Render V2MOM canvas ──
+function renderV2MOM() {
+  const d = BOXES[selectedKey];
+  const v = V2MOM_DATA[selectedKey];
+  const canvas = document.getElementById('v2momCanvas');
+  if (!v) { canvas.innerHTML = ''; return; }
+
+  const sections = [
+    { key: 'vision',    letter: 'V', word: 'Vision',    tagline: 'What future are we creating?',      cls: 'v2mom-vision'    },
+    { key: 'values',    letter: 'V', word: 'Values',    tagline: 'What principles guide us?',          cls: 'v2mom-values'    },
+    { key: 'methods',   letter: 'M', word: 'Methods',   tagline: 'How will we get there?',             cls: 'v2mom-methods'   },
+    { key: 'obstacles', letter: 'O', word: 'Obstacles', tagline: 'What stands in our way?',            cls: 'v2mom-obstacles' },
+    { key: 'measures',  letter: 'M', word: 'Measures',  tagline: 'How will we know we succeeded?',     cls: 'v2mom-measures'  }
+  ];
+
+  const cardsHTML = sections.map((s, i) => {
+    const content = v[s.key];
+    const bulletsHTML = content.bullets.map(b => `<li class="v2mom-bullet">${b}</li>`).join('');
+    return `
+      <div class="v2mom-card ${s.cls}" id="v2c-${s.key}">
+        <div class="v2mom-card-header" onclick="toggleV2mom('${s.key}')">
+          <div class="v2mom-card-letter">${s.letter}</div>
+          <div class="v2mom-card-title-group">
+            <div class="v2mom-card-word">${s.word}</div>
+            <div class="v2mom-card-tagline">${s.tagline}</div>
+          </div>
+          <div class="v2mom-chevron">▼</div>
+        </div>
+        <div class="v2mom-card-body">
+          <p class="v2mom-statement">${content.statement}</p>
+          <ul class="v2mom-bullets">${bulletsHTML}</ul>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  canvas.innerHTML = `
+    <div class="v2mom-canvas-label">V2MOM Canvas</div>
+    <div class="v2mom-canvas-header">
+      <div class="v2mom-canvas-title">V2MOM for ${d.name}</div>
+    </div>
+    <p class="v2mom-canvas-sub">The V2MOM framework surfaces what matters most for this dimension — from the future state you're building toward, through to how you'll know you've arrived. Click each element to expand.</p>
+    <div class="v2mom-cards">${cardsHTML}</div>
+  `;
+
+  // Auto-open first
+  const first = document.getElementById('v2c-vision');
+  if (first) first.classList.add('open');
+}
+
+function toggleV2mom(key) {
+  const card = document.getElementById('v2c-' + key);
+  if (card) card.classList.toggle('open');
+}
+
+// ── Close detail ──
+function closeDetail() {
+  document.getElementById('detailSection').classList.remove('visible');
+  document.querySelectorAll('.box').forEach(el => el.classList.remove('active'));
+  selectedKey = null;
+  document.getElementById('matrix-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── Filter chips ──
+document.getElementById('filterRow').addEventListener('click', e => {
+  const chip = e.target.closest('.filter-chip');
+  if (!chip) return;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  applyFilter(chip.dataset.filter);
+});
+
+// ── Box clicks ──
+document.querySelectorAll('.box[data-key]').forEach(el => {
+  el.addEventListener('click', () => selectBox(el.dataset.key));
+});
+
+// ── Init ──
+buildAllGrid();
+renderMatrixStatusBars();
+</script>
+</body>
+</html>
