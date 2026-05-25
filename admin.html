@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Participant Admin</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; background: #f3f7fb; color: #1c2d3f; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  h1 { margin: 0 0 16px; }
+  .grid { display: grid; grid-template-columns: 330px 1fr; gap: 16px; }
+  .card { background: white; border: 1px solid #d6e4f2; border-radius: 12px; padding: 14px; }
+  .users { max-height: 520px; overflow-y: auto; }
+  .user-row { display: grid; grid-template-columns: 20px 1fr; gap: 8px; align-items: start; padding: 6px 0; border-bottom: 1px solid #edf3f9; }
+  .user-row:last-child { border-bottom: 0; }
+  .email { font-size: 13px; font-weight: 600; }
+  .meta { font-size: 11px; color: #5b7691; margin-top: 2px; }
+  .btn { border: 1px solid #2c77c8; background: #2c77c8; color: white; border-radius: 8px; font-size: 12px; padding: 7px 10px; cursor: pointer; }
+  .btn.secondary { background: white; color: #2c77c8; }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th, td { border-bottom: 1px solid #edf3f9; padding: 7px 6px; text-align: left; }
+  th { background: #f8fbff; }
+  .count-pill { display: inline-block; min-width: 22px; text-align: center; border-radius: 999px; padding: 2px 6px; color: white; font-weight: 700; font-size: 11px; }
+  .green { background: #2e844a; } .amber { background: #e45b00; } .red { background: #ba0517; } .na { background: #6b7280; } .unset { background: #c3d4e4; color: #1c2d3f; }
+  .error { color: #ba0517; font-size: 12px; min-height: 18px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Participant Admin</h1>
+    <div class="grid">
+      <div class="card">
+        <div class="toolbar">
+          <button class="btn" id="refreshBtn" type="button">Refresh Users</button>
+          <button class="btn secondary" id="selectAllBtn" type="button">Select All</button>
+          <button class="btn secondary" id="clearBtn" type="button">Clear</button>
+        </div>
+        <div class="users" id="usersList"></div>
+      </div>
+      <div class="card">
+        <div class="toolbar">
+          <button class="btn" id="aggregateBtn" type="button">Aggregate Selected</button>
+          <button class="btn secondary" id="openBtn" type="button">Open First Selected</button>
+        </div>
+        <div class="error" id="errorMsg"></div>
+        <table>
+          <thead>
+            <tr>
+              <th>Conversation</th>
+              <th>Aspect</th>
+              <th>High</th>
+              <th>Medium</th>
+              <th>Low</th>
+              <th>N/A</th>
+              <th>Unset</th>
+            </tr>
+          </thead>
+          <tbody id="aggregateRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<script>
+const usersList = document.getElementById('usersList');
+const aggregateRows = document.getElementById('aggregateRows');
+const errorMsg = document.getElementById('errorMsg');
+let users = [];
+
+function setError(message) { errorMsg.textContent = message || ''; }
+function selectedEmails() {
+  return Array.from(document.querySelectorAll('input[data-email]:checked')).map(el => el.dataset.email);
+}
+
+async function loadUsers() {
+  setError('');
+  const res = await fetch('/api/admin/users');
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to load users');
+  users = data.users || [];
+  usersList.innerHTML = users.map((u) => `
+    <label class="user-row">
+      <input type="checkbox" data-email="${u.email}">
+      <span>
+        <div class="email">${u.email}</div>
+        <div class="meta">responses: ${u.response_count || 0}${u.last_response_at ? ` · last: ${new Date(u.last_response_at).toLocaleString()}` : ''}</div>
+      </span>
+    </label>
+  `).join('') || '<div class="meta">No users found yet.</div>';
+}
+
+function renderAggregate(rows) {
+  aggregateRows.innerHTML = rows.map((row) => `
+    <tr>
+      <td>${row.box_key}</td>
+      <td>${row.aspect_index + 1}</td>
+      <td><span class="count-pill green">${row.green || 0}</span></td>
+      <td><span class="count-pill amber">${row.amber || 0}</span></td>
+      <td><span class="count-pill red">${row.red || 0}</span></td>
+      <td><span class="count-pill na">${row.na || 0}</span></td>
+      <td><span class="count-pill unset">${row.unset || 0}</span></td>
+    </tr>
+  `).join('');
+}
+
+function collapseRows(rawRows) {
+  const map = new Map();
+  rawRows.forEach((r) => {
+    const key = `${r.box_key}:${r.aspect_index}`;
+    if (!map.has(key)) {
+      map.set(key, { box_key: r.box_key, aspect_index: Number(r.aspect_index), red: 0, amber: 0, green: 0, na: 0, unset: 0 });
+    }
+    const target = map.get(key);
+    const level = (r.confidence_level || 'unset');
+    target[level] = (target[level] || 0) + Number(r.count || 0);
+  });
+  return Array.from(map.values()).sort((a, b) => a.box_key.localeCompare(b.box_key) || a.aspect_index - b.aspect_index);
+}
+
+async function aggregateSelected() {
+  const emails = selectedEmails();
+  if (!emails.length) return setError('Select at least one user first.');
+  setError('');
+  const res = await fetch('/api/admin/aggregate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ emails }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to aggregate');
+  renderAggregate(collapseRows(data.rows || []));
+}
+
+document.getElementById('refreshBtn').addEventListener('click', () => loadUsers().catch(e => setError(e.message)));
+document.getElementById('selectAllBtn').addEventListener('click', () => {
+  document.querySelectorAll('input[data-email]').forEach((el) => { el.checked = true; });
+});
+document.getElementById('clearBtn').addEventListener('click', () => {
+  document.querySelectorAll('input[data-email]').forEach((el) => { el.checked = false; });
+});
+document.getElementById('aggregateBtn').addEventListener('click', () => aggregateSelected().catch(e => setError(e.message)));
+document.getElementById('openBtn').addEventListener('click', () => {
+  const emails = selectedEmails();
+  if (!emails.length) return setError('Select one user to open their page.');
+  window.open(`/my-conversations.html?email=${encodeURIComponent(emails[0])}`, '_blank');
+});
+
+loadUsers().catch((e) => setError(e.message));
+</script>
+</body>
+</html>
