@@ -422,32 +422,47 @@ body {
   bottom: 10px;
   display: grid;
   gap: 2px;
-  width: 110px;
+  width: 142px;
 }
 
 .status-stack {
   display: grid;
-  gap: 2px;
+  gap: 3px;
 }
 
 .status-row {
   display: grid;
-  gap: 2px;
-  grid-template-columns: repeat(var(--cols, 10), 1fr);
+  grid-template-columns: 1fr 26px;
+  align-items: center;
+  gap: 6px;
 }
 
-.status-cell {
+.status-track {
+  position: relative;
   height: 7px;
-  border-radius: 2px;
+  border-radius: 3px;
   border: 1px solid #D8E6F4;
   background: #F9FCFF;
+  overflow: hidden;
 }
 
-.status-cell.green { background: #2E844A; border-color: #23693B; }
-.status-cell.amber { background: #E45B00; border-color: #C94F00; }
-.status-cell.red { background: #BA0517; border-color: #A00415; }
-.status-cell.na { background: #6B7280; border-color: #565C67; }
-.status-cell.unset { background: #FFFFFF; border-color: #C9DDEE; }
+.status-fill {
+  height: 100%;
+  min-width: 0;
+}
+
+.status-fill.green { background: #2E844A; }
+.status-fill.amber { background: #E45B00; }
+.status-fill.red { background: #BA0517; }
+.status-fill.na { background: #6B7280; }
+.status-fill.unset { background: #FFFFFF; }
+
+.status-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: #6C8AA5;
+  text-align: right;
+}
 
 /* ══════════════ DETAIL PANEL ══════════════ */
 .detail-section {
@@ -589,6 +604,7 @@ body {
 .aspect-status-stack {
   margin-top: 12px;
   margin-left: 36px;
+  max-width: 320px;
 }
 
 .aspect-num.is-red {
@@ -1554,16 +1570,20 @@ function normalizeCounts(counts) {
   return out;
 }
 
-function buildStatusStack(counts, columns) {
-  const safeCols = Math.max(1, columns);
+function buildStatusStack(counts, totalParticipants) {
+  const safeTotal = Math.max(1, totalParticipants);
   const c = normalizeCounts(counts);
   const rows = LEVEL_ORDER.map((level) => {
-    const filled = Math.max(0, Math.min(safeCols, c[level] || 0));
-    const cells = Array.from({ length: safeCols }, (_, idx) => {
-      const cls = idx < filled ? level : '';
-      return `<span class="status-cell${cls ? ` ${cls}` : ''}"></span>`;
-    }).join('');
-    return `<div class="status-row" style="--cols:${safeCols}">${cells}</div>`;
+    const value = Math.max(0, c[level] || 0);
+    const pct = Math.max(0, Math.min(100, (value / safeTotal) * 100));
+    return `
+      <div class="status-row" title="${level.toUpperCase()}: ${value}/${safeTotal}">
+        <div class="status-track">
+          <div class="status-fill ${level}" style="width:${pct}%"></div>
+        </div>
+        <div class="status-count">${value}</div>
+      </div>
+    `;
   }).join('');
   return `<div class="status-stack">${rows}</div>`;
 }
