@@ -1598,8 +1598,12 @@ function summarizeBox(boxKey) {
   const summary = { green: 0, amber: 0, red: 0, na: 0, unset: 0 };
   const aspects = BOXES[boxKey]?.aspects || [];
   aspects.forEach((_, idx) => {
-    const level = dominantLevel(ensureAggregateState(boxKey, idx));
-    summary[level] += 1;
+    const counts = normalizeCounts(ensureAggregateState(boxKey, idx));
+    summary.green += counts.green;
+    summary.amber += counts.amber;
+    summary.red += counts.red;
+    summary.na += counts.na;
+    summary.unset += counts.unset;
   });
   return summary;
 }
@@ -1668,7 +1672,9 @@ function renderMatrixStatusBars() {
       strip.className = 'box-status-strip';
       el.appendChild(strip);
     }
-    strip.innerHTML = buildStatusStack(counts, 10);
+    const participantCount = Math.max(1, selectedEmails.length || 1);
+    const totalResponsesInBox = participantCount * Math.max(1, (BOXES[key]?.aspects || []).length);
+    strip.innerHTML = buildStatusStack(counts, totalResponsesInBox);
     strip.title = `High: ${counts.green}, Medium: ${counts.amber}, Low: ${counts.red}, Not Applicable: ${counts.na}, Unset: ${counts.unset}`;
   });
 }
