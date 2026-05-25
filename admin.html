@@ -132,6 +132,8 @@ async function aggregateSelected() {
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || 'Failed to aggregate');
   renderAggregate(collapseRows(data.rows || []));
+  const encoded = emails.map((e) => encodeURIComponent(e)).join(',');
+  window.open(`/my-conversations-aggregate.html?emails=${encoded}`, '_blank');
 }
 
 document.getElementById('refreshBtn').addEventListener('click', () => loadUsers().catch(e => setError(e.message)));
