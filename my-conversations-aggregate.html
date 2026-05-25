@@ -352,7 +352,8 @@ body {
 .box {
   border-radius: 12px;
   border: 1.5px solid #E0ECFA;
-  padding: 18px 20px 30px;
+  padding: 18px 20px 18px;
+  min-height: 168px;
   cursor: pointer;
   background: white;
   transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
@@ -417,12 +418,10 @@ body {
 .box.exec   .box-count { background: rgba(127,119,221,0.1); color: var(--exec-dark); }
 
 .box-status-strip {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
+  margin-top: 10px;
   display: grid;
   gap: 2px;
-  width: 142px;
+  width: 170px;
 }
 
 .status-stack {
