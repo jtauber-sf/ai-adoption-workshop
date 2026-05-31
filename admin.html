@@ -20,6 +20,8 @@
   .btn.danger { background: #ba0517; border-color: #ba0517; color: #ffffff; }
   .btn:disabled { opacity: 0.6; cursor: not-allowed; }
   .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .toolbar.danger-zone { border-top: 1px solid #edf3f9; padding-top: 10px; margin-top: 2px; }
+  .selection-status { font-size: 12px; color: #5b7691; margin: -2px 0 10px; min-height: 16px; }
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
   th, td { border-bottom: 1px solid #edf3f9; padding: 7px 6px; text-align: left; }
   th { background: #f8fbff; }
@@ -56,7 +58,16 @@
           <button class="btn" id="refreshBtn" type="button">Refresh Users</button>
           <button class="btn secondary" id="selectAllBtn" type="button">Select All</button>
           <button class="btn secondary" id="selectTestBtn" type="button">Select +test</button>
+          <button class="btn secondary" id="select15mBtn" type="button">Select Last 15m</button>
+          <button class="btn secondary" id="select30mBtn" type="button">Select Last 30m</button>
+          <button class="btn secondary" id="select60mBtn" type="button">Select Last 60m</button>
           <button class="btn secondary" id="clearBtn" type="button">Clear</button>
+        </div>
+        <div class="selection-status" id="selectionStatus"></div>
+        <div class="toolbar danger-zone">
+          <button class="btn secondary" id="deleteTestBtn" type="button">Delete Selected +test Users</button>
+          <button class="btn secondary" id="deleteAllTestBtn" type="button">Delete ALL +test Users</button>
+          <button class="btn danger" id="deleteUsersBtn" type="button">Danger: Delete Selected Users</button>
         </div>
         <div class="users" id="usersList"></div>
       </div>
@@ -64,9 +75,6 @@
         <div class="toolbar">
           <button class="btn" id="aggregateBtn" type="button">Aggregate Selected</button>
           <button class="btn secondary" id="openBtn" type="button">Open First Selected</button>
-          <button class="btn danger" id="deleteUsersBtn" type="button">Danger: Delete Selected Users</button>
-          <button class="btn secondary" id="deleteTestBtn" type="button">Delete Selected +test Users</button>
-          <button class="btn secondary" id="deleteAllTestBtn" type="button">Delete ALL +test Users</button>
         </div>
         <div class="error" id="errorMsg"></div>
         <table>
@@ -91,6 +99,7 @@
 const usersList = document.getElementById('usersList');
 const aggregateRows = document.getElementById('aggregateRows');
 const errorMsg = document.getElementById('errorMsg');
+const selectionStatus = document.getElementById('selectionStatus');
 const adminGate = document.getElementById('adminGate');
 const gatePassword = document.getElementById('gatePassword');
 const gateError = document.getElementById('gateError');
@@ -102,6 +111,9 @@ function setError(message) { errorMsg.textContent = message || ''; }
 function setGateError(message) { gateError.textContent = message || ''; }
 function selectedEmails() {
   return Array.from(document.querySelectorAll('input[data-email]:checked')).map(el => el.dataset.email);
+}
+function setSelectionStatus(message) {
+  selectionStatus.textContent = message || '';
 }
 function isTestEmail(email) {
   return String(email || '').toLowerCase().includes('+test');
@@ -153,6 +165,7 @@ async function loadUsers() {
       </span>
     </label>
   `).join('') || '<div class="meta">No users found yet.</div>';
+  setSelectionStatus('');
 }
 
 async function unlockAdmin() {
@@ -293,17 +306,36 @@ async function deleteSelectedUsers() {
   setError(`Deleted ${data.deletedCount || 0} user(s) and all associated responses.`);
 }
 
+function selectByRecentMinutes(minutes) {
+  const now = Date.now();
+  let selectedCount = 0;
+  document.querySelectorAll('input[data-email]').forEach((el) => {
+    const user = users.find((u) => u.email === el.dataset.email);
+    const ts = user?.last_response_at ? Date.parse(user.last_response_at) : NaN;
+    const withinWindow = Number.isFinite(ts) && (now - ts) <= (minutes * 60 * 1000);
+    el.checked = withinWindow;
+    if (withinWindow) selectedCount += 1;
+  });
+  setSelectionStatus(`Selected ${selectedCount} users from last ${minutes}m.`);
+}
+
 document.getElementById('refreshBtn').addEventListener('click', () => loadUsers().catch(e => setError(e.message)));
 document.getElementById('selectAllBtn').addEventListener('click', () => {
   document.querySelectorAll('input[data-email]').forEach((el) => { el.checked = true; });
+  setSelectionStatus(`Selected ${selectedEmails().length} users (all).`);
 });
 document.getElementById('selectTestBtn').addEventListener('click', () => {
   document.querySelectorAll('input[data-email]').forEach((el) => {
     el.checked = isTestEmail(el.dataset.email);
   });
+  setSelectionStatus(`Selected ${selectedEmails().length} users with +test.`);
 });
+document.getElementById('select15mBtn').addEventListener('click', () => selectByRecentMinutes(15));
+document.getElementById('select30mBtn').addEventListener('click', () => selectByRecentMinutes(30));
+document.getElementById('select60mBtn').addEventListener('click', () => selectByRecentMinutes(60));
 document.getElementById('clearBtn').addEventListener('click', () => {
   document.querySelectorAll('input[data-email]').forEach((el) => { el.checked = false; });
+  setSelectionStatus('Selection cleared.');
 });
 document.getElementById('aggregateBtn').addEventListener('click', () => aggregateSelected().catch(e => setError(e.message)));
 document.getElementById('openBtn').addEventListener('click', () => {
