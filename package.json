@@ -9,6 +9,7 @@
         "pg": "^8.21.0"
     },
     "scripts": {
-        "start": "node server.js"
+        "start": "node server.js",
+        "seed:dummy": "node scripts/seed-dummy-participants.js"
     }
 }

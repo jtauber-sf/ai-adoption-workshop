@@ -8,6 +8,7 @@ const app = express();
 
 const adminUser = process.env.AUTH_USER || 'admin';
 const adminPass = process.env.AUTH_PASS || 'password123';
+const adminPagePassword = process.env.ADMIN_PAGE_PASSWORD || 'workshop-admin';
 const port = process.env.PORT || 3000;
 
 if (!process.env.DATABASE_URL) {
@@ -188,6 +189,99 @@ app.get('/api/admin/user/:email', adminAuth, async (req, res) => {
 
   const rows = result.rows.filter((r) => r.box_key);
   return res.json({ email, responses: rows });
+});
+
+app.post('/api/admin/unlock', adminAuth, async (req, res) => {
+  const password = String(req.body?.password || '');
+  if (!password) {
+    return res.status(400).json({ error: 'Password is required.' });
+  }
+  if (password !== adminPagePassword) {
+    return res.status(401).json({ error: 'Invalid admin page password.' });
+  }
+  return res.json({ ok: true });
+});
+
+app.post('/api/admin/delete-test-users', adminAuth, async (req, res) => {
+  const emails = Array.isArray(req.body?.emails) ? req.body.emails.map(normalizeEmail) : [];
+  const validEmails = emails.filter(isValidEmail);
+  if (!validEmails.length) {
+    return res.status(400).json({ error: 'At least one valid email is required.' });
+  }
+
+  const result = await pool.query(
+    `
+    WITH deleted AS (
+      DELETE FROM users
+      WHERE email = ANY($1::citext[])
+        AND split_part(email::text, '@', 1) ILIKE '%+test%'
+      RETURNING email
+    )
+    SELECT email FROM deleted ORDER BY email;
+    `,
+    [validEmails]
+  );
+
+  return res.json({
+    deletedCount: result.rowCount,
+    deletedEmails: result.rows.map((r) => r.email),
+  });
+});
+
+app.post('/api/admin/delete-all-test-users', adminAuth, async (_req, res) => {
+  const result = await pool.query(
+    `
+    WITH deleted AS (
+      DELETE FROM users
+      WHERE split_part(email::text, '@', 1) ILIKE '%+test%'
+      RETURNING email
+    )
+    SELECT email FROM deleted ORDER BY email;
+    `
+  );
+
+  return res.json({
+    deletedCount: result.rowCount,
+    deletedEmails: result.rows.map((r) => r.email),
+  });
+});
+
+app.post('/api/admin/delete-responses', adminAuth, async (req, res) => {
+  const emails = Array.isArray(req.body?.emails) ? req.body.emails.map(normalizeEmail) : [];
+  const validEmails = emails.filter(isValidEmail);
+  if (!validEmails.length) {
+    return res.status(400).json({ error: 'At least one valid email is required.' });
+  }
+
+  const result = await pool.query(
+    `
+    WITH target_users AS (
+      SELECT id, email
+      FROM users
+      WHERE email = ANY($1::citext[])
+    ),
+    deleted AS (
+      DELETE FROM responses r
+      USING target_users tu
+      WHERE r.user_id = tu.id
+      RETURNING tu.email
+    )
+    SELECT email, COUNT(*)::int AS deleted_count
+    FROM deleted
+    GROUP BY email
+    ORDER BY email;
+    `,
+    [validEmails]
+  );
+
+  const perUser = Object.fromEntries(result.rows.map((r) => [r.email, r.deleted_count]));
+  const deletedResponses = result.rows.reduce((sum, row) => sum + Number(row.deleted_count || 0), 0);
+
+  return res.json({
+    deletedResponses,
+    perUser,
+    emails: validEmails,
+  });
 });
 
 app.post('/api/admin/aggregate', adminAuth, async (req, res) => {
