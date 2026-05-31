@@ -423,54 +423,35 @@ body {
 
 .box-status-strip {
   margin-top: 10px;
-  display: grid;
-  gap: 2px;
+  display: block;
   width: 170px;
 }
 
 .status-stack {
-  display: grid;
-  gap: 3px;
-}
-
-.status-row {
-  display: grid;
-  grid-template-columns: 1fr 26px;
-  align-items: center;
-  gap: 6px;
+  display: block;
 }
 
 .status-track {
   position: relative;
-  height: 7px;
-  border-radius: 3px;
+  display: flex;
+  height: 14px;
+  border-radius: 6px;
   border: 1px solid #D8E6F4;
   background: #F9FCFF;
   overflow: hidden;
 }
 
-.status-fill {
+.status-segment {
   height: 100%;
   min-width: 0;
+  flex: 0 0 auto;
 }
 
-.status-fill.green { background: #2E844A; }
-.status-fill.amber { background: #E45B00; }
-.status-fill.red { background: #BA0517; }
-.status-fill.na { background: #6B7280; }
-.status-fill.unset { background: #FFFFFF; }
-
-.status-count {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: #6C8AA5;
-  text-align: right;
-}
-
-.status-count.is-percent {
-  min-width: 34px;
-  color: #4E7393;
-}
+.status-segment.green { background: #2E844A; }
+.status-segment.amber { background: #E45B00; }
+.status-segment.red { background: #BA0517; }
+.status-segment.na { background: #6B7280; }
+.status-segment.unset { background: #FFFFFF; }
 
 /* ══════════════ DETAIL PANEL ══════════════ */
 .detail-section {
@@ -1589,25 +1570,18 @@ function normalizeCounts(counts) {
   return out;
 }
 
-function buildStatusStack(counts, totalParticipants, options = {}) {
-  const labelMode = options.labelMode || 'count';
+function buildStatusStack(counts, totalParticipants) {
   const safeTotal = Math.max(1, totalParticipants);
   const c = normalizeCounts(counts);
-  const rows = LEVEL_ORDER.map((level) => {
+  const segments = LEVEL_ORDER.map((level) => {
     const value = Math.max(0, c[level] || 0);
     const pct = Math.max(0, Math.min(100, (value / safeTotal) * 100));
-    const label = labelMode === 'percent' ? `${Math.round(pct)}%` : String(value);
-    const countClass = labelMode === 'percent' ? 'status-count is-percent' : 'status-count';
+    if (pct <= 0) return '';
     return `
-      <div class="status-row" title="${level.toUpperCase()}: ${value}/${safeTotal}">
-        <div class="status-track">
-          <div class="status-fill ${level}" style="width:${pct}%"></div>
-        </div>
-        <div class="${countClass}">${label}</div>
-      </div>
+      <div class="status-segment ${level}" style="width:${pct}%" title="${level.toUpperCase()} ${value}/${safeTotal}"></div>
     `;
   }).join('');
-  return `<div class="status-stack">${rows}</div>`;
+  return `<div class="status-stack"><div class="status-track">${segments}</div></div>`;
 }
 
 function dominantLevel(counts) {
@@ -1775,7 +1749,7 @@ function renderMatrixStatusBars() {
     }
     const participantCount = Math.max(1, selectedEmails.length || 1);
     const totalResponsesInBox = participantCount * Math.max(1, (BOXES[key]?.aspects || []).length);
-    strip.innerHTML = buildStatusStack(counts, totalResponsesInBox, { labelMode: 'percent' });
+    strip.innerHTML = buildStatusStack(counts, totalResponsesInBox);
     strip.title = `High: ${counts.green}, Medium: ${counts.amber}, Low: ${counts.red}, Not Applicable: ${counts.na}, Unset: ${counts.unset}, Readiness: ${band.toUpperCase()}`;
   });
 }
