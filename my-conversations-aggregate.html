@@ -365,10 +365,8 @@ body {
   position: absolute; top: 0; left: 0; right: 0;
   height: 3px; border-radius: 12px 12px 0 0;
   opacity: 0; transition: opacity 0.2s;
+  background: #CFDEEE;
 }
-.box.tech::before   { background: var(--tech-mid); }
-.box.people::before { background: var(--people-mid); }
-.box.exec::before   { background: var(--exec-mid); }
 
 .box:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(1,118,211,0.12); }
 .box:hover::before { opacity: 1; }
@@ -376,24 +374,31 @@ body {
 .box.active {
   border-width: 2px;
   transform: translateY(-3px);
-  box-shadow: 0 16px 40px rgba(1,118,211,0.16);
+  box-shadow: 0 16px 40px rgba(1,118,211,0.12);
 }
 .box.active::before { opacity: 1; }
-.box.tech.active   { border-color: var(--tech-mid);   background: var(--tech-bg); }
-.box.people.active { border-color: var(--people-mid); background: var(--people-bg); }
-.box.exec.active   { border-color: var(--exec-mid);   background: var(--exec-bg); }
 
 .box.dimmed { opacity: 0.25; transform: none; box-shadow: none; pointer-events: none; }
+
+/* Dominant aggregate confidence tint for matrix topic boxes */
+.box.dom-green:not(.active) { background: #EDF8F1; border-color: #B8DFC4; }
+.box.dom-amber:not(.active) { background: #FFF5EB; border-color: #F3C8A0; }
+.box.dom-red:not(.active)   { background: #FFF0F2; border-color: #E9B4BD; }
+.box.dom-na:not(.active)    { background: #F4F5F7; border-color: #D0D5DD; }
+
+/* Selected state = stronger saturation of dominant confidence color */
+.box.dom-green.active { background: #CDEFD8; border-color: #2E844A; box-shadow: 0 16px 40px rgba(46,132,74,0.18); }
+.box.dom-amber.active { background: #FFE2C7; border-color: #E45B00; box-shadow: 0 16px 40px rgba(228,91,0,0.18); }
+.box.dom-red.active   { background: #FFD6DC; border-color: #BA0517; box-shadow: 0 16px 40px rgba(186,5,23,0.18); }
+.box.dom-na.active    { background: #DEE1E6; border-color: #6B7280; box-shadow: 0 16px 40px rgba(107,114,128,0.18); }
 
 .box-topic {
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px; font-weight: 500;
   letter-spacing: 0.14em; text-transform: uppercase;
   margin-bottom: 6px;
+  color: #4F6A84;
 }
-.box.tech   .box-topic { color: var(--tech-mid); }
-.box.people .box-topic { color: var(--people-mid); }
-.box.exec   .box-topic { color: var(--exec-mid); }
 
 .box-name {
   font-size: 17px; font-weight: 700;
@@ -412,10 +417,9 @@ body {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px; font-weight: 500;
   padding: 3px 9px; border-radius: 10px;
+  background: #EEF4FB;
+  color: #325573;
 }
-.box.tech   .box-count { background: rgba(55,138,221,0.1); color: var(--tech-dark); }
-.box.people .box-count { background: rgba(29,158,117,0.1); color: var(--people-dark); }
-.box.exec   .box-count { background: rgba(127,119,221,0.1); color: var(--exec-dark); }
 
 .box-status-strip {
   margin-top: 10px;
@@ -461,6 +465,11 @@ body {
   font-size: 9px;
   color: #6C8AA5;
   text-align: right;
+}
+
+.status-count.is-percent {
+  min-width: 34px;
+  color: #4E7393;
 }
 
 /* ══════════════ DETAIL PANEL ══════════════ */
@@ -761,6 +770,13 @@ body {
   display: grid;
   justify-items: end;
   gap: 8px;
+}
+
+.confidence-tools {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .detail-body-label {
@@ -1259,7 +1275,10 @@ footer strong { color: var(--sky); }
           <div class="aspects-mode-hint" id="aspectsModeHint">Click any aspect card to enter edit mode.</div>
         </div>
         <div class="confidence-legend-wrap">
-          <button type="button" class="confidence-legend-toggle" aria-expanded="false" aria-controls="confidence-legend" onclick="toggleConfidenceLegend(this)">Confidence Level Key</button>
+          <div class="confidence-tools">
+            <button type="button" class="confidence-legend-toggle" aria-expanded="false" aria-controls="confidence-legend" onclick="toggleConfidenceLegend(this)">Confidence Level Key</button>
+            <button type="button" class="confidence-legend-toggle" id="aspectSortToggle" onclick="toggleAspectSort()">Sort: Confidence &amp; Alignment</button>
+          </div>
           <div class="confidence-legend" id="confidence-legend">
             <div class="confidence-legend-title">Confidence Level Key</div>
             <ul>
@@ -1541,6 +1560,7 @@ let selectedKey = null;
 let activeFilter = 'all';
 const AGG_STATE = {};
 let selectedEmails = [];
+let aspectSortMode = 'confidence';
 
 async function apiRequest(url, options = {}) {
   const response = await fetch(url, options);
@@ -1569,18 +1589,21 @@ function normalizeCounts(counts) {
   return out;
 }
 
-function buildStatusStack(counts, totalParticipants) {
+function buildStatusStack(counts, totalParticipants, options = {}) {
+  const labelMode = options.labelMode || 'count';
   const safeTotal = Math.max(1, totalParticipants);
   const c = normalizeCounts(counts);
   const rows = LEVEL_ORDER.map((level) => {
     const value = Math.max(0, c[level] || 0);
     const pct = Math.max(0, Math.min(100, (value / safeTotal) * 100));
+    const label = labelMode === 'percent' ? `${Math.round(pct)}%` : String(value);
+    const countClass = labelMode === 'percent' ? 'status-count is-percent' : 'status-count';
     return `
       <div class="status-row" title="${level.toUpperCase()}: ${value}/${safeTotal}">
         <div class="status-track">
           <div class="status-fill ${level}" style="width:${pct}%"></div>
         </div>
-        <div class="status-count">${value}</div>
+        <div class="${countClass}">${label}</div>
       </div>
     `;
   }).join('');
@@ -1589,9 +1612,83 @@ function buildStatusStack(counts, totalParticipants) {
 
 function dominantLevel(counts) {
   const c = normalizeCounts(counts);
-  const ranking = ['green', 'amber', 'red', 'na', 'unset'];
-  return ranking.reduce((best, level) => (c[level] > c[best] ? level : best), 'unset');
+  const nonUnsetOrder = ['green', 'amber', 'red', 'na'];
+  const nonUnsetMax = Math.max(...nonUnsetOrder.map((level) => c[level]));
+
+  if (nonUnsetMax <= 0 && c.unset <= 0) return 'unset';
+
+  // Prefer a real confidence state when tied with unset.
+  if (nonUnsetMax >= c.unset) {
+    return nonUnsetOrder.find((level) => c[level] === nonUnsetMax) || 'unset';
+  }
+
+  return 'unset';
 }
+
+function confidenceSortRank(level) {
+  const order = { green: 0, amber: 1, red: 2, na: 3, unset: 4 };
+  return order[level] ?? 99;
+}
+
+function dominantConfidenceLevel(counts) {
+  const c = normalizeCounts(counts);
+  const order = ['green', 'amber', 'red', 'na'];
+  const max = Math.max(...order.map((level) => c[level]));
+  if (max <= 0) return 'unset';
+  return order.find((level) => c[level] === max) || 'unset';
+}
+
+function topConfidenceLevels(counts) {
+  const c = normalizeCounts(counts);
+  const order = ['green', 'amber', 'red', 'na'];
+  const max = Math.max(...order.map((level) => c[level]));
+  if (max <= 0) return ['unset'];
+  return order.filter((level) => c[level] === max);
+}
+
+function maxConfidenceCount(counts) {
+  const c = normalizeCounts(counts);
+  return Math.max(c.green, c.amber, c.red, c.na);
+}
+
+function confidenceReadinessScore(counts) {
+  const c = normalizeCounts(counts);
+  return (2 * c.green) + (1 * c.amber) - (2 * c.red);
+}
+
+function readinessBand(counts) {
+  const c = normalizeCounts(counts);
+  const maxConfidence = Math.max(c.green, c.amber, c.red);
+  if (c.na > maxConfidence) return 'na';
+
+  const confidenceResponses = c.green + c.amber + c.red;
+  if (confidenceResponses <= 0) return 'na';
+
+  const normalizedScore = confidenceReadinessScore(c) / confidenceResponses;
+  if (normalizedScore >= 0.75) return 'green';
+  if (normalizedScore >= 0.0) return 'amber';
+  return 'red';
+}
+
+function updateAspectSortToggleLabel() {
+  const btn = document.getElementById('aspectSortToggle');
+  if (!btn) return;
+  btn.textContent = aspectSortMode === 'number' ? 'Sort: Number' : 'Sort: Confidence & Alignment';
+}
+
+function toggleAspectSort() {
+  aspectSortMode = aspectSortMode === 'number' ? 'confidence' : 'number';
+  updateAspectSortToggleLabel();
+  if (selectedKey) renderAspects();
+}
+
+const DOM_BORDER = {
+  green: '#2E844A',
+  amber: '#E45B00',
+  red: '#BA0517',
+  na: '#6B7280',
+  unset: '#9CB7D2',
+};
 
 function summarizeBox(boxKey) {
   const summary = { green: 0, amber: 0, red: 0, na: 0, unset: 0 };
@@ -1665,6 +1762,11 @@ function renderMatrixStatusBars() {
     const key = el.dataset.key;
     if (!key || !BOXES[key]) return;
     const counts = summarizeBox(key);
+    const band = readinessBand(counts);
+    el.classList.remove('dom-green', 'dom-amber', 'dom-red', 'dom-na');
+    if (band !== 'unset') {
+      el.classList.add(`dom-${band}`);
+    }
     let strip = el.querySelector('.box-status-strip');
     if (!strip) {
       strip = document.createElement('div');
@@ -1673,13 +1775,14 @@ function renderMatrixStatusBars() {
     }
     const participantCount = Math.max(1, selectedEmails.length || 1);
     const totalResponsesInBox = participantCount * Math.max(1, (BOXES[key]?.aspects || []).length);
-    strip.innerHTML = buildStatusStack(counts, totalResponsesInBox);
-    strip.title = `High: ${counts.green}, Medium: ${counts.amber}, Low: ${counts.red}, Not Applicable: ${counts.na}, Unset: ${counts.unset}`;
+    strip.innerHTML = buildStatusStack(counts, totalResponsesInBox, { labelMode: 'percent' });
+    strip.title = `High: ${counts.green}, Medium: ${counts.amber}, Low: ${counts.red}, Not Applicable: ${counts.na}, Unset: ${counts.unset}, Readiness: ${band.toUpperCase()}`;
   });
 }
 
 // ── Select box ──
-function selectBox(key) {
+function selectBox(key, options = {}) {
+  const shouldScrollToDetail = options.scrollToDetail !== false;
   selectedKey = key;
 
   document.querySelectorAll('.box').forEach(el => {
@@ -1692,7 +1795,9 @@ function selectBox(key) {
 
   const ds = document.getElementById('detailSection');
   ds.classList.add('visible');
-  setTimeout(() => ds.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  if (shouldScrollToDetail) {
+    setTimeout(() => ds.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
 }
 
 // ── Render detail ──
@@ -1718,24 +1823,56 @@ function renderAspects() {
   const d = BOXES[selectedKey];
   const grid = document.getElementById('aspectsGrid');
   grid.innerHTML = '';
+  updateAspectSortToggleLabel();
   const modeHint = document.getElementById('aspectsModeHint');
   if (modeHint) {
-    modeHint.textContent = selectedEmails.length
-      ? `Aggregate view for ${selectedEmails.length} selected participant(s).`
-      : 'No selected participants. Return to admin and choose users.';
+    if (!selectedEmails.length) {
+      modeHint.textContent = 'No selected participants. Return to admin and choose users.';
+    } else {
+      modeHint.textContent = `Aggregate view for ${selectedEmails.length} selected participant(s). Number colors reflect confidence & alignment readiness bands.`;
+    }
   }
 
-  d.aspects.forEach((a, i) => {
-    const counts = ensureAggregateState(selectedKey, i);
+  const aspectItems = d.aspects.map((a, i) => ({ a, i, counts: ensureAggregateState(selectedKey, i) }));
+  if (aspectSortMode === 'confidence') {
+    aspectItems.sort((x, y) => {
+      const sx = confidenceReadinessScore(x.counts);
+      const sy = confidenceReadinessScore(y.counts);
+      if (sy !== sx) return sy - sx;
+
+      const cx = normalizeCounts(x.counts);
+      const cy = normalizeCounts(y.counts);
+
+      // Prefer fewer low-confidence votes.
+      if (cx.red !== cy.red) return cx.red - cy.red;
+      // Then prefer more medium-confidence votes.
+      if (cy.amber !== cx.amber) return cy.amber - cx.amber;
+      // Then prefer stronger high-confidence support.
+      if (cy.green !== cx.green) return cy.green - cx.green;
+      // Then prefer lower N/A.
+      if (cx.na !== cy.na) return cx.na - cy.na;
+
+      // Then prefer more total answered (confidence + N/A).
+      const answeredX = cx.green + cx.amber + cx.red + cx.na;
+      const answeredY = cy.green + cy.amber + cy.red + cy.na;
+      if (answeredY !== answeredX) return answeredY - answeredX;
+
+      // Final deterministic tie-breaker.
+      return x.i - y.i;
+    });
+  }
+
+  aspectItems.forEach(({ a, i, counts }) => {
     const card = document.createElement('div');
     card.className = 'aspect-card';
     card.style.animationDelay = (i * 0.04) + 's';
-    const numberStateClass = `is-${dominantLevel(counts)}`;
+    const numberBand = readinessBand(counts);
+    const numberStateClass = `is-${numberBand}`;
     const stackHtml = buildStatusStack(counts, Math.max(1, selectedEmails.length || 1));
     card.innerHTML = `
       <div class="aspect-header">
         <div class="aspect-num-wrap">
-          <div class="aspect-num ${numberStateClass}" title="${dominantLevel(counts).toUpperCase()}">${String(i+1).padStart(2,'0')}</div>
+          <div class="aspect-num ${numberStateClass}" title="${numberBand.toUpperCase()}">${String(i+1).padStart(2,'0')}</div>
           <div class="aspect-meta"></div>
         </div>
         <div class="aspect-title">${a.title}</div>
@@ -1851,7 +1988,7 @@ buildAllGrid();
 loadAggregateData()
   .then(() => {
     renderMatrixStatusBars();
-    if (ORDER[0]) selectBox(ORDER[0]);
+    if (ORDER[0]) selectBox(ORDER[0], { scrollToDetail: false });
   })
   .catch((error) => {
     const hint = document.getElementById('aspectsModeHint');

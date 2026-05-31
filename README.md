@@ -62,10 +62,23 @@ On startup, the server bootstraps the database schema (`users`, `responses`) if 
 4. Use controls to:
    - open selected participant
    - aggregate selected participants
-   - create test users (1-50 per action)
-   - delete selected users (dangerous; removes users and their responses)
-   - delete selected `+test` users
-   - delete all `+test` users
+   - quickly select cohorts (`Select Last 15m`, `Select Last 30m`, `Select Last 60m`, `Select +test`, `Select All`)
+   - use the `Create/Delete Users` accordion to:
+     - create test users (preset counts: 5/10/20/30/50)
+     - delete selected users (dangerous; removes users and their responses)
+     - delete selected `+test` users
+     - delete all `+test` users
+   - review confirmation prompts with user summaries before destructive actions
+
+### Aggregate Page Notes (`my-conversations-aggregate.html`)
+
+- Top conversation cards are color-coded using the same confidence/alignment readiness scheme used for strategic aspect numbers.
+- Conversation card bars show percentages (not raw counts).
+- Strategic aspects support two sort modes:
+  - `Sort: Confidence & Alignment` (default)
+  - `Sort: Number`
+- Aspect ordering and number colors are now aligned to the confidence/alignment readiness model for consistency.
+- Opening an aggregate URL starts at `The Framework` section; selecting a conversation still navigates to detail content.
 
 ## Dummy Data Seeding
 
