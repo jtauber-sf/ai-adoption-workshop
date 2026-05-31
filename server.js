@@ -37,6 +37,47 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+const BOX_KEYS = [
+  'production',
+  'ownership',
+  'culture',
+  'validation',
+  'controls',
+  'structure',
+  'usecase',
+  'roles',
+  'strategy',
+];
+const ASPECTS_PER_BOX = 10;
+
+function pickRandomConfidence() {
+  const n = Math.random();
+  if (n < 0.20) return 'green';
+  if (n < 0.40) return 'amber';
+  if (n < 0.60) return 'red';
+  if (n < 0.80) return 'na';
+  return null;
+}
+
+function randomRecentTimestamp() {
+  const now = Date.now();
+  const windowMs = 10 * 60 * 1000;
+  const offset = Math.floor(Math.random() * windowMs);
+  return new Date(now - offset);
+}
+
+function randomCommentFor(level) {
+  if (Math.random() > 0.45) return '';
+  const notes = {
+    green: 'Strong alignment and clear owner accountable for delivery.',
+    amber: 'Partially defined approach; needs refinement and sequencing.',
+    red: 'Low confidence with unresolved blockers and unclear next steps.',
+    na: 'Not applicable to current scope for this participant.',
+    unset: 'Pending discussion in the next workshop cycle.',
+  };
+  return notes[level || 'unset'];
+}
+
 async function bootstrapSchema() {
   await pool.query(`
     CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -244,6 +285,84 @@ app.post('/api/admin/delete-all-test-users', adminAuth, async (_req, res) => {
     deletedCount: result.rowCount,
     deletedEmails: result.rows.map((r) => r.email),
   });
+});
+
+app.post('/api/admin/create-test-users', adminAuth, async (req, res) => {
+  const requested = Number(req.body?.count);
+  if (!Number.isInteger(requested) || requested < 1 || requested > 50) {
+    return res.status(400).json({ error: 'count must be an integer between 1 and 50.' });
+  }
+
+  const runTag = Date.now().toString(36).slice(-8);
+  const createdEmails = [];
+
+  for (let i = 1; i <= requested; i += 1) {
+    const serial = String(i).padStart(3, '0');
+    const randomSuffix = Math.random().toString(36).slice(2, 7);
+    const email = normalizeEmail(`participant${serial}+test${runTag}${randomSuffix}@gmail.com`);
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+      const userResult = await client.query(
+        `
+        INSERT INTO users (email, updated_at)
+        VALUES ($1, NOW())
+        ON CONFLICT (email) DO UPDATE SET updated_at = EXCLUDED.updated_at
+        RETURNING id;
+        `,
+        [email]
+      );
+      const userId = userResult.rows[0].id;
+
+      const values = [];
+      const placeholders = [];
+      let latest = new Date(0);
+      let idx = 0;
+      for (const boxKey of BOX_KEYS) {
+        for (let aspectIndex = 0; aspectIndex < ASPECTS_PER_BOX; aspectIndex += 1) {
+          const confidence = pickRandomConfidence();
+          const updatedAt = randomRecentTimestamp();
+          const comment = randomCommentFor(confidence);
+          if (updatedAt > latest) latest = updatedAt;
+          const base = idx * 6;
+          placeholders.push(`($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${base + 5}, $${base + 6})`);
+          values.push(userId, boxKey, aspectIndex, confidence, comment, updatedAt);
+          idx += 1;
+        }
+      }
+
+      await client.query(
+        `
+        INSERT INTO responses (
+          user_id, box_key, aspect_index, confidence_level, comment_text, updated_at
+        )
+        VALUES ${placeholders.join(', ')}
+        ON CONFLICT (user_id, box_key, aspect_index)
+        DO UPDATE SET
+          confidence_level = EXCLUDED.confidence_level,
+          comment_text = EXCLUDED.comment_text,
+          updated_at = EXCLUDED.updated_at;
+        `,
+        values
+      );
+
+      await client.query(
+        `
+        UPDATE users SET updated_at = $2 WHERE id = $1;
+        `,
+        [userId, latest]
+      );
+      await client.query('COMMIT');
+      createdEmails.push(email);
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  return res.json({ createdCount: createdEmails.length, createdEmails });
 });
 
 app.post('/api/admin/delete-users', adminAuth, async (req, res) => {

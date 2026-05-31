@@ -62,6 +62,7 @@ On startup, the server bootstraps the database schema (`users`, `responses`) if 
 4. Use controls to:
    - open selected participant
    - aggregate selected participants
+   - create test users (1-50 per action)
    - delete selected users (dangerous; removes users and their responses)
    - delete selected `+test` users
    - delete all `+test` users
@@ -100,6 +101,7 @@ Optional:
 - `GET /api/admin/user/:email` - fetch full response snapshot for one user
 - `POST /api/admin/aggregate` - aggregate counts for selected users
 - `POST /api/admin/unlock` - validate `ADMIN_PAGE_PASSWORD`
+- `POST /api/admin/create-test-users` - create test users (with seeded responses)
 - `POST /api/admin/delete-users` - delete selected users and all their responses
 - `POST /api/admin/delete-test-users` - delete selected `+test` users
 - `POST /api/admin/delete-all-test-users` - delete all `+test` users

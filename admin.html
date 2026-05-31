@@ -22,6 +22,12 @@
   .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
   .toolbar.danger-zone { border-top: 1px solid #edf3f9; padding-top: 10px; margin-top: 2px; }
   .selection-status { font-size: 12px; color: #5b7691; margin: -2px 0 10px; min-height: 16px; }
+  .tools-accordion { border: 1px solid #edf3f9; border-radius: 10px; margin-bottom: 10px; background: #fbfdff; }
+  .tools-accordion summary { cursor: pointer; list-style: none; padding: 10px 12px; font-size: 12px; font-weight: 700; color: #1c2d3f; }
+  .tools-accordion summary::-webkit-details-marker { display: none; }
+  .tools-accordion-content { padding: 0 12px 10px; }
+  .inline-control { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: #1c2d3f; }
+  .inline-input { width: 90px; border: 1px solid #bdd3ea; border-radius: 8px; padding: 6px 8px; font-size: 12px; background: #fff; }
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
   th, td { border-bottom: 1px solid #edf3f9; padding: 7px 6px; text-align: left; }
   th { background: #f8fbff; }
@@ -64,11 +70,29 @@
           <button class="btn secondary" id="clearBtn" type="button">Clear</button>
         </div>
         <div class="selection-status" id="selectionStatus"></div>
-        <div class="toolbar danger-zone">
-          <button class="btn secondary" id="deleteTestBtn" type="button">Delete Selected +test Users</button>
-          <button class="btn secondary" id="deleteAllTestBtn" type="button">Delete ALL +test Users</button>
-          <button class="btn danger" id="deleteUsersBtn" type="button">Danger: Delete Selected Users</button>
-        </div>
+        <details class="tools-accordion">
+          <summary>Create/Delete Users</summary>
+          <div class="tools-accordion-content">
+            <div class="toolbar">
+              <span class="inline-control">
+                <label for="createCountInput">Create test users</label>
+                <select class="inline-input" id="createCountInput">
+                  <option value="5">5</option>
+                  <option value="10" selected>10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="50">50</option>
+                </select>
+              </span>
+              <button class="btn secondary" id="createTestBtn" type="button">Create Test Users</button>
+            </div>
+            <div class="toolbar danger-zone">
+              <button class="btn secondary" id="deleteTestBtn" type="button">Delete Selected +test Users</button>
+              <button class="btn secondary" id="deleteAllTestBtn" type="button">Delete ALL +test Users</button>
+              <button class="btn danger" id="deleteUsersBtn" type="button">Danger: Delete Selected Users</button>
+            </div>
+          </div>
+        </details>
         <div class="users" id="usersList"></div>
       </div>
       <div class="card">
@@ -306,6 +330,24 @@ async function deleteSelectedUsers() {
   setError(`Deleted ${data.deletedCount || 0} user(s) and all associated responses.`);
 }
 
+async function createTestUsers() {
+  if (!isUnlocked) return setError('Unlock admin first.');
+  const count = Number(document.getElementById('createCountInput').value);
+  if (!Number.isInteger(count) || count < 1 || count > 50) {
+    return setError('Create count must be an integer between 1 and 50.');
+  }
+  setError('');
+  const res = await fetch('/api/admin/create-test-users', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ count }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to create test users.');
+  await loadUsers();
+  setError(`Created ${data.createdCount || 0} test user(s).`);
+}
+
 function selectByRecentMinutes(minutes) {
   const now = Date.now();
   let selectedCount = 0;
@@ -347,6 +389,7 @@ document.getElementById('openBtn').addEventListener('click', () => {
 document.getElementById('deleteTestBtn').addEventListener('click', () => deleteSelectedTestUsers().catch(e => setError(e.message)));
 document.getElementById('deleteAllTestBtn').addEventListener('click', () => deleteAllTestUsers().catch(e => setError(e.message)));
 document.getElementById('deleteUsersBtn').addEventListener('click', () => deleteSelectedUsers().catch(e => setError(e.message)));
+document.getElementById('createTestBtn').addEventListener('click', () => createTestUsers().catch(e => setError(e.message)));
 document.getElementById('gateSubmitBtn').addEventListener('click', () => unlockAdmin().catch(e => setGateError(e.message)));
 gatePassword.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') unlockAdmin().catch(e => setGateError(e.message));
