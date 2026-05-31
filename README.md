@@ -1,61 +1,105 @@
-# ai-adoption-workshop
-A one-day executive workshop with your ELT to build a confident, structured plan for absorbing and scaling agentic AI across the organisation — from strategic intent to a 90-day sprint with named owners.
+# AI Adoption Workshop
 
-## Persisted Participant Workflow
+A workshop web app for running strategic AI adoption sessions, capturing participant confidence/comment responses, and reviewing individual or aggregate outcomes through admin views.
 
-The original `my-conversations-static.html` remains unchanged and browser-only.
+## What’s Included
 
-A persisted version is available at `my-conversations.html`, backed by Postgres via `DATABASE_URL`.
+- Static workshop pages (`index.html`, `framework.html`, `sample-sprint-plan.html`, `sample-playbook.html`)
+- Participant experience:
+  - `my-conversations-static.html` (browser-only, no persistence)
+  - `my-conversations.html` (persisted to Postgres)
+- Aggregate view:
+  - `my-conversations-aggregate.html`
+- Admin dashboard:
+  - `admin.html`
 
-### Environment Variables
+## Tech Stack
 
-- `DATABASE_URL` (required): Heroku Postgres connection string.
-- `AUTH_USER` (optional, default `admin`): Basic auth user for admin endpoints/page.
-- `AUTH_PASS` (optional, default `password123`): Basic auth password for admin endpoints/page.
-- `ADMIN_PAGE_PASSWORD` (optional, default `workshop-admin`): second password gate shown inside `admin.html`.
-- `PORT` (optional, default `3000`)
+- Node.js + Express
+- PostgreSQL (`pg`)
+- Frontend: plain HTML/CSS/JS
 
-### Run
+## Environment Variables
+
+Create a `.env` in project root:
+
+```env
+DATABASE_URL=postgres://...
+AUTH_USER=admin
+AUTH_PASS=password123
+ADMIN_PAGE_PASSWORD=workshop-admin
+PORT=3000
+```
+
+- `DATABASE_URL` (required): Postgres connection string
+- `AUTH_USER` (optional): HTTP Basic username for admin routes/pages
+- `AUTH_PASS` (optional): HTTP Basic password for admin routes/pages
+- `ADMIN_PAGE_PASSWORD` (optional): second password gate inside `admin.html`
+- `PORT` (optional): defaults to `3000`
+
+## Install and Run
 
 ```bash
 npm install
 npm start
 ```
 
-### Seed Dummy Participants
+On startup, the server bootstraps the database schema (`users`, `responses`) if needed.
+
+## Core Workflows
+
+### Participant (Persisted)
+
+1. Open `my-conversations.html`
+2. Enter email to create/resume session
+3. Confidence and comments auto-save to Postgres
+
+### Admin
+
+1. Open `admin.html`
+2. Pass HTTP Basic auth (`AUTH_USER` / `AUTH_PASS`)
+3. Enter `ADMIN_PAGE_PASSWORD` in the page overlay
+4. Use controls to:
+   - open selected participant
+   - aggregate selected participants
+   - delete selected responses
+   - delete selected `+test` users
+   - delete all `+test` users
+
+## Dummy Data Seeding
+
+Run:
 
 ```bash
 npm run seed:dummy
 ```
 
-This creates/updates 30 dummy users with randomized per-run `+test` emails
-(for example `participant001+testmbd8kq1r@gmail.com`) and writes randomized confidence/comment responses for all boxes/aspects with
-timestamps distributed across the last 10 minutes.
+Seeder behavior:
 
-On startup, the server bootstraps schema automatically (`users`, `responses`).
+- Creates 30 users per run
+- Uses randomized, collision-resistant test emails (for example `participant001+testabc123@gmail.com`)
+- Seeds all conversation/aspect responses with mixed confidence levels
+- Distributes timestamps within a recent 10-minute window
+- Includes retry logic for transient DB connection issues
 
-### Participant Flow
+Optional:
 
-- Open `my-conversations.html`
-- Enter email to create/resume a saved session
-- Confidence and comment updates save continuously to Postgres
+- Set `DUMMY_RUN_TAG` to control the run suffix for test emails
 
-### Admin Flow
+## API Endpoints
 
-- Open `admin.html` (protected by basic auth)
-- Select users to:
-  - inspect individual progress (open first selected user in persisted participant page)
-  - aggregate confidence distributions across selected users
-- Cleanup actions are available in Admin:
-  - delete selected users with `+test`
-  - delete all `+test` users in bulk
-  - delete selected users' responses while keeping user records
-
-### API Endpoints
+### Participant
 
 - `POST /api/session` - create/find user by email
-- `GET /api/responses/:email` - fetch saved responses for email
-- `POST /api/responses/:email` - upsert response for one box/aspect
-- `GET /api/admin/users` - list users with response counts (admin auth)
-- `GET /api/admin/user/:email` - full response snapshot for a user (admin auth)
-- `POST /api/admin/aggregate` - grouped aggregate counts for selected emails (admin auth)
+- `GET /api/responses/:email` - fetch saved responses
+- `POST /api/responses/:email` - upsert one response
+
+### Admin (requires HTTP Basic auth)
+
+- `GET /api/admin/users` - list users with response counts and latest activity
+- `GET /api/admin/user/:email` - fetch full response snapshot for one user
+- `POST /api/admin/aggregate` - aggregate counts for selected users
+- `POST /api/admin/unlock` - validate `ADMIN_PAGE_PASSWORD`
+- `POST /api/admin/delete-responses` - delete responses for selected users
+- `POST /api/admin/delete-test-users` - delete selected `+test` users
+- `POST /api/admin/delete-all-test-users` - delete all `+test` users
