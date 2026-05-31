@@ -17,6 +17,7 @@
   .meta { font-size: 11px; color: #5b7691; margin-top: 2px; }
   .btn { border: 1px solid #2c77c8; background: #2c77c8; color: white; border-radius: 8px; font-size: 12px; padding: 7px 10px; cursor: pointer; }
   .btn.secondary { background: white; color: #2c77c8; }
+  .btn.danger { background: #ba0517; border-color: #ba0517; color: #ffffff; }
   .btn:disabled { opacity: 0.6; cursor: not-allowed; }
   .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
@@ -63,7 +64,7 @@
         <div class="toolbar">
           <button class="btn" id="aggregateBtn" type="button">Aggregate Selected</button>
           <button class="btn secondary" id="openBtn" type="button">Open First Selected</button>
-          <button class="btn secondary" id="deleteResponsesBtn" type="button">Delete Selected Responses</button>
+          <button class="btn danger" id="deleteUsersBtn" type="button">Danger: Delete Selected Users</button>
           <button class="btn secondary" id="deleteTestBtn" type="button">Delete Selected +test Users</button>
           <button class="btn secondary" id="deleteAllTestBtn" type="button">Delete ALL +test Users</button>
         </div>
@@ -267,26 +268,29 @@ async function deleteAllTestUsers() {
   setError(`Deleted ${data.deletedCount || 0} +test user(s).`);
 }
 
-async function deleteSelectedResponses() {
+async function deleteSelectedUsers() {
   if (!isUnlocked) return setError('Unlock admin first.');
   const emails = selectedEmails();
   if (!emails.length) return setError('Select at least one user first.');
-  const ok = window.confirm(
-    `Delete responses for ${emails.length} selected user(s)? Users remain, only responses are deleted.\n\n${summaryList(emails)}`
-  );
-  if (!ok) return;
+  const confirmMessage =
+    `DANGER: Delete ${emails.length} selected user(s)?\n\n` +
+    `This permanently deletes the users and all their responses.\n\n` +
+    `${summaryList(emails)}\n\n` +
+    `Type DELETE to continue.`;
+  const typed = window.prompt(confirmMessage, '');
+  if (typed !== 'DELETE') return;
 
   setError('');
-  const res = await fetch('/api/admin/delete-responses', {
+  const res = await fetch('/api/admin/delete-users', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ emails }),
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Failed to delete responses.');
+  if (!res.ok) throw new Error(data.error || 'Failed to delete users.');
   aggregateRows.innerHTML = '';
   await loadUsers();
-  setError(`Deleted ${data.deletedResponses || 0} response(s) across ${emails.length} user(s).`);
+  setError(`Deleted ${data.deletedCount || 0} user(s) and all associated responses.`);
 }
 
 document.getElementById('refreshBtn').addEventListener('click', () => loadUsers().catch(e => setError(e.message)));
@@ -310,7 +314,7 @@ document.getElementById('openBtn').addEventListener('click', () => {
 });
 document.getElementById('deleteTestBtn').addEventListener('click', () => deleteSelectedTestUsers().catch(e => setError(e.message)));
 document.getElementById('deleteAllTestBtn').addEventListener('click', () => deleteAllTestUsers().catch(e => setError(e.message)));
-document.getElementById('deleteResponsesBtn').addEventListener('click', () => deleteSelectedResponses().catch(e => setError(e.message)));
+document.getElementById('deleteUsersBtn').addEventListener('click', () => deleteSelectedUsers().catch(e => setError(e.message)));
 document.getElementById('gateSubmitBtn').addEventListener('click', () => unlockAdmin().catch(e => setGateError(e.message)));
 gatePassword.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') unlockAdmin().catch(e => setGateError(e.message));

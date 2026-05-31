@@ -246,7 +246,7 @@ app.post('/api/admin/delete-all-test-users', adminAuth, async (_req, res) => {
   });
 });
 
-app.post('/api/admin/delete-responses', adminAuth, async (req, res) => {
+app.post('/api/admin/delete-users', adminAuth, async (req, res) => {
   const emails = Array.isArray(req.body?.emails) ? req.body.emails.map(normalizeEmail) : [];
   const validEmails = emails.filter(isValidEmail);
   if (!validEmails.length) {
@@ -255,32 +255,27 @@ app.post('/api/admin/delete-responses', adminAuth, async (req, res) => {
 
   const result = await pool.query(
     `
-    WITH target_users AS (
+    WITH target AS (
       SELECT id, email
       FROM users
       WHERE email = ANY($1::citext[])
     ),
     deleted AS (
-      DELETE FROM responses r
-      USING target_users tu
-      WHERE r.user_id = tu.id
-      RETURNING tu.email
+      DELETE FROM users u
+      USING target t
+      WHERE u.id = t.id
+      RETURNING u.email
     )
-    SELECT email, COUNT(*)::int AS deleted_count
+    SELECT email
     FROM deleted
-    GROUP BY email
     ORDER BY email;
     `,
     [validEmails]
   );
 
-  const perUser = Object.fromEntries(result.rows.map((r) => [r.email, r.deleted_count]));
-  const deletedResponses = result.rows.reduce((sum, row) => sum + Number(row.deleted_count || 0), 0);
-
   return res.json({
-    deletedResponses,
-    perUser,
-    emails: validEmails,
+    deletedCount: result.rowCount,
+    deletedEmails: result.rows.map((r) => r.email),
   });
 });
 
